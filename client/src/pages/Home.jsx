@@ -14,7 +14,7 @@ export default function Home() {
   const [featured, setFeatured] = useState([])
 
   useEffect(() => {
-    axios.get('/api/tours').then(res => setFeatured(res.data.slice(0, 6)))
+    axios.get((import.meta.env.VITE_API_URL || '') + '/api/tours').then(res => setFeatured(res.data.slice(0, 6)))
   }, [])
 
   useEffect(() => {

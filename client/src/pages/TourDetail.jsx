@@ -15,7 +15,7 @@ export default function TourDetail() {
   useEffect(() => {
     setLoading(true)
     setError(false)
-    fetch('/api/tours/' + slug)
+    fetch((import.meta.env.VITE_API_URL || '') + '/api/tours/' + slug)
       .then(r => {
         if (!r.ok) throw new Error('Not found')
         return r.json()

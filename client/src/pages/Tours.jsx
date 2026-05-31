@@ -17,7 +17,7 @@ export default function Tours() {
   const pageRef = useRef(null)
 
   useEffect(() => {
-    axios.get('/api/tours')
+    axios.get((import.meta.env.VITE_API_URL || '') + '/api/tours')
       .then(res => { setTours(res.data); setLoading(false) })
       .catch(() => { setError(true); setLoading(false) })
   }, [])
