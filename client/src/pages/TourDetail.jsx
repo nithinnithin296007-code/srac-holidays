@@ -15,7 +15,7 @@ export default function TourDetail() {
   useEffect(() => {
     setLoading(true)
     setError(false)
-    fetch((import.meta.env.VITE_API_URL || '') + '/api/tours/' + slug)
+    fetch('https://srac-holidays-server.onrender.com/api/tours/' + slug)
       .then(r => {
         if (!r.ok) throw new Error('Not found')
         return r.json()

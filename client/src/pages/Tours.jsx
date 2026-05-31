@@ -17,7 +17,7 @@ export default function Tours() {
   const pageRef = useRef(null)
 
   useEffect(() => {
-    axios.get((import.meta.env.VITE_API_URL || '') + '/api/tours')
+    axios.get('https://srac-holidays-server.onrender.com/api/tours')
       .then(res => { setTours(res.data); setLoading(false) })
       .catch(() => { setError(true); setLoading(false) })
   }, [])
