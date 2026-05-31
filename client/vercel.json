@@ -1,1 +1,0 @@
-﻿{"rewrites":[{"source":"/api/(.*)","destination":"https://srac-holidays-server.onrender.com/api/$1"}]}
