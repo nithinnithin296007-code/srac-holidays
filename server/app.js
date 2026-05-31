@@ -7,7 +7,7 @@ const tourRoutes = require('./routes/tours');
 const app = express();
 
 app.use(helmet());
-app.use(cors({ origin: process.env.ALLOWED_ORIGIN || 'http://localhost:3000' }));
+app.use(cors({ origin: ['http://localhost:3000', 'https://sracholidays.vercel.app'], credentials: true }));
 app.use(express.json());
 
 const limiter = rateLimit({
