@@ -29,9 +29,9 @@ export default function Navbar() {
         <>
             <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}>
                 <div className="container navbar__inner">
-                    <Link to="/" className="navbar__logo">
+                    <Link to="/" className="navbar__logo" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                         <img src={logo} alt="SRAC Holidays" style={{ height: '38px', width: 'auto', display: 'block' }} />
-                        <span style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.2 }}>
+                        <span style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', lineHeight: 1.2 }}>
                             <span style={{ fontFamily: 'var(--font-display)', fontSize: '0.95rem', fontWeight: 700, color: 'var(--light)', letterSpacing: '0.05em' }}>SRAC</span>
                             <span style={{ fontFamily: 'var(--font-display)', fontSize: '0.6rem', fontWeight: 600, color: 'var(--primary)', letterSpacing: '0.15em' }}>HOLIDAYS</span>
                         </span>
