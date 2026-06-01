@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import SEO from '../components/SEO'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
@@ -6,16 +6,27 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import TourCard from '../components/TourCard'
 import axios from 'axios'
+import { API_URL } from '../utils/api'
 
 gsap.registerPlugin(ScrollTrigger)
 
 export default function Home() {
   const heroRef = useRef(null)
   const [featured, setFeatured] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    axios.get('https://srac-holidays-server.onrender.com/api/tours').then(res => setFeatured(res.data.slice(0, 6)))
+    setLoading(true)
+    axios.get(`${API_URL}/tours`)
+      .then(res => {
+        setFeatured(res.data.slice(0, 6))
+        setLoading(false)
+      })
+      .catch(() => {
+        setLoading(false)
+      })
   }, [])
+
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -47,6 +58,7 @@ export default function Home() {
 
   return (
     <main ref={heroRef}>
+      <SEO />
       <section className="hero">
         <div className="hero__video-bg">
           <video autoPlay muted loop playsInline>
@@ -105,9 +117,23 @@ export default function Home() {
             <p className="section-sub">Every tour is guided by a local who knows the city — not a script.</p>
           </div>
           <div className="tours-grid">
-            {featured.map((tour, i) => (
-              <TourCard key={tour.slug} tour={tour} index={i} />
-            ))}
+            {loading ? (
+              Array.from({ length: 6 }).map((_, i) => (
+                <div className="tour-card skeleton-card" key={i}>
+                  <div className="skeleton-image skeleton-pulse" />
+                  <div className="tour-card__body">
+                    <div className="skeleton-title skeleton-pulse" />
+                    <div className="skeleton-text skeleton-pulse" />
+                    <div className="skeleton-text skeleton-pulse" style={{ width: '60%' }} />
+                    <div className="skeleton-meta skeleton-pulse" />
+                  </div>
+                </div>
+              ))
+            ) : (
+              featured.map((tour, i) => (
+                <TourCard key={tour.slug} tour={tour} index={i} />
+              ))
+            )}
           </div>
           <div className="featured__cta reveal-section">
             <Link to="/tours" className="btn btn-outline">See All 15 Tours →</Link>

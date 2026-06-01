@@ -1,9 +1,10 @@
-﻿import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import SEO from '../components/SEO'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import TourCard from '../components/TourCard'
 import axios from 'axios'
+import { API_URL } from '../utils/api'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -17,10 +18,11 @@ export default function Tours() {
   const pageRef = useRef(null)
 
   useEffect(() => {
-    axios.get('https://srac-holidays-server.onrender.com/api/tours')
+    axios.get(`${API_URL}/tours`)
       .then(res => { setTours(res.data); setLoading(false) })
       .catch(() => { setError(true); setLoading(false) })
   }, [])
+
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -35,6 +37,10 @@ export default function Tours() {
 
   return (
     <main ref={pageRef}>
+      <SEO 
+        title="Mumbai Tours & Experiences" 
+        description="Explore our list of unique Mumbai tours. Bollywood Film City tours, Dharavi slum tours, heritage walks, street food tastings, and local getaways." 
+      />
 
       {/* ── HERO ── */}
       <section className="tours-hero">
@@ -77,9 +83,18 @@ export default function Tours() {
       <section className="section tours__grid-section">
         <div className="container">
           {loading ? (
-            <div className="tours__loading">
-              <div className="tours__spinner" />
-              <p>Loading tours...</p>
+            <div className="tours-grid tours-grid--full">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div className="tour-card skeleton-card" key={i}>
+                  <div className="skeleton-image skeleton-pulse" />
+                  <div className="tour-card__body">
+                    <div className="skeleton-title skeleton-pulse" />
+                    <div className="skeleton-text skeleton-pulse" />
+                    <div className="skeleton-text skeleton-pulse" style={{ width: '60%' }} />
+                    <div className="skeleton-meta skeleton-pulse" />
+                  </div>
+                </div>
+              ))}
             </div>
           ) : error ? (
             <div style={{ textAlign: 'center', padding: '4rem', color: 'var(--muted)' }}>

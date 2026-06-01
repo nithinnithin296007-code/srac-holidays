@@ -3,6 +3,7 @@ import { fade } from '../utils/animations'
 import SEO from '../components/SEO'
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { API_URL } from '../utils/api'
 
 
 
@@ -15,7 +16,7 @@ export default function TourDetail() {
   useEffect(() => {
     setLoading(true)
     setError(false)
-    fetch('https://srac-holidays-server.onrender.com/api/tours/' + slug)
+    fetch(`${API_URL}/tours/${slug}`)
       .then(r => {
         if (!r.ok) throw new Error('Not found')
         return r.json()
@@ -23,6 +24,7 @@ export default function TourDetail() {
       .then(data => { setTour(data); setLoading(false) })
       .catch(() => { setError(true); setLoading(false) })
   }, [slug])
+
 
   if (loading) return (
     <main style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

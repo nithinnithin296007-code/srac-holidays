@@ -3467,6 +3467,98 @@ a.contact__detail-value:hover { color: var(--primary); }
   line-height: 1.6;
 }
 
+/* Spinner & Skeleton Loading States */
+.tours__loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 2rem;
+  gap: 1.5rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.tours__spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+  border-top-color: var(--primary);
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Skeleton Card Loader */
+.skeleton-card {
+  pointer-events: none;
+  background: var(--dark-2);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.skeleton-image {
+  height: 220px;
+  background: var(--dark-3);
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-title {
+  height: 1.5rem;
+  background: var(--dark-3);
+  margin-bottom: 0.8rem;
+  border-radius: var(--radius-sm);
+  width: 75%;
+}
+
+.skeleton-text {
+  height: 0.85rem;
+  background: var(--dark-3);
+  margin-bottom: 0.5rem;
+  border-radius: 4px;
+}
+
+.skeleton-meta {
+  height: 1.5rem;
+  background: var(--dark-3);
+  margin-top: 1rem;
+  border-radius: 100px;
+  width: 40%;
+}
+
+.skeleton-pulse {
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-pulse::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.03) 20%,
+    rgba(255, 255, 255, 0.06) 60%,
+    transparent 100%
+  );
+  animation: shimmer 1.8s infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+
 /* Navbar logo text */
 
 
