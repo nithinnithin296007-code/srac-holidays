@@ -2,32 +2,52 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import SEO from '../components/SEO'
 import FortunerModel from '../components/FortunerModel'
+import imgDzire from '../assets/cars/dzire.jpg'
+import imgAmaze from '../assets/cars/honda-amaze.jpg'
+import imgHondaCity from '../assets/cars/honda-city.jpg'
+import imgVerna from '../assets/cars/verna.jpg'
+import imgEtios from '../assets/cars/etios.jpg'
+import imgMercedes from '../assets/cars/mercedes-e.jpg'
+import imgBMW from '../assets/cars/bmw-5.jpg'
+import imgAudi from '../assets/cars/audi.jpg'
+import imgJaguar from '../assets/cars/jaguar-xf.jpg'
+import imgCamry from '../assets/cars/camry.jpg'
+import imgInnova from '../assets/cars/innova.jpg'
+import imgInnovaCrysta from '../assets/cars/innova-crysta.jpg'
+import imgFortuner from '../assets/cars/fortuner.jpg'
+import imgScorpio from '../assets/cars/scorpio.png'
+import imgCreta from '../assets/cars/creta.jpg'
+import imgErtiga from '../assets/cars/ertiga.jpg'
+import imgMarazzo from '../assets/cars/marazzo.jpg'
+import imgTempo from '../assets/cars/tempo.png'
+import imgCoach18 from '../assets/cars/coach-18.avif'
+import imgCoach24 from '../assets/cars/coach-24.jpg'
+import imgCoach32 from '../assets/cars/coach-32.jpg'
 
 const WHATSAPP = '917738676316'
 
 const FLEET = [
-  { id: 1, name: 'Swift Dzire', category: 'Sedan', seats: 4, luggage: 2, tag: null, img: 'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=600&q=80', services: ['Airport Transfer', 'Local', 'Outstation', 'Corporate'] },
-  { id: 2, name: 'Honda Amaze', category: 'Sedan', seats: 4, luggage: 2, tag: null, img: 'https://images.unsplash.com/photo-1590362891991-f776e747a588?w=600&q=80', services: ['Airport Transfer', 'Local', 'Outstation', 'Corporate'] },
-  { id: 3, name: 'Honda City', category: 'Sedan', seats: 4, luggage: 2, tag: null, img: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=600&q=80', services: ['Airport Transfer', 'Local', 'Outstation', 'Corporate'] },
-  { id: 4, name: 'Hyundai Verna', category: 'Sedan', seats: 4, luggage: 2, tag: null, img: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=600&q=80', services: ['Airport Transfer', 'Local', 'Outstation', 'Corporate'] },
-  { id: 5, name: 'Toyota Etios', category: 'Sedan', seats: 4, luggage: 2, tag: null, img: 'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=600&q=80', services: ['Airport Transfer', 'Local', 'Outstation'] },
-  { id: 6, name: 'Mercedes E-Class', category: 'Luxury', seats: 4, luggage: 3, tag: 'Premium', img: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=600&q=80', services: ['Airport Transfer', 'Corporate', 'Local'] },
-  { id: 7, name: 'BMW 5 Series', category: 'Luxury', seats: 4, luggage: 3, tag: 'Premium', img: 'https://images.unsplash.com/photo-1556800572-1b8aeef2c54f?w=600&q=80', services: ['Airport Transfer', 'Corporate', 'Local'] },
-  { id: 8, name: 'Audi A6', category: 'Luxury', seats: 4, luggage: 3, tag: 'Premium', img: 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=600&q=80', services: ['Airport Transfer', 'Corporate', 'Local'] },
-  { id: 9, name: 'Jaguar XF', category: 'Luxury', seats: 4, luggage: 2, tag: 'Elite', img: 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=600&q=80', services: ['Airport Transfer', 'Corporate'] },
-  { id: 10, name: 'Toyota Camry', category: 'Luxury', seats: 4, luggage: 3, tag: null, img: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=600&q=80', services: ['Airport Transfer', 'Corporate', 'Local', 'Outstation'] },
-  { id: 11, name: 'Toyota Innova', category: 'SUV', seats: 7, luggage: 4, tag: 'Popular', img: 'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=600&q=80', services: ['Airport Transfer', 'Local', 'Outstation', 'Corporate'] },
-  { id: 12, name: 'Innova Crysta', category: 'SUV', seats: 7, luggage: 4, tag: 'Popular', img: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=600&q=80', services: ['Airport Transfer', 'Local', 'Outstation', 'Corporate'] },
-  { id: 13, name: 'Toyota Fortuner', category: 'SUV', seats: 7, luggage: 4, tag: null, img: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=600&q=80', services: ['Airport Transfer', 'Outstation', 'Corporate'] },
-  { id: 14, name: 'Mahindra Scorpio', category: 'SUV', seats: 7, luggage: 3, tag: null, img: 'https://images.unsplash.com/photo-1563720360172-67b8f3dce741?w=600&q=80', services: ['Airport Transfer', 'Local', 'Outstation'] },
-  { id: 15, name: 'Hyundai Creta', category: 'SUV', seats: 5, luggage: 3, tag: null, img: 'https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=600&q=80', services: ['Airport Transfer', 'Local', 'Outstation'] },
-  { id: 16, name: 'Maruti Ertiga', category: 'MPV', seats: 7, luggage: 3, tag: null, img: 'https://imgd.aeplcdn.com/664x374/n/cw/ec/115777/ertiga-exterior-right-front-three-quarter-2.jpeg?isig=0&q=80', services: ['Airport Transfer', 'Local', 'Outstation'] },
-  { id: 17, name: 'Mahindra Marazzo', category: 'MPV', seats: 8, luggage: 3, tag: null, img: 'https://imgd.aeplcdn.com/664x374/n/cw/ec/32597/marazzo-exterior-right-front-three-quarter-5.jpeg?isig=0&q=80', services: ['Airport Transfer', 'Local', 'Outstation'] },
-  { id: 18, name: 'Tempo Traveller 9', category: 'MPV', seats: 9, luggage: 5, tag: null, img: 'https://www.tempotravellers.com/images/9-seater-tempo-traveller.jpg', services: ['Airport Transfer', 'Outstation', 'Corporate'] },
-  { id: 19, name: 'Tempo Traveller 13', category: 'MPV', seats: 13, luggage: 6, tag: null, img: 'https://www.tempotravellers.com/images/13-seater-tempo-traveller.jpg', services: ['Airport Transfer', 'Outstation', 'Corporate'] },
-  { id: 20, name: '18 Seater Coach', category: 'Group', seats: 18, luggage: 8, tag: null, img: 'https://imgd.aeplcdn.com/664x374/n/cw/ec/45105/urbania-exterior-right-front-three-quarter-3.jpeg?isig=0&q=80', services: ['Corporate', 'Outstation'] },
-  { id: 21, name: '24 Seater Coach', category: 'Group', seats: 24, luggage: 10, tag: null, img: 'https://5.imimg.com/data5/SELLER/Default/2021/6/PY/RW/HK/6aborJunction/27-seater-bus-500x500.jpg', services: ['Corporate', 'Outstation'] },
-  { id: 22, name: '32 Seater Coach', category: 'Group', seats: 32, luggage: 12, tag: null, img: 'https://5.imimg.com/data5/SELLER/Default/2022/9/NU/EE/FZ/2aborJunction/35-seater-tourist-bus.jpg', services: ['Corporate', 'Outstation'] },
+  { id: 1, name: 'Swift Dzire', category: 'Sedan', seats: 4, luggage: 2, tag: null, img: imgDzire, services: ['Airport Transfer', 'Local', 'Outstation', 'Corporate'] },
+  { id: 2, name: 'Honda Amaze', category: 'Sedan', seats: 4, luggage: 2, tag: null, img: imgAmaze, services: ['Airport Transfer', 'Local', 'Outstation', 'Corporate'] },
+  { id: 3, name: 'Honda City', category: 'Sedan', seats: 4, luggage: 2, tag: null, img: imgHondaCity, services: ['Airport Transfer', 'Local', 'Outstation', 'Corporate'] },
+  { id: 4, name: 'Hyundai Verna', category: 'Sedan', seats: 4, luggage: 2, tag: null, img: imgVerna, services: ['Airport Transfer', 'Local', 'Outstation', 'Corporate'] },
+  { id: 5, name: 'Toyota Etios', category: 'Sedan', seats: 4, luggage: 2, tag: null, img: imgEtios, services: ['Airport Transfer', 'Local', 'Outstation'] },
+  { id: 6, name: 'Mercedes E-Class', category: 'Luxury', seats: 4, luggage: 3, tag: 'Premium', img: imgMercedes, services: ['Airport Transfer', 'Corporate', 'Local'] },
+  { id: 7, name: 'BMW 5 Series', category: 'Luxury', seats: 4, luggage: 3, tag: 'Premium', img: imgBMW, services: ['Airport Transfer', 'Corporate', 'Local'] },
+  { id: 8, name: 'Audi A4', category: 'Luxury', seats: 4, luggage: 3, tag: 'Premium', img: imgAudi, services: ['Airport Transfer', 'Corporate', 'Local'] },
+  { id: 9, name: 'Jaguar XF', category: 'Luxury', seats: 4, luggage: 2, tag: 'Elite', img: imgJaguar, services: ['Airport Transfer', 'Corporate'] },
+  { id: 10, name: 'Toyota Camry', category: 'Luxury', seats: 4, luggage: 3, tag: null, img: imgCamry, services: ['Airport Transfer', 'Corporate', 'Local', 'Outstation'] },
+  { id: 11, name: 'Toyota Innova', category: 'SUV', seats: 7, luggage: 4, tag: 'Popular', img: imgInnova, services: ['Airport Transfer', 'Local', 'Outstation', 'Corporate'] },
+  { id: 12, name: 'Innova Crysta', category: 'SUV', seats: 7, luggage: 4, tag: 'Popular', img: imgInnovaCrysta, services: ['Airport Transfer', 'Local', 'Outstation', 'Corporate'] },
+  { id: 13, name: 'Toyota Fortuner', category: 'SUV', seats: 7, luggage: 4, tag: null, img: imgFortuner, services: ['Airport Transfer', 'Outstation', 'Corporate'] },
+  { id: 14, name: 'Mahindra Scorpio', category: 'SUV', seats: 7, luggage: 3, tag: null, img: imgScorpio, services: ['Airport Transfer', 'Local', 'Outstation'] },
+  { id: 15, name: 'Hyundai Creta', category: 'SUV', seats: 5, luggage: 3, tag: null, img: imgCreta, services: ['Airport Transfer', 'Local', 'Outstation'] },
+  { id: 16, name: 'Maruti Ertiga', category: 'MPV', seats: 7, luggage: 3, tag: null, img: imgErtiga, services: ['Airport Transfer', 'Local', 'Outstation'] },
+  { id: 17, name: 'Mahindra Marazzo', category: 'MPV', seats: 8, luggage: 3, tag: null, img: imgMarazzo, services: ['Airport Transfer', 'Local', 'Outstation'] },
+  { id: 18, name: 'Tempo Traveller', category: 'MPV', seats: 12, luggage: 5, tag: null, img: imgTempo, services: ['Airport Transfer', 'Outstation', 'Corporate'] },
+  { id: 19, name: '18 Seater Coach', category: 'Group', seats: 18, luggage: 8, tag: null, img: imgCoach18, services: ['Corporate', 'Outstation'] },
+  { id: 20, name: '24 Seater Coach', category: 'Group', seats: 24, luggage: 10, tag: null, img: imgCoach24, services: ['Corporate', 'Outstation'] },
+  { id: 21, name: '32 Seater Coach', category: 'Group', seats: 32, luggage: 12, tag: null, img: imgCoach32, services: ['Corporate', 'Outstation'] },
 ]
 
 const CATEGORIES = ['All', 'Sedan', 'Luxury', 'SUV', 'MPV', 'Group']
