@@ -21,13 +21,13 @@ const FLEET = [
   { id: 13, name: 'Toyota Fortuner', category: 'SUV', seats: 7, luggage: 4, tag: null, img: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=600&q=80', services: ['Airport Transfer', 'Outstation', 'Corporate'] },
   { id: 14, name: 'Mahindra Scorpio', category: 'SUV', seats: 7, luggage: 3, tag: null, img: 'https://images.unsplash.com/photo-1563720360172-67b8f3dce741?w=600&q=80', services: ['Airport Transfer', 'Local', 'Outstation'] },
   { id: 15, name: 'Hyundai Creta', category: 'SUV', seats: 5, luggage: 3, tag: null, img: 'https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=600&q=80', services: ['Airport Transfer', 'Local', 'Outstation'] },
-  { id: 16, name: 'Maruti Ertiga', category: 'MPV', seats: 7, luggage: 3, tag: null, img: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=600&q=80', services: ['Airport Transfer', 'Local', 'Outstation'] },
-  { id: 17, name: 'Mahindra Marazzo', category: 'MPV', seats: 8, luggage: 3, tag: null, img: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=600&q=80', services: ['Airport Transfer', 'Local', 'Outstation'] },
-  { id: 18, name: 'Tempo Traveller 9', category: 'MPV', seats: 9, luggage: 5, tag: null, img: 'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=600&q=80', services: ['Airport Transfer', 'Outstation', 'Corporate'] },
-  { id: 19, name: 'Tempo Traveller 13', category: 'MPV', seats: 13, luggage: 6, tag: null, img: 'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=600&q=80', services: ['Airport Transfer', 'Outstation', 'Corporate'] },
-  { id: 20, name: '18 Seater Coach', category: 'Group', seats: 18, luggage: 8, tag: null, img: 'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=600&q=80', services: ['Corporate', 'Outstation'] },
-  { id: 21, name: '24 Seater Coach', category: 'Group', seats: 24, luggage: 10, tag: null, img: 'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=600&q=80', services: ['Corporate', 'Outstation'] },
-  { id: 22, name: '32 Seater Coach', category: 'Group', seats: 32, luggage: 12, tag: null, img: 'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=600&q=80', services: ['Corporate', 'Outstation'] },
+  { id: 16, name: 'Maruti Ertiga', category: 'MPV', seats: 7, luggage: 3, tag: null, img: 'https://imgd.aeplcdn.com/664x374/n/cw/ec/115777/ertiga-exterior-right-front-three-quarter-2.jpeg?isig=0&q=80', services: ['Airport Transfer', 'Local', 'Outstation'] },
+  { id: 17, name: 'Mahindra Marazzo', category: 'MPV', seats: 8, luggage: 3, tag: null, img: 'https://imgd.aeplcdn.com/664x374/n/cw/ec/32597/marazzo-exterior-right-front-three-quarter-5.jpeg?isig=0&q=80', services: ['Airport Transfer', 'Local', 'Outstation'] },
+  { id: 18, name: 'Tempo Traveller 9', category: 'MPV', seats: 9, luggage: 5, tag: null, img: 'https://www.tempotravellers.com/images/9-seater-tempo-traveller.jpg', services: ['Airport Transfer', 'Outstation', 'Corporate'] },
+  { id: 19, name: 'Tempo Traveller 13', category: 'MPV', seats: 13, luggage: 6, tag: null, img: 'https://www.tempotravellers.com/images/13-seater-tempo-traveller.jpg', services: ['Airport Transfer', 'Outstation', 'Corporate'] },
+  { id: 20, name: '18 Seater Coach', category: 'Group', seats: 18, luggage: 8, tag: null, img: 'https://imgd.aeplcdn.com/664x374/n/cw/ec/45105/urbania-exterior-right-front-three-quarter-3.jpeg?isig=0&q=80', services: ['Corporate', 'Outstation'] },
+  { id: 21, name: '24 Seater Coach', category: 'Group', seats: 24, luggage: 10, tag: null, img: 'https://5.imimg.com/data5/SELLER/Default/2021/6/PY/RW/HK/6aborJunction/27-seater-bus-500x500.jpg', services: ['Corporate', 'Outstation'] },
+  { id: 22, name: '32 Seater Coach', category: 'Group', seats: 32, luggage: 12, tag: null, img: 'https://5.imimg.com/data5/SELLER/Default/2022/9/NU/EE/FZ/2aborJunction/35-seater-tourist-bus.jpg', services: ['Corporate', 'Outstation'] },
 ]
 
 const CATEGORIES = ['All', 'Sedan', 'Luxury', 'SUV', 'MPV', 'Group']
