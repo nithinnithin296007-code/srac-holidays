@@ -5,7 +5,6 @@ import { OrbitControls, Environment, useGLTF, Html, Center, ContactShadows } fro
 const MODELS = [
   { file: "/models/toyota_fortuner_2021.glb", name: "Toyota Fortuner", scale: 1.25, shadowY: -0.78 },
   { file: "/models/mercedes_s65.glb", name: "Mercedes S65", scale: 1.1, shadowY: -0.70 },
-  { file: "/models/bmw_m4.glb", name: "BMW M4", scale: 1.2, shadowY: -0.80 },
   { file: "/models/audi_a5.glb", name: "Audi A5", scale: 1.1, shadowY: -0.80 },
   { file: "/models/innova_zenix.glb", name: "Innova Hycross", scale: 1.15, shadowY: -0.98 },
 ]
@@ -76,15 +75,23 @@ export default function FortunerModel() {
       </div>
 
       {/* Model switcher */}
-      <div style={{
-        position: 'absolute',
-        bottom: '1rem',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        display: 'flex',
-        gap: '8px',
-        zIndex: 10,
-      }}>
+      <div 
+        className="cr-model-switcher"
+        style={{
+          position: 'absolute',
+          bottom: '1rem',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          display: 'flex',
+          gap: '8px',
+          zIndex: 10,
+          maxWidth: '95%',
+          overflowX: 'auto',
+          padding: '6px 4px',
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
+        }}
+      >
         {MODELS.map((m, i) => (
           <button
             key={i}
@@ -96,12 +103,13 @@ export default function FortunerModel() {
               fontSize: '0.65rem',
               letterSpacing: '1px',
               textTransform: 'uppercase',
-              padding: '5px 12px',
+              padding: '6px 14px',
               borderRadius: '100px',
               cursor: 'pointer',
               transition: 'all 0.2s',
               fontFamily: 'var(--font-body)',
               whiteSpace: 'nowrap',
+              flexShrink: 0,
             }}
           >
             {m.name}

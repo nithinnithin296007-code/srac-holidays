@@ -8,7 +8,6 @@ import imgHondaCity from '../assets/cars/honda-city.jpg'
 import imgVerna from '../assets/cars/verna.jpg'
 import imgEtios from '../assets/cars/etios.jpg'
 import imgMercedes from '../assets/cars/mercedes-e.jpg'
-import imgBMW from '../assets/cars/bmw-5.jpg'
 import imgAudi from '../assets/cars/audi.jpg'
 import imgJaguar from '../assets/cars/jaguar-xf.jpg'
 import imgCamry from '../assets/cars/camry.jpg'
@@ -28,7 +27,6 @@ const WHATSAPP = '917738676316'
 
 const FLEET = [
   { id: 6, name: 'Mercedes E-Class', category: 'Luxury', seats: 4, luggage: 3, tag: 'Premium', img: imgMercedes, services: ['Airport Transfer', 'Corporate', 'Local'] },
-  { id: 7, name: 'BMW 5 Series', category: 'Luxury', seats: 4, luggage: 3, tag: 'Premium', img: imgBMW, services: ['Airport Transfer', 'Corporate', 'Local'] },
   { id: 9, name: 'Jaguar XF', category: 'Luxury', seats: 4, luggage: 2, tag: 'Elite', img: imgJaguar, services: ['Airport Transfer', 'Corporate'] },
   { id: 8, name: 'Audi A4', category: 'Luxury', seats: 4, luggage: 3, tag: 'Premium', img: imgAudi, services: ['Airport Transfer', 'Corporate', 'Local'] },
   { id: 10, name: 'Toyota Camry', category: 'Luxury', seats: 4, luggage: 3, tag: null, img: imgCamry, services: ['Airport Transfer', 'Corporate', 'Local', 'Outstation'] },
@@ -304,6 +302,10 @@ export default function CarRentals() {
           width: 100%;
         }
 
+        .cr-model-switcher::-webkit-scrollbar {
+          display: none;
+        }
+
         /* HERO */
         .cr-hero {
           position: relative;
@@ -373,6 +375,13 @@ export default function CarRentals() {
           }
           .cr-hero__canvas {
             height: 300px;
+          }
+          .cr-hero__sub {
+            margin-bottom: 1.5rem !important;
+            font-size: 0.95rem;
+          }
+          .cr-stats {
+            margin-bottom: 1.5rem !important;
           }
         }
         .cr-hero__title {
