@@ -6,22 +6,12 @@ const MODELS = [
   { file: "/models/toyota_fortuner_2021.glb", name: "Toyota Fortuner", scale: 1.25, shadowY: -0.78 },
   { file: "/models/mercedes_s65.glb", name: "Mercedes S65", scale: 1.1, shadowY: -0.70 },
   { file: "/models/bmw_m4.glb", name: "BMW M4", scale: 1.2, shadowY: -0.80 },
-  { file: "/models/land_rover_defender.glb", name: "Land Rover Defender", scale: 0.6, shadowY: -1.15 },
-  { file: "/models/range_rover_evoque.glb", name: "Range Rover Evoque", scale: 110.0, shadowY: -0.70 },
   { file: "/models/audi_a5.glb", name: "Audi A5", scale: 1.1, shadowY: -0.80 },
-  { file: "/models/innova_zenix.glb", name: "Innova Zenix", scale: 1.15, shadowY: -0.98 },
+  { file: "/models/innova_zenix.glb", name: "Innova Hycross", scale: 1.15, shadowY: -0.98 },
 ]
 
 function Car({ model }) {
   const { scene } = useGLTF(model.file)
-
-  // Clean up outlier node in Land Rover Defender if it exists to center the car body correctly
-  if (model.name === "Land Rover Defender") {
-    const outlier = scene.getObjectByName("Object_61_143")
-    if (outlier && outlier.parent) {
-      outlier.parent.remove(outlier)
-    }
-  }
 
   const { size, camera } = useThree()
   const width = size.width

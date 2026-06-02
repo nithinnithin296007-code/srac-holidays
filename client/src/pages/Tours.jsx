@@ -5,14 +5,17 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import TourCard from '../components/TourCard'
 import axios from 'axios'
 import { API_URL } from '../utils/api'
+import { useSearchParams } from 'react-router-dom'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const categories = ['All', 'Bollywood', 'Mumbai', 'Heritage', 'Food', 'Getaway']
+const categories = ['All', 'Bollywood', 'Mumbai', 'Heritage', 'Food', 'Getaways']
 
 export default function Tours() {
   const [tours, setTours] = useState([])
-  const [active, setActive] = useState('All')
+  const [searchParams] = useSearchParams()
+  const categoryParam = searchParams.get('category')
+  const [active, setActive] = useState(categoryParam || 'All')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
   const pageRef = useRef(null)

@@ -1,4 +1,4 @@
-﻿const tours = [
+const tours = [
     {
         slug: 'bollywood-city-tour',
         name: 'Bollywood & City Tour',
@@ -144,7 +144,7 @@
         tagline: 'Maharashtra\'s hill station escape',
         duration: '2 Days',
         groupSize: '2–20 people',
-        category: 'Getaway',
+        category: 'Getaways',
         coverImage: 'https://images.unsplash.com/photo-1663052156709-648428439981?w=800&q=80',
         description: 'Strawberry farms, valley viewpoints, cool air — 2 hours from Mumbai.',
         highlights: ['Scenic valley viewpoints', 'Strawberry farm visit', 'Venna Lake boating', 'Local cuisine'],
@@ -162,7 +162,7 @@
         tagline: 'India\'s wine country, near Nashik',
         duration: '2 Days',
         groupSize: '2–15 people',
-        category: 'Getaway',
+        category: 'Getaways',
         coverImage: 'https://plus.unsplash.com/premium_photo-1675970835725-a339c261d5c7?w=800&q=80',
         description: 'India\'s most celebrated vineyard is 3 hours from Mumbai. Wine tasting, vineyard walks, and a resort stay in the Sahyadri hills.',
         highlights: ['Sula vineyard tour', 'Wine tasting session', 'Resort stay', 'Nashik city sightseeing'],
@@ -197,7 +197,7 @@
         tagline: 'India\'s only car-free hill station',
         duration: 'Full Day · 8 hrs',
         groupSize: '2–20 people',
-        category: 'Getaway',
+        category: 'Getaways',
         coverImage: 'https://images.unsplash.com/photo-1713545396351-b848e4707cb2?w=800&q=80',
         description: 'No cars, no pollution. 90 minutes from Mumbai, accessible only by toy train or on foot.',
         highlights: ['Heritage toy train ride', 'Car-free environment', 'Valley viewpoints', 'Nature trails'],
