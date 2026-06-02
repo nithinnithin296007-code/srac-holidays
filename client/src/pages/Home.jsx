@@ -113,7 +113,7 @@ export default function Home() {
         <div className="container">
           <div className="section-header reveal-section">
             <span className="tag">What We Do</span>
-            <h2 className="section-title">Tours Worth Taking</h2>
+            <ScrollFloat containerClassName="section-title">Tours Worth Taking</ScrollFloat>
             <p className="section-sub">Every tour is guided by a local who knows the city — not a script.</p>
           </div>
           <div className="tours-grid">

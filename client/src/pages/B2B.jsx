@@ -3,6 +3,7 @@ import { fade } from '../utils/animations'
 import { validateName, validatePhone, validateCompany } from '../utils/validation'
 import SEO from '../components/SEO'
 import { motion } from 'framer-motion'
+import ScrollFloat from '../components/ScrollFloat'
 
 const perks = [
   { icon: '💰', title: 'Competitive Commission', desc: 'Attractive commission structure for travel agents and resellers on all tour bookings.' },
@@ -90,7 +91,7 @@ export default function B2B() {
         <div className="container">
           <motion.div style={{ textAlign: 'center', marginBottom: '3rem' }} {...fade()}>
             <span className="tag">Who We Work With</span>
-            <h2 className="section-title">Our Trade Partners</h2>
+            <ScrollFloat containerClassName="section-title">Our Trade Partners</ScrollFloat>
           </motion.div>
           <div className="b2b__who-grid">
             {[
@@ -174,12 +175,12 @@ export default function B2B() {
                   <div className="b2b__field">
                     <label>Contact Name <span>*</span></label>
                     <input name="name" value={form.name} onChange={handle} placeholder="Your name" className={errors.name ? 'input-error' : ''} />
-                  {errors.name && <span className="cr__error">{errors.name}</span>}
+                    {errors.name && <span className="cr__error">{errors.name}</span>}
                   </div>
                   <div className="b2b__field">
                     <label>Mobile <span>*</span></label>
                     <input name="mobile" value={form.mobile} onChange={handle} placeholder="+91 98765 43210" className={errors.mobile ? 'input-error' : ''} />
-                  {errors.mobile && <span className="cr__error">{errors.mobile}</span>}
+                    {errors.mobile && <span className="cr__error">{errors.mobile}</span>}
                   </div>
                 </div>
                 <div className="b2b__field">
