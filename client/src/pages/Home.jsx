@@ -7,6 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import TourCard from '../components/TourCard'
 import axios from 'axios'
 import { API_URL } from '../utils/api'
+import ScrollFloat from '../components/ScrollFloat'
 
 gsap.registerPlugin(ScrollTrigger)
 
