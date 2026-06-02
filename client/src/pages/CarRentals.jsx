@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import SEO from '../components/SEO'
-import CarCanvas from '../components/CarCanvas'
 
 const WHATSAPP = '917738676316'
 
@@ -86,46 +85,41 @@ export default function CarRentals() {
       {/* ── HERO ── */}
       <section className="cr-hero">
         <div className="cr-hero__overlay" />
-        <div className="container cr-hero__inner cr-hero__inner--split">
-          <div className="cr-hero__text">
-            <motion.div {...fade()}>
-              <span className="tag">Smart Rent A Car · 20+ Years</span>
-              <h1 className="cr-hero__title">
-                Premium Car Rentals<br />
-                <span style={{ color: 'var(--primary)' }}>Across India</span>
-              </h1>
-              <p className="cr-hero__sub">
-                Chauffeur-driven sedans, SUVs, luxury cars and coaches.
-                Airport runs, city tours, outstation — we move you right.
-              </p>
-            </motion.div>
+        <div className="container cr-hero__inner">
+          <motion.div {...fade()}>
+            <span className="tag">Smart Rent A Car · 20+ Years</span>
+            <h1 className="cr-hero__title">
+              Premium Car Rentals<br />
+              <span style={{ color: 'var(--primary)' }}>Across India</span>
+            </h1>
+            <p className="cr-hero__sub">
+              Chauffeur-driven sedans, SUVs, luxury cars and coaches.
+              Airport runs, city tours, outstation — we move you right.
+            </p>
+          </motion.div>
 
-            <motion.div className="cr-stats" {...fade(0.15)}>
-              {[
-                { n: '20+', l: 'Vehicles' },
-                { n: '24/7', l: 'Available' },
-                { n: '20yr', l: 'Experience' },
-                { n: '4.9★', l: 'Rated' },
-              ].map(s => (
-                <div className="cr-stat" key={s.l}>
-                  <span className="cr-stat__num">{s.n}</span>
-                  <span className="cr-stat__label">{s.l}</span>
-                </div>
-              ))}
-            </motion.div>
+          <motion.div className="cr-stats" {...fade(0.15)}>
+            {[
+              { n: '20+', l: 'Vehicles' },
+              { n: '24/7', l: 'Available' },
+              { n: '20yr', l: 'Experience' },
+              { n: '4.9★', l: 'Rated' },
+            ].map(s => (
+              <div className="cr-stat" key={s.l}>
+                <span className="cr-stat__num">{s.n}</span>
+                <span className="cr-stat__label">{s.l}</span>
+              </div>
+            ))}
+          </motion.div>
 
-            <motion.div className="cr-services-strip" {...fade(0.25)}>
-              {Object.entries(SERVICE_ICONS).map(([k, icon]) => (
-                <div className="cr-service-pill" key={k}>
-                  <span>{icon}</span>
-                  <span>{k}</span>
-                </div>
-              ))}
-            </motion.div>
-          </div>
-          <div className="cr-hero__canvas">
-            <CarCanvas />
-          </div>
+          <motion.div className="cr-services-strip" {...fade(0.25)}>
+            {Object.entries(SERVICE_ICONS).map(([k, icon]) => (
+              <div className="cr-service-pill" key={k}>
+                <span>{icon}</span>
+                <span>{k}</span>
+              </div>
+            ))}
+          </motion.div>
         </div>
       </section>
 
@@ -292,20 +286,6 @@ export default function CarRentals() {
           pointer-events: none;
         }
         .cr-hero__inner { position: relative; z-index: 1; }
-        .cr-hero__inner--split {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 2rem;
-          align-items: center;
-        }
-        .cr-hero__canvas {
-          height: 420px;
-          position: relative;
-        }
-        @media (max-width: 768px) {
-          .cr-hero__inner--split { grid-template-columns: 1fr; }
-          .cr-hero__canvas { height: 260px; }
-        }
         .cr-hero__title {
           font-size: clamp(2.2rem, 5vw, 3.6rem);
           margin: 1rem 0;
