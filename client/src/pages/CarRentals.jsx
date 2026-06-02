@@ -279,6 +279,11 @@ export default function CarRentals() {
       </section>
 
       <style>{`
+        .cr-page {
+          overflow-x: hidden;
+          width: 100%;
+        }
+
         /* HERO */
         .cr-hero {
           position: relative;
@@ -331,12 +336,23 @@ export default function CarRentals() {
           to { transform: rotate(360deg); }
         }
         @media (max-width: 991px) {
+          .cr-hero {
+            padding: 6rem 0 3rem;
+          }
           .cr-hero__inner--split {
             grid-template-columns: 1fr;
             gap: 2rem;
           }
           .cr-hero__canvas {
-            height: 400px;
+            height: 380px;
+          }
+        }
+        @media (max-width: 576px) {
+          .cr-hero {
+            padding: 5rem 0 2rem;
+          }
+          .cr-hero__canvas {
+            height: 300px;
           }
         }
         .cr-hero__title {
@@ -362,10 +378,37 @@ export default function CarRentals() {
           overflow: hidden;
           width: fit-content;
         }
+        @media (max-width: 576px) {
+          .cr-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            width: 100%;
+          }
+        }
         .cr-stat {
           padding: 1rem 1.8rem;
           border-right: 1px solid var(--dark-3);
           text-align: center;
+        }
+        @media (max-width: 576px) {
+          .cr-stat {
+            padding: 0.75rem 0.5rem;
+            border-right: 1px solid var(--dark-3);
+            border-bottom: 1px solid var(--dark-3);
+          }
+          .cr-stat:nth-child(2n) {
+            border-right: none;
+          }
+          .cr-stat:nth-child(3),
+          .cr-stat:nth-child(4) {
+            border-bottom: none;
+          }
+          .cr-stat__num {
+            font-size: 1.2rem;
+          }
+          .cr-stat__label {
+            font-size: 0.6rem;
+          }
         }
         .cr-stat:last-child { border-right: none; }
         .cr-stat__num {
