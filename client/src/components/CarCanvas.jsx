@@ -27,7 +27,7 @@ export default function CarCanvas() {
         window.addEventListener('mousemove', onMouse)
 
         // ── Car geometry (vertices + edges) ──────────────────────────
-        // Scaled to roughly -1..1 on each axis
+        // Scaled to roughly -1.6..1.6 on X, -0.3..0.65 on Y, -0.5..0.5 on Z
         const V = [
             // Body bottom
             [-1.6, -0.3, -0.5], [1.6, -0.3, -0.5],  // 0 1  front-bottom-left/right
@@ -66,21 +66,28 @@ export default function CarCanvas() {
             [14, 15], [16, 17],
         ]
 
-        // Wheel drawing helper — 8-sided polygon at a centre vertex
-        const wheelEdges = (ci, r) => {
-            const segs = []
-            for (let i = 0; i < 8; i++) {
-                const a0 = (i / 8) * Math.PI * 2
-                const a1 = ((i + 1) / 8) * Math.PI * 2
-                segs.push([ci, a0, a1, r])
-            }
-            return segs
-        }
+        // License plates local vertices
+        // Front plate (facing outward along +X axis)
+        const frontPlate = [
+            [1.605, -0.06, -0.22],
+            [1.605, -0.06, 0.22],
+            [1.605, -0.18, 0.22],
+            [1.605, -0.18, -0.22]
+        ]
+        // Rear plate (facing outward along -X axis)
+        const rearPlate = [
+            [-1.605, -0.06, 0.22],
+            [-1.605, -0.06, -0.22],
+            [-1.605, -0.18, -0.22],
+            [-1.605, -0.18, 0.22]
+        ]
 
         // ── Project 3-D → 2-D ────────────────────────────────────────
-        const project = (vx, vy, vz, cx, cy, fov) => {
-            const z = vz + 4
-            const s = fov / z
+        // Safe projection where vz is never allowed to cause division by zero
+        const project = (vx, vy, vz, cx, cy, scaleFactor) => {
+            const distance = 4.0
+            const z = vz + distance
+            const s = scaleFactor / z
             return [cx + vx * s, cy - vy * s]
         }
 
@@ -96,7 +103,6 @@ export default function CarCanvas() {
         ]
 
         const PRIMARY = '#C8410B'
-        const DIM = 'rgba(200,65,11,0.25)'
         const GLOW = 'rgba(200,65,11,0.08)'
 
         const drawWheel = (ctx, cx, cy, rx, ry) => {
@@ -131,8 +137,9 @@ export default function CarCanvas() {
 
             const cx = W * 0.5
             const cy = H * 0.5 + H * 0.04
-            const fov = Math.min(W, H) * 1.1
-            const scale = Math.min(W, H) * 0.28
+            
+            // Adjust scale to keep the car fully inside the canvas boundaries
+            const scale = Math.min(W, H) * 0.65
 
             // Transform all vertices
             const tv = V.map(v => {
@@ -143,7 +150,7 @@ export default function CarCanvas() {
             })
 
             // Glow blob behind car
-            const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, fov * 0.45)
+            const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, scale * 0.9)
             grad.addColorStop(0, GLOW)
             grad.addColorStop(1, 'transparent')
             ctx.fillStyle = grad
@@ -152,14 +159,14 @@ export default function CarCanvas() {
             // Shadow on ground
             ctx.save()
             ctx.beginPath()
-            ctx.ellipse(cx, cy + scale * 0.42, scale * 1.4, scale * 0.08, 0, 0, Math.PI * 2)
-            ctx.fillStyle = 'rgba(200,65,11,0.10)'
+            // Project shadow points or approximate under the car
+            ctx.ellipse(cx, cy + scale * 0.12, scale * 0.55, scale * 0.08, 0, 0, Math.PI * 2)
+            ctx.fillStyle = 'rgba(200,65,11,0.06)'
             ctx.fill()
             ctx.restore()
 
             const pt = (i) => {
-                const p = project(tv[i][0] * scale / 1.6, tv[i][1] * scale / 1.6, tv[i][2] * scale / 1.6, cx, cy, fov * 0.6)
-                return p
+                return project(tv[i][0], tv[i][1], tv[i][2], cx, cy, scale)
             }
 
             // Draw edges
@@ -185,23 +192,91 @@ export default function CarCanvas() {
                 const wc = pt(wi)
                 const wz = tv[wi][2]
                 const alpha = Math.max(0.2, Math.min(1, 0.5 + wz * 0.35))
-                const rx = scale * 0.175
+                
+                // Scale wheel radius with perspective
+                const z = wz + 4.0
+                const rx = (scale * 0.125) / z
                 const ry = rx * Math.abs(Math.cos(rotX)) * 0.45
+                
                 ctx.globalAlpha = alpha
                 drawWheel(ctx, wc[0], wc[1], rx, ry)
                 ctx.globalAlpha = 1
             })
 
-                // Vertex dots at key points
-                ;[0, 1, 2, 3, 4, 8, 9, 7, 14, 15, 16, 17].forEach(i => {
-                    const p = pt(i)
-                    const z = tv[i][2]
-                    const alpha = Math.max(0.1, Math.min(0.9, 0.4 + z * 0.35))
-                    ctx.beginPath()
-                    ctx.arc(p[0], p[1], 2.5, 0, Math.PI * 2)
-                    ctx.fillStyle = `rgba(200,65,11,${alpha})`
-                    ctx.fill()
+            // Draw license plate with text "Smart Rent a Car"
+            const drawPlate = (localPts, text) => {
+                const tvs = localPts.map(v => {
+                    let p = [v[0], v[1] + floatY, v[2]]
+                    p = rotateY(p, rotY)
+                    p = rotateX(p, rotX)
+                    return p
                 })
+
+                const pts = tvs.map(tv => project(tv[0], tv[1], tv[2], cx, cy, scale))
+
+                // Determine if facing towards camera (normal dot product or clockwise order)
+                const cp = (pts[1][0] - pts[0][0]) * (pts[2][1] - pts[1][1]) - (pts[1][1] - pts[0][1]) * (pts[2][0] - pts[1][0])
+                if (cp <= 0) return // Back-face culling
+
+                const avgZ = (tvs[0][2] + tvs[1][2] + tvs[2][2] + tvs[3][2]) / 4
+                const z = avgZ + 4.0
+                const alpha = Math.max(0.3, Math.min(1, 0.6 + avgZ * 0.35))
+
+                ctx.save()
+                ctx.globalAlpha = alpha
+
+                // Draw background
+                ctx.beginPath()
+                ctx.moveTo(pts[0][0], pts[0][1])
+                ctx.lineTo(pts[1][0], pts[1][1])
+                ctx.lineTo(pts[2][0], pts[2][1])
+                ctx.lineTo(pts[3][0], pts[3][1])
+                ctx.closePath()
+
+                // Yellow color for license plate
+                ctx.fillStyle = '#FBBF24'
+                ctx.fill()
+                ctx.strokeStyle = '#1E293B'
+                ctx.lineWidth = 1
+                ctx.stroke()
+
+                // Render centered & rotated text
+                const centerProj = [
+                    (pts[0][0] + pts[2][0]) / 2,
+                    (pts[0][1] + pts[2][1]) / 2
+                ]
+
+                // Dynamic font size based on depth
+                const fontSize = Math.max(5, Math.min(9, (scale * 0.05) / z))
+                ctx.font = `bold ${fontSize}px sans-serif`
+                ctx.fillStyle = '#0F172A'
+                ctx.textAlign = 'center'
+                ctx.textBaseline = 'middle'
+
+                const dx = pts[1][0] - pts[0][0]
+                const dy = pts[1][1] - pts[0][1]
+                const angle = Math.atan2(dy, dx)
+
+                ctx.translate(centerProj[0], centerProj[1])
+                ctx.rotate(angle)
+                
+                ctx.fillText(text, 0, 0)
+                ctx.restore()
+            }
+
+            drawPlate(frontPlate, 'Smart Rent a Car')
+            drawPlate(rearPlate, 'Smart Rent a Car')
+
+            // Vertex dots at key points
+            ;[0, 1, 2, 3, 4, 8, 9, 7, 14, 15, 16, 17].forEach(i => {
+                const p = pt(i)
+                const z = tv[i][2]
+                const alpha = Math.max(0.1, Math.min(0.9, 0.4 + z * 0.35))
+                ctx.beginPath()
+                ctx.arc(p[0], p[1], 2, 0, Math.PI * 2)
+                ctx.fillStyle = `rgba(200,65,11,${alpha})`
+                ctx.fill()
+            })
 
             animId = requestAnimationFrame(draw)
         }
