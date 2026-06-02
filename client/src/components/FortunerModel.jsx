@@ -5,8 +5,8 @@ import { OrbitControls, Environment, useGLTF, Html, Center, ContactShadows } fro
 const MODELS = [
   { file: "/models/toyota_fortuner_2021.glb", name: "Toyota Fortuner", scale: 1.25, shadowY: -0.78 },
   { file: "/models/mercedes_s65.glb", name: "Mercedes S65", scale: 1.1, shadowY: -0.70 },
-  { file: "/models/bmw_m4.glb", name: "BMW M4", scale: 0.8, shadowY: -0.65 },
-  { file: "/models/land_rover_defender.glb", name: "Land Rover Defender", scale: 1.15, shadowY: -0.72 },
+  { file: "/models/bmw_m4.glb", name: "BMW M4", scale: 1.2, shadowY: -0.80 },
+  { file: "/models/land_rover_defender.glb", name: "Land Rover Defender", scale: 0.6, shadowY: -1.15 },
   { file: "/models/range_rover_evoque.glb", name: "Range Rover Evoque", scale: 110.0, shadowY: -0.70 },
 ]
 
