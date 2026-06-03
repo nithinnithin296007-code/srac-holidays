@@ -83,9 +83,6 @@ export default function About() {
 
           <div className="ab__team-grid">
             <motion.div className="ab__team-card" {...fade(0.1)}>
-              <div className="ab__team-img-wrap">
-                <img src="/images/shreekant_mandal.png" alt="Shreekant Mandal" className="ab__team-img" />
-              </div>
               <div className="ab__team-info">
                 <h3 className="ab__team-name">Shreekant Mandal</h3>
                 <span className="ab__team-role">Founder</span>
@@ -96,9 +93,6 @@ export default function About() {
             </motion.div>
 
             <motion.div className="ab__team-card" {...fade(0.2)}>
-              <div className="ab__team-img-wrap">
-                <img src="/images/abhishek_mandal.png" alt="Abhishek Mandal" className="ab__team-img" />
-              </div>
               <div className="ab__team-info">
                 <h3 className="ab__team-name">Abhishek Mandal</h3>
                 <span className="ab__team-role">Chief Executive Officer</span>
