@@ -3120,7 +3120,94 @@ a.contact__detail-value:hover { color: var(--primary); }
 @media (max-width: 768px) { .ab__story-grid { grid-template-columns: 1fr; gap: 3rem; } .ab__story-stats { grid-template-columns: repeat(2, 1fr); } .ab__awards-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 480px) { .ab__awards-grid { grid-template-columns: repeat(2, 1fr); } .ab__values-grid { grid-template-columns: 1fr; } }
 
-/* â”€â”€ CONTACT PAGE â”€â”€ */
+/* Team / Leadership */
+.ab__team-sub {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+}
+.ab__team-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+.ab__team-card {
+  display: flex;
+  background: var(--dark-2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform 0.4s var(--transition), border-color 0.4s var(--transition), box-shadow 0.4s var(--transition);
+}
+.ab__team-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(200, 65, 11, 0.3);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+.ab__team-img-wrap {
+  flex: 0 0 200px;
+  height: auto;
+  min-height: 250px;
+  overflow: hidden;
+  background: var(--dark-3);
+  position: relative;
+}
+.ab__team-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--transition);
+}
+.ab__team-card:hover .ab__team-img {
+  transform: scale(1.05);
+}
+.ab__team-info {
+  padding: 2.2rem;
+  display: flex;
+  flex-direction: column;
+}
+.ab__team-name {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--light);
+  margin-bottom: 0.2rem;
+  font-family: var(--font-body);
+}
+.ab__team-role {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--primary);
+  margin-bottom: 1.2rem;
+}
+.ab__team-bio {
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+
+@media (max-width: 991px) {
+  .ab__team-card {
+    flex-direction: column;
+  }
+  .ab__team-img-wrap {
+    flex: 0 0 240px;
+    height: 240px;
+    min-height: auto;
+  }
+  .ab__team-info {
+    padding: 1.5rem;
+  }
+}
+@media (max-width: 768px) {
+  .ab__team-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+/* ── CONTACT PAGE ── */
 .contact__hero {
   position: relative;
   min-height: 45vh;

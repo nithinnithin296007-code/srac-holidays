@@ -22,6 +22,38 @@ function Car({ url }) {
     camera.updateProjectionMatrix()
   }, [w, camera])
 
+  useEffect(() => {
+    const disposeMaterial = (material) => {
+      material.dispose()
+      for (const key of Object.keys(material)) {
+        const value = material[key]
+        if (value && typeof value.dispose === 'function') {
+          value.dispose()
+        }
+      }
+    }
+
+    return () => {
+      if (scene) {
+        scene.traverse((object) => {
+          if (object.isMesh) {
+            if (object.geometry) {
+              object.geometry.dispose()
+            }
+            if (object.material) {
+              if (Array.isArray(object.material)) {
+                object.material.forEach((material) => disposeMaterial(material))
+              } else {
+                disposeMaterial(object.material)
+              }
+            }
+          }
+        })
+      }
+      useGLTF.clear(url)
+    }
+  }, [scene, url])
+
   let scale = 1.2
   if (w < 480) scale = 0.8
   else if (w < 768) scale = 1.0

@@ -222,6 +222,7 @@ export default function CarRentals() {
                   exit={{ opacity: 0, x: 20 }}
                   transition={{ duration: 0.28 }}
                 >
+                  <div className="cr-sb__grab-handle" />
                   <div className="cr-sb__header">
                     <span className="tag">Quick Enquiry</span>
                     <button className="cr-sb__close" onClick={() => setSelected(null)}>✕</button>
@@ -519,15 +520,31 @@ export default function CarRentals() {
           gap: 2rem;
           align-items: start;
         }
+        .cr-sb__grab-handle {
+          display: none;
+        }
         @media (max-width: 900px) {
           .cr-layout { grid-template-columns: 1fr; }
           .cr-sidebar:not(.cr-sidebar--empty) {
             position: fixed; bottom: 0; left: 0; right: 0;
             z-index: 200;
-            max-height: 80vh;
+            max-height: 85vh;
             overflow-y: auto;
             border-radius: var(--radius) var(--radius) 0 0;
-            border-left: none; border-right: none; border-bottom: none;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: none;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(24px);
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.6);
+            padding: 1.25rem 1.5rem;
+          }
+          .cr-sb__grab-handle {
+            display: block;
+            width: 36px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 2px;
+            margin: -0.5rem auto 1.25rem;
           }
         }
 

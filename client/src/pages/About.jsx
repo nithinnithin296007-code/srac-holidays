@@ -72,6 +72,45 @@ export default function About() {
         </div>
       </section>
 
+      {/* LEADERSHIP */}
+      <section className="section ab__team">
+        <div className="container">
+          <motion.div style={{ textAlign: 'center', marginBottom: '4rem' }} {...fade()}>
+            <span className="tag">Leadership</span>
+            <h2 className="section-title">Meet Our Leadership</h2>
+            <p className="ab__team-sub">The visionaries steering SRAC Holidays toward delivering authentic travel experiences.</p>
+          </motion.div>
+
+          <div className="ab__team-grid">
+            <motion.div className="ab__team-card" {...fade(0.1)}>
+              <div className="ab__team-img-wrap">
+                <img src="/images/shreekant_mandal.png" alt="Shreekant Mandal" className="ab__team-img" />
+              </div>
+              <div className="ab__team-info">
+                <h3 className="ab__team-name">Shreekant Mandal</h3>
+                <span className="ab__team-role">Founder</span>
+                <p className="ab__team-bio">
+                  Shreekant founded SRAC Holidays in 2003 with a vision to offer genuine, local-led travel experiences. Over the past two decades, his passion for hospitality and local insights has grown the company from a single unique tour into an award-winning agency trusted by thousands of global travelers.
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div className="ab__team-card" {...fade(0.2)}>
+              <div className="ab__team-img-wrap">
+                <img src="/images/abhishek_mandal.png" alt="Abhishek Mandal" className="ab__team-img" />
+              </div>
+              <div className="ab__team-info">
+                <h3 className="ab__team-name">Abhishek Mandal</h3>
+                <span className="ab__team-role">Chief Executive Officer</span>
+                <p className="ab__team-bio">
+                  Abhishek leads the strategic growth, operational excellence, and digital scaling of SRAC Holidays. He ensures that while the company embraces modern platforms and custom luxury experiences, it preserves its foundational promise of transparent, community-centric tourism.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* VALUES */}
       <section className="section ab__values" style={{ background: 'var(--dark-2)' }}>
         <div className="container">

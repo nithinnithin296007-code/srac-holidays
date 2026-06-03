@@ -72,29 +72,104 @@ export default function Navbar() {
 
             <AnimatePresence>
                 {open && (
-                    <motion.div
-                        className="mobile-menu"
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        transition={{ duration: 0.3 }}
-                    >
-                        <ul>
-                            {links.map((l, i) => (
-                                <motion.li
-                                    key={l.to}
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: i * 0.07 }}
-                                >
-                                    <Link to={l.to}>{l.label}</Link>
-                                </motion.li>
-                            ))}
-                        </ul>
-                        <a href="https://wa.me/917738676316" target="_blank" rel="noreferrer" className="btn btn-whatsapp">
-                            WhatsApp Us
-                        </a>
-                    </motion.div>
+                    <>
+                        {/* Backdrop */}
+                        <motion.div
+                            className="mobile-menu-backdrop"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={() => setOpen(false)}
+                            style={{
+                                position: 'fixed',
+                                inset: 0,
+                                background: 'rgba(0, 0, 0, 0.6)',
+                                backdropFilter: 'blur(6px)',
+                                zIndex: 998,
+                            }}
+                        />
+
+                        {/* Slide-over Menu Panel */}
+                        <motion.div
+                            className="mobile-menu-panel"
+                            initial={{ x: '100%' }}
+                            animate={{ x: 0 }}
+                            exit={{ x: '100%' }}
+                            transition={{ type: 'spring', damping: 26, stiffness: 220 }}
+                            style={{
+                                position: 'fixed',
+                                top: 0,
+                                right: 0,
+                                bottom: 0,
+                                width: 'min(320px, 85vw)',
+                                height: '100vh',
+                                background: 'rgba(13, 13, 13, 0.96)',
+                                backdropFilter: 'blur(20px)',
+                                borderLeft: '1px solid rgba(255, 255, 255, 0.08)',
+                                zIndex: 999,
+                                padding: '2.5rem 2rem',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'space-between',
+                                boxShodow: '-10px 0 35px rgba(0,0,0,0.6)',
+                            }}
+                        >
+                            <div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
+                                    <span style={{ fontSize: '0.65rem', letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--muted)', fontWeight: 600 }}>Navigation</span>
+                                    <button 
+                                        onClick={() => setOpen(false)}
+                                        style={{ background: 'none', border: 'none', color: 'var(--light)', fontSize: '1.25rem', cursor: 'pointer', opacity: 0.7 }}
+                                    >
+                                        ✕
+                                    </button>
+                                </div>
+                                <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '1.8rem' }}>
+                                    {links.map((l, i) => (
+                                        <motion.li
+                                            key={l.to}
+                                            initial={{ opacity: 0, x: 20 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            transition={{ delay: i * 0.05 }}
+                                        >
+                                            <Link 
+                                                to={l.to}
+                                                style={{ 
+                                                    fontSize: '1.5rem', 
+                                                    fontFamily: 'var(--font-heading)', 
+                                                    color: location.pathname === l.to ? 'var(--primary)' : 'var(--light)',
+                                                    fontWeight: location.pathname === l.to ? '700' : '400',
+                                                    transition: 'color 0.2s',
+                                                    display: 'block'
+                                                }}
+                                            >
+                                                {l.label}
+                                            </Link>
+                                        </motion.li>
+                                    ))}
+                                </ul>
+                            </div>
+                            
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '1.5rem' }}>
+                                <a href="https://wa.me/917738676316" target="_blank" rel="noreferrer" className="btn btn-whatsapp" style={{ justifyContent: 'center', fontSize: '0.85rem' }}>
+                                    WhatsApp Us
+                                </a>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'var(--muted)', fontSize: '0.72rem' }}>
+                                    <span>© 2026 SRAC HOLIDAYS</span>
+                                    <a 
+                                        href="https://www.instagram.com/sracholidays?igsh=dGwycnU3MjIyYjg5" 
+                                        target="_blank" 
+                                        rel="noreferrer" 
+                                        style={{ color: 'var(--muted)', transition: 'color 0.2s' }}
+                                        onMouseEnter={e => e.currentTarget.style.color = '#E1306C'} 
+                                        onMouseLeave={e => e.currentTarget.style.color = 'var(--muted)'}
+                                    >
+                                        Instagram
+                                    </a>
+                                </div>
+                            </div>
+                        </motion.div>
+                    </>
                 )}
             </AnimatePresence>
         </>
