@@ -332,7 +332,7 @@ export default function CarRentals() {
         }
         .cr-model-container {
           width: 100%;
-          height: 100%;
+          height: 400px;
           cursor: grab;
         }
         .cr-model-container:active {
