@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import SEO from '../components/SEO'
-
+import FortunerModel from '../components/FortunerModel'
 import imgDzire from '../assets/cars/honda-amaze.jpg'
 import imgAmaze from '../assets/cars/honda-amaze.jpg'
 import imgHondaCity from '../assets/cars/honda-city.jpg'
@@ -24,14 +24,6 @@ import imgCoach24 from '../assets/cars/coach-24.jpg'
 import imgCoach32 from '../assets/cars/coach-32.jpg'
 
 const WHATSAPP = '917738676316'
-
-const SPOTLIGHT = [
-  { name: 'Mercedes E-Class', tag: 'PREMIUM', img: imgMercedes },
-  { name: 'Jaguar XF', tag: 'ELITE', img: imgJaguar },
-  { name: 'Audi A4', tag: 'PREMIUM', img: imgAudi },
-  { name: 'Toyota Fortuner', tag: 'SUV', img: imgFortuner },
-  { name: 'Innova Crysta', tag: 'POPULAR', img: imgInnovaCrysta },
-]
 
 const FLEET = [
   { id: 6, name: 'Mercedes E-Class', category: 'Luxury', seats: 4, luggage: 3, tag: 'Premium', img: imgMercedes, services: ['Airport Transfer', 'Corporate', 'Local'] },
@@ -77,7 +69,6 @@ export default function CarRentals() {
   const [service, setService] = useState('')
   const [details, setDetails] = useState('')
   const [name, setName] = useState('')
-  const [spotIdx, setSpotIdx] = useState(0)
 
   const filtered = activeCategory === 'All'
     ? FLEET
@@ -113,76 +104,45 @@ export default function CarRentals() {
       {/* ── HERO ── */}
       <section className="cr-hero">
         <div className="cr-hero__overlay" />
-
-        {/* Spotlight background image */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={spotIdx}
-            className="cr-spotlight__bg"
-            initial={{ opacity: 0, scale: 1.04 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.97 }}
-            transition={{ duration: 0.6, ease: 'easeInOut' }}
-            style={{ backgroundImage: `url(${SPOTLIGHT[spotIdx].img})` }}
-          />
-        </AnimatePresence>
-
         <div className="container cr-hero__inner cr-hero__inner--split">
-          {/* Left text */}
           <div className="cr-hero__text">
-            <motion.span className="tag" {...fade(0.1)}>Smart Rent A Car · 20+ Years</motion.span>
-            <motion.h1 className="cr-hero__title" {...fade(0.2)}>
-              Premium Car Rentals<br />
-              <span style={{ color: 'var(--primary)' }}>Across India</span>
-            </motion.h1>
-            <motion.p className="cr-hero__sub" {...fade(0.3)}>
-              Chauffeur-driven sedans, SUVs, luxury cars and coaches. Airport runs, city tours, outstation — we move you right.
-            </motion.p>
+            <motion.div {...fade()}>
+              <span className="tag">Smart Rent A Car · 20+ Years</span>
+              <h1 className="cr-hero__title">
+                Premium Car Rentals<br />
+                <span style={{ color: 'var(--primary)' }}>Across India</span>
+              </h1>
+              <p className="cr-hero__sub">
+                Chauffeur-driven sedans, SUVs, luxury cars and coaches.
+                Airport runs, city tours, outstation — we move you right.
+              </p>
+            </motion.div>
 
-            {/* Stats */}
-            <motion.div className="cr-hero__stats" {...fade(0.4)}>
-              {[['20+','Vehicles'],['24/7','Available'],['20yr','Experience'],['4.9★','Rated']].map(([n,l]) => (
-                <div key={l} className="cr-hero__stat">
-                  <strong>{n}</strong><span>{l}</span>
+            <motion.div className="cr-stats" {...fade(0.15)}>
+              {[
+                { n: '20+', l: 'Vehicles' },
+                { n: '24/7', l: 'Available' },
+                { n: '20yr', l: 'Experience' },
+                { n: '4.9★', l: 'Rated' },
+              ].map(s => (
+                <div className="cr-stat" key={s.l}>
+                  <span className="cr-stat__num">{s.n}</span>
+                  <span className="cr-stat__label">{s.l}</span>
                 </div>
               ))}
             </motion.div>
 
-            {/* Service tabs */}
-            <motion.div className="cr-hero__services" {...fade(0.5)}>
-              {['Airport Transfer','Local','Outstation','Corporate'].map(s => (
-                <span key={s} className="cr-hero__svc">{s}</span>
+            <motion.div className="cr-services-strip" {...fade(0.25)}>
+              {Object.entries(SERVICE_ICONS).map(([k, icon]) => (
+                <div className="cr-service-pill" key={k}>
+                  <span>{icon}</span>
+                  <span>{k}</span>
+                </div>
               ))}
             </motion.div>
           </div>
-
-          {/* Right spotlight */}
           <div className="cr-hero__canvas">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={spotIdx}
-                className="cr-spotlight__card"
-                initial={{ opacity: 0, x: 40 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -40 }}
-                transition={{ duration: 0.5 }}
-              >
-                <div className="cr-spotlight__tag">{SPOTLIGHT[spotIdx].tag}</div>
-                <img src={SPOTLIGHT[spotIdx].img} alt={SPOTLIGHT[spotIdx].name} className="cr-spotlight__img" />
-                <div className="cr-spotlight__name">{SPOTLIGHT[spotIdx].name}</div>
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Dots */}
-            <div className="cr-spotlight__dots">
-              {SPOTLIGHT.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setSpotIdx(i)}
-                  className={`cr-spotlight__dot${i === spotIdx ? ' active' : ''}`}
-                />
-              ))}
-            </div>
+            <FortunerModel />
           </div>
         </div>
       </section>
@@ -346,71 +306,6 @@ export default function CarRentals() {
           display: none;
         }
 
-        /* SPOTLIGHT */
-        .cr-spotlight__bg {
-          position: absolute; inset: 0;
-          background-size: cover;
-          background-position: center;
-          filter: blur(18px) brightness(0.18);
-          transform-origin: center;
-          z-index: 0;
-        }
-        .cr-spotlight__card {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 1rem;
-          padding: 1.5rem;
-          background: rgba(255,255,255,0.04);
-          border: 1px solid rgba(255,255,255,0.08);
-          border-radius: 20px;
-          backdrop-filter: blur(12px);
-          width: 100%;
-          max-width: 380px;
-        }
-        .cr-spotlight__tag {
-          font-size: 0.65rem;
-          letter-spacing: 2.5px;
-          text-transform: uppercase;
-          color: var(--primary);
-          font-weight: 700;
-          border: 1px solid rgba(200,65,11,0.3);
-          padding: 4px 12px;
-          border-radius: 100px;
-        }
-        .cr-spotlight__img {
-          width: 100%;
-          height: 200px;
-          object-fit: cover;
-          border-radius: 12px;
-          filter: drop-shadow(0 8px 32px rgba(0,0,0,0.6));
-        }
-        .cr-spotlight__name {
-          font-size: 1.1rem;
-          font-family: var(--font-display);
-          font-weight: 600;
-          letter-spacing: 0.5px;
-        }
-        .cr-spotlight__dots {
-          display: flex;
-          gap: 8px;
-          justify-content: center;
-          margin-top: 1rem;
-        }
-        .cr-spotlight__dot {
-          width: 8px; height: 8px;
-          border-radius: 100px;
-          border: none;
-          background: rgba(255,255,255,0.2);
-          cursor: pointer;
-          transition: all 0.3s;
-          padding: 0;
-        }
-        .cr-spotlight__dot.active {
-          background: var(--primary);
-          width: 24px;
-        }
-
         /* HERO */
         .cr-hero {
           position: relative;
@@ -422,22 +317,45 @@ export default function CarRentals() {
           position: absolute; inset: 0;
           background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(200,65,11,0.12) 0%, transparent 70%);
           pointer-events: none;
-          z-index: 1;
         }
-        .cr-hero__inner { position: relative; z-index: 2; }
+        .cr-hero__inner { position: relative; z-index: 1; }
         .cr-hero__inner--split {
           display: grid;
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: 1fr 1.2fr;
           gap: 3rem;
           align-items: center;
         }
         .cr-hero__canvas {
+          height: 500px;
+          position: relative;
+          width: 100%;
+        }
+        .cr-model-container {
+          width: 100%;
+          height: 400px;
+          cursor: grab;
+        }
+        .cr-model-container:active {
+          cursor: grabbing;
+        }
+        .cr-model-loader {
           display: flex;
           flex-direction: column;
           align-items: center;
-          justify-content: center;
-          position: relative;
-          width: 100%;
+          gap: 1rem;
+          color: var(--muted);
+          font-size: 0.9rem;
+        }
+        .cr-model-loader__spinner {
+          width: 40px;
+          height: 40px;
+          border: 3px solid rgba(255, 255, 255, 0.1);
+          border-top-color: var(--primary);
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+          to { transform: rotate(360deg); }
         }
         @media (max-width: 991px) {
           .cr-hero {
@@ -447,14 +365,23 @@ export default function CarRentals() {
             grid-template-columns: 1fr;
             gap: 2rem;
           }
+          .cr-hero__canvas {
+            height: 380px;
+          }
         }
         @media (max-width: 576px) {
           .cr-hero {
             padding: 5rem 0 2rem;
           }
+          .cr-hero__canvas {
+            height: 300px;
+          }
           .cr-hero__sub {
             margin-bottom: 1.5rem !important;
             font-size: 0.95rem;
+          }
+          .cr-stats {
+            margin-bottom: 1.5rem !important;
           }
         }
         .cr-hero__title {
@@ -468,70 +395,6 @@ export default function CarRentals() {
           max-width: 520px;
           line-height: 1.7;
           margin-bottom: 2.5rem;
-        }
-
-        /* Hero Stats */
-        .cr-hero__stats {
-          display: flex;
-          gap: 0;
-          margin-bottom: 2rem;
-          border: 1px solid var(--dark-3);
-          border-radius: var(--radius-sm);
-          overflow: hidden;
-          width: fit-content;
-        }
-        .cr-hero__stat {
-          padding: 0.8rem 1.5rem;
-          border-right: 1px solid var(--dark-3);
-          text-align: center;
-          display: flex;
-          flex-direction: column;
-          gap: 2px;
-        }
-        .cr-hero__stat:last-child { border-right: none; }
-        .cr-hero__stat strong {
-          font-family: var(--font-heading);
-          font-size: 1.3rem;
-          color: var(--primary);
-        }
-        .cr-hero__stat span {
-          font-size: 0.6rem;
-          color: var(--muted);
-          text-transform: uppercase;
-          letter-spacing: 1.5px;
-        }
-        @media (max-width: 576px) {
-          .cr-hero__stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            width: 100%;
-          }
-          .cr-hero__stat {
-            padding: 0.6rem 0.5rem;
-            border-bottom: 1px solid var(--dark-3);
-          }
-          .cr-hero__stat:nth-child(2n) { border-right: none; }
-          .cr-hero__stat:nth-child(3),
-          .cr-hero__stat:nth-child(4) { border-bottom: none; }
-        }
-
-        /* Hero Services */
-        .cr-hero__services {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 0.6rem;
-        }
-        .cr-hero__svc {
-          display: flex;
-          align-items: center;
-          gap: 0.4rem;
-          background: var(--dark-2);
-          border: 1px solid var(--dark-3);
-          border-radius: 100px;
-          padding: 0.4rem 0.9rem;
-          font-size: 0.75rem;
-          color: var(--muted);
-          letter-spacing: 0.5px;
         }
 
         /* Stats */
