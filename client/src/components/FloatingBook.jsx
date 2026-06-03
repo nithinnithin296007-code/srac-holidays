@@ -23,13 +23,13 @@ export default function FloatingBook() {
     const btnBase = {
         display: 'flex',
         alignItems: 'center',
-        gap: '8px',
+        gap: '6px',
         border: 'none',
         borderRadius: '100px',
-        padding: '0.7rem 1.4rem',
-        fontSize: '0.78rem',
+        padding: '0.45rem 1rem',
+        fontSize: '0.68rem',
         fontFamily: 'var(--font-body)',
-        letterSpacing: '1.5px',
+        letterSpacing: '1.2px',
         textTransform: 'uppercase',
         fontWeight: 600,
         cursor: 'pointer',
@@ -40,12 +40,12 @@ export default function FloatingBook() {
     return (
         <div style={{
             position: 'fixed',
-            bottom: '2rem',
-            right: '2rem',
+            bottom: '1.2rem',
+            right: '1.2rem',
             zIndex: 999,
             display: 'flex',
             flexDirection: 'column',
-            gap: '0.6rem',
+            gap: '0.4rem',
             alignItems: 'flex-end',
         }}>
             <button
