@@ -375,7 +375,7 @@ export default function CarRentals() {
             padding: 5rem 0 2rem;
           }
           .cr-hero__canvas {
-            height: 300px;
+            height: 350px;
           }
           .cr-hero__sub {
             margin-bottom: 1.5rem !important;

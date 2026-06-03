@@ -125,17 +125,30 @@ export default function FortunerModel() {
       </Canvas>
 
       {/* Switcher */}
-      <div style={{
-        position: 'absolute',
-        bottom: '1rem',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        display: 'flex',
-        gap: '8px',
-        zIndex: 10,
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-      }}>
+      <div 
+        className="cr-model-switcher"
+        style={{
+          position: 'absolute',
+          bottom: '0.75rem',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          display: 'flex',
+          gap: '8px',
+          zIndex: 10,
+          flexWrap: 'nowrap',
+          justifyContent: 'center',
+          maxWidth: '92%',
+          overflowX: 'auto',
+          padding: '6px 12px',
+          background: 'rgba(13, 13, 13, 0.65)',
+          backdropFilter: 'blur(16px)',
+          borderRadius: '100px',
+          border: '1px solid rgba(255, 255, 255, 0.08)',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
+        }}
+      >
         {MODELS.map((m, i) => (
           <button
             key={i}
