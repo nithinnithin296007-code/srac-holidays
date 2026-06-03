@@ -1,5 +1,6 @@
-import { useState } from 'react'
-import ModelViewer from './ModelViewer'
+import { Suspense, useState, useEffect } from 'react'
+import { Canvas, useThree } from '@react-three/fiber'
+import { OrbitControls, Environment, useGLTF, Html, Center, ContactShadows } from '@react-three/drei'
 
 const MODELS = [
   { file: '/models/toyota_fortuner_2021.glb', name: 'Toyota Fortuner' },
@@ -9,34 +10,88 @@ const MODELS = [
   { file: '/models/innova_zenix.glb', name: 'Innova Hycross' },
 ]
 
+function Car({ url }) {
+  const { scene } = useGLTF(url)
+  const { size, camera } = useThree()
+  const w = size.width
+
+  useEffect(() => {
+    if (w < 480) camera.position.set(3.2, 1.6, 7.8)
+    else if (w < 768) camera.position.set(3.8, 1.7, 7.0)
+    else camera.position.set(4.5, 1.8, 6.5)
+    camera.lookAt(0, 0, 0)
+    camera.updateProjectionMatrix()
+  }, [w, camera])
+
+  let scale = 1.2
+  if (w < 480) scale = 0.8
+  else if (w < 768) scale = 1.0
+
+  return (
+    <>
+      <Center>
+        <primitive object={scene} scale={scale} />
+      </Center>
+      <ContactShadows
+        position={[0, -0.78, 0]}
+        opacity={0.6}
+        scale={10}
+        blur={2.5}
+        far={1.5}
+      />
+    </>
+  )
+}
+
+function Loader() {
+  return (
+    <Html center>
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '0.75rem',
+        color: 'rgba(255,255,255,0.5)',
+      }}>
+        <div style={{
+          width: 36,
+          height: 36,
+          border: '3px solid rgba(255,255,255,0.1)',
+          borderTopColor: 'var(--primary)',
+          borderRadius: '50%',
+          animation: 'spin 1s linear infinite',
+        }} />
+        <span style={{ fontSize: '0.8rem' }}>Loading model…</span>
+      </div>
+    </Html>
+  )
+}
+
 export default function FortunerModel() {
   const [active, setActive] = useState(0)
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-      <ModelViewer
-        key={active}
-        url={MODELS[active].file}
-        width="100%"
-        height="100%"
-        autoRotate
-        autoRotateSpeed={0.4}
-        enableMouseParallax={false}
-        enableHoverRotation={false}
-        enableManualRotation
-        enableManualZoom={false}
-        autoFrame
-        fadeIn
-        showScreenshotButton={false}
-        environmentPreset="city"
-        ambientIntensity={0.5}
-        keyLightIntensity={1.8}
-        fillLightIntensity={0.4}
-        rimLightIntensity={0.6}
-        defaultRotationX={-50}
-        defaultRotationY={20}
-        defaultZoom={2.8}
-      />
+      <Canvas
+        camera={{ position: [4.5, 1.8, 6.5], fov: 40 }}
+        style={{ background: 'transparent' }}
+      >
+        <ambientLight intensity={0.7} />
+        <directionalLight position={[5, 8, 5]} intensity={1.8} castShadow />
+        <directionalLight position={[-3, 2, 4]} intensity={0.4} />
+        <Environment preset="city" />
+        <Suspense fallback={<Loader />}>
+          <Car key={active} url={MODELS[active].file} />
+        </Suspense>
+        <OrbitControls
+          enableZoom={false}
+          enablePan={false}
+          autoRotate
+          autoRotateSpeed={0.5}
+          minPolarAngle={Math.PI / 4}
+          maxPolarAngle={Math.PI / 2.1}
+        />
+      </Canvas>
 
       {/* Switcher */}
       <div style={{
