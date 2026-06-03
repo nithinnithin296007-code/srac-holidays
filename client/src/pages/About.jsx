@@ -105,6 +105,59 @@ export default function About() {
         </div>
       </section>
 
+      {/* GUIDES SPOTLIGHT */}
+      <section className="section ab__guides" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <motion.div style={{ textAlign: 'center', marginBottom: '4rem' }} {...fade()}>
+            <span className="tag">Local Experts</span>
+            <h2 className="section-title">Meet Our Local Guides</h2>
+            <p className="ab__team-sub">Real Mumbai locals who live in the neighborhoods they show you.</p>
+          </motion.div>
+
+          <div className="ab__team-grid">
+            <motion.div className="ab__team-card" {...fade(0.1)}>
+              <div className="ab__team-info">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '1.2rem' }}>
+                  <div style={{ width: '45px', height: '45px', borderRadius: '50%', border: '2px solid var(--accent)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '1rem', background: 'rgba(245,166,35,0.05)' }}>
+                    SK
+                  </div>
+                  <div>
+                    <h3 className="ab__team-name" style={{ marginBottom: '2px' }}>Sunil Kamble</h3>
+                    <span style={{ fontSize: '0.68rem', letterSpacing: '1px', textTransform: 'uppercase', color: 'var(--primary)', fontWeight: 600 }}>Dharavi Specialist</span>
+                  </div>
+                </div>
+                <p className="ab__team-bio" style={{ marginBottom: '1.2rem' }}>
+                  Sunil was born and raised in Dharavi. For over 12 years, he has guided travelers through his home neighborhood, explaining the recycling ecosystems, small leather workshops, and community structures with local insight.
+                </p>
+                <p style={{ fontStyle: 'italic', color: 'var(--accent)', fontSize: '0.82rem', borderLeft: '2px solid var(--primary)', paddingLeft: '10px', lineHeight: 1.5, margin: 0 }}>
+                  "Dharavi is not a place of poverty; it is an inspiring hub of hard work, recycling innovation, and family values."
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div className="ab__team-card" {...fade(0.2)}>
+              <div className="ab__team-info">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '1.2rem' }}>
+                  <div style={{ width: '45px', height: '45px', borderRadius: '50%', border: '2px solid var(--accent)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '1rem', background: 'rgba(245,166,35,0.05)' }}>
+                    PS
+                  </div>
+                  <div>
+                    <h3 className="ab__team-name" style={{ marginBottom: '2px' }}>Priya Sharma</h3>
+                    <span style={{ fontSize: '0.68rem', letterSpacing: '1px', textTransform: 'uppercase', color: 'var(--primary)', fontWeight: 600 }}>Bollywood & Heritage Guide</span>
+                  </div>
+                </div>
+                <p className="ab__team-bio" style={{ marginBottom: '1.2rem' }}>
+                  A cinema graduate from Mumbai University, Priya has spent 8+ years guiding travelers behind the scenes of Bollywood active sets and explaining South Mumbai's rich Victorian Gothic architecture.
+                </p>
+                <p style={{ fontStyle: 'italic', color: 'var(--accent)', fontSize: '0.82rem', borderLeft: '2px solid var(--primary)', paddingLeft: '10px', lineHeight: 1.5, margin: 0 }}>
+                  "Every stone in Mumbai tells a story, and every studio floor shows how dreams are turned into silver screen reality."
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* VALUES */}
       <section className="section ab__values" style={{ background: 'var(--dark-2)' }}>
         <div className="container">

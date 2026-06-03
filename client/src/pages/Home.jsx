@@ -8,6 +8,8 @@ import TourCard from '../components/TourCard'
 import axios from 'axios'
 import { API_URL } from '../utils/api'
 import ScrollFloat from '../components/ScrollFloat'
+import TripBuilder from '../components/TripBuilder'
+import MediaGallery from '../components/MediaGallery'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -231,6 +233,17 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="section home__gallery" style={{ background: 'var(--dark)' }}>
+        <div className="container">
+          <div className="section-header reveal-section" style={{ textAlign: "center" }}>
+            <span className="tag">Moments from Mumbai</span>
+            <ScrollFloat containerClassName="section-title">Authentic Travel Moments</ScrollFloat>
+            <p className="section-sub">A glimpse into real experiences, street life, and stories from our custom excursions.</p>
+          </div>
+          <MediaGallery />
+        </div>
+      </section>
+
       <section className="section home__rentals">
         <div className="container">
           <div style={{
@@ -275,6 +288,17 @@ export default function Home() {
               </a>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="section home__builder" style={{ paddingBottom: 0 }}>
+        <div className="container">
+          <div className="section-header reveal-section" style={{ textAlign: "center" }}>
+            <span className="tag">Custom Trip</span>
+            <h2 className="section-title">Build Your Custom Tour</h2>
+            <p className="section-sub">Select your interests, tell us your duration, and let us design a personalized day in Mumbai.</p>
+          </div>
+          <TripBuilder />
         </div>
       </section>
 

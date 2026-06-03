@@ -2,8 +2,165 @@ import { useParams, Link } from 'react-router-dom'
 import { fade } from '../utils/animations'
 import SEO from '../components/SEO'
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { API_URL } from '../utils/api'
+
+function TourMap({ itinerary }) {
+  const [activeStop, setActiveStop] = useState(0)
+
+  if (!itinerary || itinerary.length === 0) return null
+
+  const width = 800
+  const height = 150
+  const padding = 60
+  const stopsCount = itinerary.length
+
+  const points = itinerary.map((item, index) => {
+    const x = padding + (index * (width - 2 * padding)) / Math.max(stopsCount - 1, 1)
+    const y = height / 2 + Math.sin(index * 1.5) * 32
+    return { x, y, ...item }
+  })
+
+  let pathD = ''
+  if (points.length > 0) {
+    pathD = `M ${points[0].x} ${points[0].y}`
+    for (let i = 1; i < points.length; i++) {
+      const prev = points[i - 1]
+      const curr = points[i]
+      const cpX1 = prev.x + (curr.x - prev.x) / 2
+      const cpY1 = prev.y
+      const cpX2 = prev.x + (curr.x - prev.x) / 2
+      const cpY2 = curr.y
+      pathD += ` C ${cpX1} ${cpY1}, ${cpX2} ${cpY2}, ${curr.x} ${curr.y}`
+    }
+  }
+
+  return (
+    <div className="td__block" style={{ margin: '3rem 0', background: 'var(--dark-2)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 'var(--radius)', padding: '2rem' }}>
+      <h2 style={{ marginBottom: '1.25rem' }}>Interactive Route Map</h2>
+      
+      {/* Scrollable container for mobile */}
+      <div style={{ overflowX: 'auto', width: '100%', scrollbarWidth: 'none', msOverflowStyle: 'none' }} className="cr-model-switcher">
+        <div style={{ width: `${width}px`, height: `${height}px`, position: 'relative', margin: '0 auto' }}>
+          <svg width={width} height={height} style={{ overflow: 'visible' }}>
+            {/* Winding road path background */}
+            <path
+              d={pathD}
+              fill="none"
+              stroke="rgba(255, 255, 255, 0.05)"
+              strokeWidth="6"
+              strokeLinecap="round"
+            />
+            {/* Active animated stroke */}
+            <path
+              d={pathD}
+              fill="none"
+              stroke="var(--primary)"
+              strokeWidth="2.2"
+              strokeDasharray="6 4"
+              strokeLinecap="round"
+            />
+
+            {/* Render Nodes */}
+            {points.map((pt, idx) => {
+              const isActive = activeStop === idx
+              return (
+                <g 
+                  key={idx} 
+                  onClick={() => setActiveStop(idx)} 
+                  onMouseEnter={() => setActiveStop(idx)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  {/* Outer glowing ring */}
+                  <circle
+                    cx={pt.x}
+                    cy={pt.y}
+                    r={isActive ? 13 : 8}
+                    fill={isActive ? 'rgba(200, 65, 11, 0.2)' : 'rgba(255, 255, 255, 0.05)'}
+                    stroke={isActive ? 'var(--primary)' : 'rgba(255, 255, 255, 0.25)'}
+                    strokeWidth="2"
+                    style={{ transition: 'all 0.25s cubic-bezier(0.25, 1, 0.5, 1)' }}
+                  />
+                  {/* Inner node */}
+                  <circle
+                    cx={pt.x}
+                    cy={pt.y}
+                    r="4.5"
+                    fill={isActive ? 'var(--accent)' : '#fff'}
+                    style={{ transition: 'all 0.25s' }}
+                  />
+                  {/* Stop Time text */}
+                  <text
+                    x={pt.x}
+                    y={pt.y - 18}
+                    textAnchor="middle"
+                    fill={isActive ? 'var(--accent)' : 'var(--muted)'}
+                    fontSize="9.5"
+                    fontWeight={isActive ? '700' : '400'}
+                    style={{ transition: 'all 0.25s', fontFamily: 'var(--font-body)' }}
+                  >
+                    {pt.time}
+                  </text>
+                </g>
+              )
+            })}
+          </svg>
+        </div>
+      </div>
+
+      {/* Stop details preview card */}
+      <div style={{ minHeight: '80px' }}>
+        <AnimatePresence mode="wait">
+          {points[activeStop] && (
+            <motion.div
+              key={activeStop}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.18 }}
+              style={{
+                marginTop: '1.25rem',
+                background: 'rgba(255, 255, 255, 0.02)',
+                border: '1px solid rgba(255, 255, 255, 0.06)',
+                borderRadius: '8px',
+                padding: '1.2rem',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '14px',
+              }}
+            >
+              <div style={{
+                width: '36px',
+                height: '36px',
+                borderRadius: '50%',
+                backgroundColor: 'rgba(200, 65, 11, 0.12)',
+                border: '1px solid var(--primary)',
+                color: 'var(--primary)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontWeight: 700,
+                fontSize: '0.85rem',
+                flexShrink: 0,
+              }}>
+                {activeStop + 1}
+              </div>
+              <div>
+                <span style={{ fontSize: '0.68rem', color: 'var(--primary)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1px' }}>
+                  Stop {activeStop + 1} · {points[activeStop].time}
+                </span>
+                <h4 style={{ fontSize: '0.92rem', color: '#fff', margin: '2px 0 0', fontFamily: 'var(--font-body)', fontWeight: 500 }}>
+                  {points[activeStop].activity}
+                </h4>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </div>
+  )
+}
+
 
 
 
@@ -90,6 +247,8 @@ export default function TourDetail() {
                 </ul>
               </motion.div>
             )}
+
+            <TourMap itinerary={tour.itinerary} />
 
             {tour.itinerary && tour.itinerary.length > 0 && (
               <motion.div className="td__block" {...fade(0.15)}>

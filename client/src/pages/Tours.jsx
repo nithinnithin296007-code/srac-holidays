@@ -3,6 +3,7 @@ import SEO from '../components/SEO'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import TourCard from '../components/TourCard'
+import FAQAccordion from '../components/FAQAccordion'
 import axios from 'axios'
 import { API_URL } from '../utils/api'
 import { useSearchParams } from 'react-router-dom'
@@ -110,6 +111,17 @@ export default function Tours() {
               ))}
             </div>
           )}
+        </div>
+      </section>
+
+      {/* ── FAQ SECTION ── */}
+      <section className="section tours__faq" style={{ background: 'var(--dark-2)' }}>
+        <div className="container">
+          <div className="section-header" style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <span className="tag">Common Queries</span>
+            <h2 className="section-title">Frequently Asked Questions</h2>
+          </div>
+          <FAQAccordion />
         </div>
       </section>
 
