@@ -17,8 +17,8 @@ export default function FortunerModel() {
       <ModelViewer
         key={active}
         url={MODELS[active].file}
-        width={500}
-        height={400}
+        width="100%"
+        height="100%"
         autoRotate
         autoRotateSpeed={0.4}
         enableMouseParallax={false}
@@ -33,9 +33,9 @@ export default function FortunerModel() {
         keyLightIntensity={1.8}
         fillLightIntensity={0.4}
         rimLightIntensity={0.6}
-        defaultRotationY={0}
-        defaultRotationX={-20}
-        defaultZoom={0.5}
+        defaultRotationX={-50}
+        defaultRotationY={20}
+        defaultZoom={2.8}
       />
 
       {/* Switcher */}
