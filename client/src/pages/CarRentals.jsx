@@ -422,45 +422,22 @@ export default function CarRentals() {
           position: absolute; inset: 0;
           background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(200,65,11,0.12) 0%, transparent 70%);
           pointer-events: none;
+          z-index: 1;
         }
-        .cr-hero__inner { position: relative; z-index: 1; }
+        .cr-hero__inner { position: relative; z-index: 2; }
         .cr-hero__inner--split {
           display: grid;
-          grid-template-columns: 1fr 1.2fr;
+          grid-template-columns: 1fr 1fr;
           gap: 3rem;
           align-items: center;
         }
         .cr-hero__canvas {
-          height: 500px;
-          position: relative;
-          width: 100%;
-        }
-        .cr-model-container {
-          width: 100%;
-          height: 400px;
-          cursor: grab;
-        }
-        .cr-model-container:active {
-          cursor: grabbing;
-        }
-        .cr-model-loader {
           display: flex;
           flex-direction: column;
           align-items: center;
-          gap: 1rem;
-          color: var(--muted);
-          font-size: 0.9rem;
-        }
-        .cr-model-loader__spinner {
-          width: 40px;
-          height: 40px;
-          border: 3px solid rgba(255, 255, 255, 0.1);
-          border-top-color: var(--primary);
-          border-radius: 50%;
-          animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-          to { transform: rotate(360deg); }
+          justify-content: center;
+          position: relative;
+          width: 100%;
         }
         @media (max-width: 991px) {
           .cr-hero {
@@ -470,23 +447,14 @@ export default function CarRentals() {
             grid-template-columns: 1fr;
             gap: 2rem;
           }
-          .cr-hero__canvas {
-            height: 380px;
-          }
         }
         @media (max-width: 576px) {
           .cr-hero {
             padding: 5rem 0 2rem;
           }
-          .cr-hero__canvas {
-            height: 300px;
-          }
           .cr-hero__sub {
             margin-bottom: 1.5rem !important;
             font-size: 0.95rem;
-          }
-          .cr-stats {
-            margin-bottom: 1.5rem !important;
           }
         }
         .cr-hero__title {
@@ -500,6 +468,70 @@ export default function CarRentals() {
           max-width: 520px;
           line-height: 1.7;
           margin-bottom: 2.5rem;
+        }
+
+        /* Hero Stats */
+        .cr-hero__stats {
+          display: flex;
+          gap: 0;
+          margin-bottom: 2rem;
+          border: 1px solid var(--dark-3);
+          border-radius: var(--radius-sm);
+          overflow: hidden;
+          width: fit-content;
+        }
+        .cr-hero__stat {
+          padding: 0.8rem 1.5rem;
+          border-right: 1px solid var(--dark-3);
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+        }
+        .cr-hero__stat:last-child { border-right: none; }
+        .cr-hero__stat strong {
+          font-family: var(--font-heading);
+          font-size: 1.3rem;
+          color: var(--primary);
+        }
+        .cr-hero__stat span {
+          font-size: 0.6rem;
+          color: var(--muted);
+          text-transform: uppercase;
+          letter-spacing: 1.5px;
+        }
+        @media (max-width: 576px) {
+          .cr-hero__stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            width: 100%;
+          }
+          .cr-hero__stat {
+            padding: 0.6rem 0.5rem;
+            border-bottom: 1px solid var(--dark-3);
+          }
+          .cr-hero__stat:nth-child(2n) { border-right: none; }
+          .cr-hero__stat:nth-child(3),
+          .cr-hero__stat:nth-child(4) { border-bottom: none; }
+        }
+
+        /* Hero Services */
+        .cr-hero__services {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.6rem;
+        }
+        .cr-hero__svc {
+          display: flex;
+          align-items: center;
+          gap: 0.4rem;
+          background: var(--dark-2);
+          border: 1px solid var(--dark-3);
+          border-radius: 100px;
+          padding: 0.4rem 0.9rem;
+          font-size: 0.75rem;
+          color: var(--muted);
+          letter-spacing: 0.5px;
         }
 
         /* Stats */
