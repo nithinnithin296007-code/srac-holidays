@@ -1,97 +1,55 @@
-import { Suspense, useEffect, useState } from "react";
-import { Canvas, useThree } from "@react-three/fiber";
-import { OrbitControls, Environment, useGLTF, Html, Center, ContactShadows } from "@react-three/drei";
+import { useState } from 'react'
+import ModelViewer from './ModelViewer'
 
 const MODELS = [
-  { file: "/models/toyota_fortuner_2021.glb", name: "Toyota Fortuner", scale: 1.25, shadowY: -0.78 },
-  { file: "/models/mercedes_s65.glb", name: "Mercedes S65", scale: 1.1, shadowY: -0.70 },
-  { file: "/models/audi_a5.glb", name: "Audi A5", scale: 1.1, shadowY: -0.80 },
-  { file: "/models/innova_zenix.glb", name: "Innova Hycross", scale: 1.15, shadowY: -0.98 },
+  { file: '/models/toyota_fortuner_2021.glb', name: 'Toyota Fortuner' },
+  { file: '/models/mercedes_s65.glb', name: 'Mercedes S65' },
+  { file: '/models/bmw_m4.glb', name: 'BMW 5 Series' },
+  { file: '/models/audi_a5.glb', name: 'Audi A5' },
+  { file: '/models/innova_zenix.glb', name: 'Innova Hycross' },
 ]
-
-function Car({ model }) {
-  const { scene } = useGLTF(model.file)
-
-  const { size, camera } = useThree()
-  const width = size.width
-
-  let scale = model.scale
-  let shadowY = model.shadowY
-
-  if (width < 480) { scale *= 0.65; shadowY *= 0.65 }
-  else if (width < 768) { scale *= 0.84; shadowY *= 0.84 }
-
-  useEffect(() => {
-    if (width < 480) camera.position.set(3.2, 1.6, 7.8)
-    else if (width < 768) camera.position.set(3.8, 1.7, 7.0)
-    else camera.position.set(4.5, 1.8, 6.5)
-    camera.lookAt(0, 0, 0)
-    camera.updateProjectionMatrix()
-  }, [width, camera])
-
-  return (
-    <>
-      <Center>
-        <primitive object={scene} scale={scale} />
-      </Center>
-      <ContactShadows position={[0, shadowY, 0]} opacity={0.7} scale={10} blur={2.5} far={1.5} />
-    </>
-  )
-}
-
-function Loader() {
-  return (
-    <Html center>
-      <div className="cr-model-loader">
-        <div className="cr-model-loader__spinner"></div>
-        <span>Loading model...</span>
-      </div>
-    </Html>
-  )
-}
-
 
 export default function FortunerModel() {
   const [active, setActive] = useState(0)
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-      <div className="cr-model-container">
-        <Canvas camera={{ position: [4.5, 1.8, 6.5], fov: 40 }} style={{ background: 'transparent' }}>
-          <ambientLight intensity={0.7} />
-          <directionalLight position={[5, 8, 5]} intensity={1.8} />
-          <Environment preset="city" />
-          <Suspense fallback={<Loader />}>
-            <Car key={active} model={MODELS[active]} />
-          </Suspense>
-          <OrbitControls
-            enableZoom={false}
-            autoRotate
-            autoRotateSpeed={0.5}
-            minPolarAngle={Math.PI / 4}
-            maxPolarAngle={Math.PI / 2.1}
-          />
-        </Canvas>
-      </div>
+      <ModelViewer
+        key={active}
+        url={MODELS[active].file}
+        width="100%"
+        height="100%"
+        autoRotate
+        autoRotateSpeed={0.4}
+        enableMouseParallax
+        enableHoverRotation
+        enableManualRotation
+        enableManualZoom={false}
+        autoFrame
+        fadeIn
+        showScreenshotButton={false}
+        environmentPreset="city"
+        ambientIntensity={0.5}
+        keyLightIntensity={1.8}
+        fillLightIntensity={0.4}
+        rimLightIntensity={0.6}
+        defaultRotationY={15}
+        defaultRotationX={-30}
+        defaultZoom={0.5}
+      />
 
-      {/* Model switcher */}
-      <div 
-        className="cr-model-switcher"
-        style={{
-          position: 'absolute',
-          bottom: '1rem',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          display: 'flex',
-          gap: '8px',
-          zIndex: 10,
-          maxWidth: '95%',
-          overflowX: 'auto',
-          padding: '6px 4px',
-          scrollbarWidth: 'none',
-          msOverflowStyle: 'none',
-        }}
-      >
+      {/* Switcher */}
+      <div style={{
+        position: 'absolute',
+        bottom: '1rem',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        display: 'flex',
+        gap: '8px',
+        zIndex: 10,
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+      }}>
         {MODELS.map((m, i) => (
           <button
             key={i}
@@ -103,13 +61,12 @@ export default function FortunerModel() {
               fontSize: '0.65rem',
               letterSpacing: '1px',
               textTransform: 'uppercase',
-              padding: '6px 14px',
+              padding: '5px 12px',
               borderRadius: '100px',
               cursor: 'pointer',
               transition: 'all 0.2s',
               fontFamily: 'var(--font-body)',
               whiteSpace: 'nowrap',
-              flexShrink: 0,
             }}
           >
             {m.name}
