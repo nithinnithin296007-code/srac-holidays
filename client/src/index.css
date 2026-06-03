@@ -327,11 +327,12 @@ body::before {
   content: '';
   position: absolute;
   bottom: -4px;
-  left: 0;
+  left: 50%;
   width: 0;
-  height: 1px;
+  height: 1.5px;
   background: var(--primary);
-  transition: width 0.3s;
+  transform: translateX(-50%);
+  transition: width 0.35s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .navbar__link:hover,
@@ -365,7 +366,7 @@ body::before {
   width: 24px;
   height: 1.5px;
   background: var(--light);
-  transition: var(--transition);
+  transition: transform 0.4s cubic-bezier(0.68, -0.6, 0.32, 1.6), opacity 0.4s ease;
 }
 
 .navbar__burger.open span:nth-child(1) {
@@ -3121,6 +3122,9 @@ a.contact__detail-value:hover { color: var(--primary); }
 @media (max-width: 480px) { .ab__awards-grid { grid-template-columns: repeat(2, 1fr); } .ab__values-grid { grid-template-columns: 1fr; } }
 
 /* Team / Leadership */
+.ab__team {
+  padding-top: 1rem !important; /* Pulls leadership section closer to Story section, removing the huge vertical space */
+}
 .ab__team-sub {
   color: var(--muted);
   font-size: 0.95rem;
@@ -3137,12 +3141,12 @@ a.contact__detail-value:hover { color: var(--primary); }
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: var(--radius);
   overflow: hidden;
-  transition: transform 0.4s var(--transition), border-color 0.4s var(--transition), box-shadow 0.4s var(--transition);
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 .ab__team-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(200, 65, 11, 0.3);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  transform: translateY(-4px) scale(1.005);
+  border-color: rgba(200, 65, 11, 0.35);
+  box-shadow: 0 12px 36px rgba(200, 65, 11, 0.1);
 }
 .ab__team-img-wrap {
   flex: 0 0 200px;
@@ -3647,6 +3651,63 @@ a.contact__detail-value:hover { color: var(--primary); }
 
 
 /* Navbar logo text */
+
+/* ── PREMIUM MICRO-ANIMATIONS & INTERACTIONS ── */
+
+/* Wobble bounce animation for WhatsApp button svg icon */
+@keyframes wobble {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  15% { transform: rotate(-12deg) scale(1.1); }
+  30% { transform: rotate(14deg) scale(1.1); }
+  45% { transform: rotate(-10deg) scale(1.1); }
+  60% { transform: rotate(8deg) scale(1.1); }
+  75% { transform: rotate(-4deg) scale(1.1); }
+}
+.btn-whatsapp:hover svg,
+.btn-whatsapp:hover span:first-child {
+  animation: wobble 0.8s cubic-bezier(0.25, 1, 0.5, 1) both;
+}
+
+/* Button micro-interactions */
+.btn {
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s ease, box-shadow 0.3s ease;
+}
+.btn:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(200, 65, 11, 0.2);
+}
+.btn-outline:hover {
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.05);
+}
+
+/* Form and Sidebar Input focus glows */
+.contact__field input,
+.contact__field textarea,
+.cr-sb__input,
+.cr-sb__textarea {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+.contact__field input:focus,
+.contact__field textarea:focus,
+.cr-sb__input:focus,
+.cr-sb__textarea:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 10px rgba(200, 65, 11, 0.2) !important;
+}
+
+/* Tour Card name color transition */
+.tour-card {
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.tour-card:hover {
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+.tour-card__name {
+  transition: color 0.3s ease;
+}
+.tour-card:hover .tour-card__name {
+  color: var(--primary);
+}
 
 
 
