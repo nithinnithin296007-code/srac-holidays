@@ -253,7 +253,7 @@ body::before {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.65rem;
   line-height: 1;
   margin-right: auto;
   text-decoration: none;
@@ -262,70 +262,50 @@ body::before {
 }
 
 .navbar__logo-icon {
-  height: 38px;
+  height: 36px;
   width: auto;
   display: block;
   flex-shrink: 0;
-  transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
-}
-.navbar__logo:hover .navbar__logo-icon {
-  transform: scale(1.08) rotate(12deg);
 }
 
 .navbar__logo-text {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 2px;
+  gap: 1px;
 }
 
 .navbar__logo-srac {
   font-family: var(--font-heading);
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-weight: 900;
-  color: var(--white);
-  letter-spacing: 0.08em;
+  color: var(--light);
+  letter-spacing: 0.06em;
   line-height: 1;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-  transition: letter-spacing 0.3s var(--transition), color 0.3s ease;
-}
-.navbar__logo:hover .navbar__logo-srac {
-  color: var(--accent);
-  letter-spacing: 0.12em;
 }
 
 .navbar__logo-holidays {
   font-size: 0.52rem;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.18em;
   color: var(--accent);
   text-transform: uppercase;
   font-weight: 600;
   line-height: 1;
-  transition: letter-spacing 0.3s var(--transition);
-}
-.navbar__logo:hover .navbar__logo-holidays {
-  letter-spacing: 0.26em;
 }
 
 .navbar__logo-est {
-  font-size: 0.46rem;
+  font-size: 0.48rem;
   letter-spacing: 0.12em;
-  color: var(--accent);
+  color: var(--dark);
   text-transform: uppercase;
   font-weight: 700;
-  border: 1px solid var(--accent);
-  background: rgba(245, 166, 35, 0.06);
+  background: var(--accent);
   padding: 2px 6px;
   border-radius: 3px;
   margin-top: 3px;
   line-height: 1;
   text-align: center;
   width: fit-content;
-  transition: background 0.3s ease, color 0.3s ease;
-}
-.navbar__logo:hover .navbar__logo-est {
-  background: var(--accent);
-  color: var(--dark);
 }
 
 .navbar__links {
@@ -3727,6 +3707,13 @@ a.contact__detail-value:hover { color: var(--primary); }
 }
 .tour-card:hover .tour-card__name {
   color: var(--primary);
+}
+
+/* Section spacing overrides to prevent double-stacked paddings on homepage */
+.home__why,
+.home__testimonials,
+.home__rentals {
+  padding-top: 1.5rem !important;
 }
 
 
