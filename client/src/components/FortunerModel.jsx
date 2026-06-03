@@ -5,7 +5,6 @@ import { OrbitControls, Environment, useGLTF, Html, Center, ContactShadows } fro
 const MODELS = [
   { file: '/models/toyota_fortuner_2021.glb', name: 'Toyota Fortuner' },
   { file: '/models/mercedes_s65.glb', name: 'Mercedes S65' },
-  { file: '/models/bmw_m4.glb', name: 'BMW 5 Series' },
   { file: '/models/audi_a5.glb', name: 'Audi A5' },
   { file: '/models/innova_zenix.glb', name: 'Innova Hycross' },
 ]
