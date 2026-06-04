@@ -3,7 +3,6 @@ import { AnimatePresence } from 'framer-motion'
 import { useEffect } from 'react'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
-import FloatingBook from './components/FloatingBook'
 import WhatsAppWidget from './components/WhatsAppWidget'
 import Home from './pages/Home'
 import Tours from './pages/Tours'
@@ -37,7 +36,6 @@ export default function App() {
         </Routes>
       </AnimatePresence>
       <Footer />
-      <FloatingBook />
       <WhatsAppWidget />
     </>
   )

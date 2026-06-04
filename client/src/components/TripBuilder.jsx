@@ -67,35 +67,21 @@ export default function TripBuilder() {
   }
 
   return (
-    <div className="trip-builder-card" style={{
-      background: 'var(--dark-2)',
-      border: '1px solid rgba(255, 255, 255, 0.06)',
-      borderRadius: 'var(--radius)',
-      padding: '2.5rem',
-      maxWidth: '800px',
-      margin: '4rem auto 0',
-      boxShadow: '0 12px 40px rgba(0,0,0,0.4)',
-    }}>
+    <div className="trip-builder-card">
       {/* Step Indicator Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '1rem' }}>
-        <span style={{ fontSize: '0.7rem', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--primary)' }}>
+      <div className="tb__header">
+        <span className="tb__step-indicator">
           Step {step} of 4
         </span>
-        <div style={{ display: 'flex', gap: '6px' }}>
+        <div className="tb__progress-bars">
           {[1, 2, 3, 4].map(s => (
-            <div key={s} style={{
-              width: '24px',
-              height: '4px',
-              borderRadius: '2px',
-              background: s <= step ? 'var(--primary)' : 'rgba(255,255,255,0.1)',
-              transition: 'background 0.3s',
-            }} />
+            <div key={s} className={`tb__progress-bar ${s <= step ? 'active' : ''}`} />
           ))}
         </div>
       </div>
 
       {/* Steps Content wrapper */}
-      <div style={{ minHeight: '320px' }}>
+      <div className="tb__body">
         <AnimatePresence mode="wait">
           {step === 1 && (
             <motion.div
@@ -105,30 +91,21 @@ export default function TripBuilder() {
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.25 }}
             >
-              <h2 style={{ fontSize: '1.6rem', marginBottom: '0.5rem', fontFamily: 'var(--font-heading)' }}>Select Mumbai Experiences</h2>
-              <p style={{ color: 'var(--muted)', fontSize: '0.88rem', marginBottom: '1.5rem' }}>Choose one or more items to add to your custom itinerary.</p>
+              <h2 className="tb__title">Select Mumbai Experiences</h2>
+              <p className="tb__desc">Choose one or more items to add to your custom itinerary.</p>
               
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '12px' }}>
+              <div className="tb__interests-grid">
                 {INTERESTS.map(item => {
                   const active = selectedInterests.includes(item.id)
                   return (
                     <div
                       key={item.id}
                       onClick={() => toggleInterest(item.id)}
-                      style={{
-                        background: active ? 'rgba(200,65,11,0.08)' : 'rgba(255,255,255,0.02)',
-                        border: active ? '1px solid var(--primary)' : '1px solid rgba(255,255,255,0.08)',
-                        borderRadius: '10px',
-                        padding: '1.2rem',
-                        cursor: 'pointer',
-                        transition: 'all 0.2s ease',
-                      }}
-                      onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
-                      onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
+                      className={`tb__interest-item ${active ? 'active' : ''}`}
                     >
-                      <span style={{ fontSize: '1.8rem', display: 'block', marginBottom: '0.6rem' }}>{item.icon}</span>
-                      <h3 style={{ fontSize: '0.95rem', color: '#fff', marginBottom: '4px' }}>{item.title}</h3>
-                      <p style={{ color: 'var(--muted)', fontSize: '0.72rem', lineHeight: 1.4 }}>{item.desc}</p>
+                      <span className="tb__interest-icon">{item.icon}</span>
+                      <h3 className="tb__interest-title">{item.title}</h3>
+                      <p className="tb__interest-desc">{item.desc}</p>
                     </div>
                   )
                 })}
@@ -144,28 +121,19 @@ export default function TripBuilder() {
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.25 }}
             >
-              <h2 style={{ fontSize: '1.6rem', marginBottom: '0.5rem', fontFamily: 'var(--font-heading)' }}>Duration & Group Size</h2>
-              <p style={{ color: 'var(--muted)', fontSize: '0.88rem', marginBottom: '1.8rem' }}>Tell us how much time you have and who is traveling.</p>
+              <h2 className="tb__title">Duration & Group Size</h2>
+              <p className="tb__desc">Tell us how much time you have and who is traveling.</p>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2.5rem' }}>
+              <div className="tb__split-grid">
                 {/* Durations */}
                 <div>
-                  <h3 style={{ fontSize: '0.8rem', color: 'var(--muted)', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '1rem' }}>Duration</h3>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  <h3 className="tb__section-subtitle">Duration</h3>
+                  <div className="tb__options-list">
                     {DURATIONS.map(d => (
                       <div
                         key={d.id}
                         onClick={() => setDuration(d.id)}
-                        style={{
-                          background: duration === d.id ? 'rgba(200,65,11,0.08)' : 'rgba(255,255,255,0.02)',
-                          border: duration === d.id ? '1px solid var(--primary)' : '1px solid rgba(255,255,255,0.08)',
-                          borderRadius: '8px',
-                          padding: '0.9rem 1.2rem',
-                          fontSize: '0.85rem',
-                          color: '#fff',
-                          cursor: 'pointer',
-                          transition: 'all 0.2s',
-                        }}
+                        className={`tb__option-item ${duration === d.id ? 'active' : ''}`}
                       >
                         {d.label}
                       </div>
@@ -175,22 +143,13 @@ export default function TripBuilder() {
 
                 {/* Groups */}
                 <div>
-                  <h3 style={{ fontSize: '0.8rem', color: 'var(--muted)', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '1rem' }}>Group Size</h3>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  <h3 className="tb__section-subtitle">Group Size</h3>
+                  <div className="tb__options-list">
                     {GROUPS.map(g => (
                       <div
                         key={g.id}
                         onClick={() => setGroupSize(g.id)}
-                        style={{
-                          background: groupSize === g.id ? 'rgba(200,65,11,0.08)' : 'rgba(255,255,255,0.02)',
-                          border: groupSize === g.id ? '1px solid var(--primary)' : '1px solid rgba(255,255,255,0.08)',
-                          borderRadius: '8px',
-                          padding: '0.9rem 1.2rem',
-                          fontSize: '0.85rem',
-                          color: '#fff',
-                          cursor: 'pointer',
-                          transition: 'all 0.2s',
-                        }}
+                        className={`tb__option-item ${groupSize === g.id ? 'active' : ''}`}
                       >
                         {g.label}
                       </div>
@@ -209,82 +168,48 @@ export default function TripBuilder() {
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.25 }}
             >
-              <h2 style={{ fontSize: '1.6rem', marginBottom: '0.5rem', fontFamily: 'var(--font-heading)' }}>Travel Details</h2>
-              <p style={{ color: 'var(--muted)', fontSize: '0.88rem', marginBottom: '1.8rem' }}>Provide contact info and date so we can coordinate your tour details.</p>
+              <h2 className="tb__title">Travel Details</h2>
+              <p className="tb__desc">Provide contact info and date so we can coordinate your tour details.</p>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  <label style={{ fontSize: '0.72rem', textTransform: 'uppercase', color: 'var(--muted)', fontWeight: 600 }}>Your Name *</label>
+              <div className="tb__details-grid">
+                <div className="tb__input-group">
+                  <label className="tb__input-label">Your Name *</label>
                   <input
                     value={details.name}
                     onChange={e => setDetails({ ...details, name: e.target.value })}
                     placeholder="Enter name"
-                    style={{
-                      backgroundColor: 'var(--dark)',
-                      border: '1px solid rgba(255,255,255,0.08)',
-                      borderRadius: '8px',
-                      padding: '0.75rem 1rem',
-                      color: '#fff',
-                      fontSize: '0.88rem',
-                      outline: 'none',
-                    }}
+                    className="tb__input"
                   />
                 </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  <label style={{ fontSize: '0.72rem', textTransform: 'uppercase', color: 'var(--muted)', fontWeight: 600 }}>Phone Number *</label>
+                <div className="tb__input-group">
+                  <label className="tb__input-label">Phone Number *</label>
                   <input
                     value={details.phone}
                     onChange={e => setDetails({ ...details, phone: e.target.value })}
                     placeholder="e.g. +91 98765 43210"
-                    style={{
-                      backgroundColor: 'var(--dark)',
-                      border: '1px solid rgba(255,255,255,0.08)',
-                      borderRadius: '8px',
-                      padding: '0.75rem 1rem',
-                      color: '#fff',
-                      fontSize: '0.88rem',
-                      outline: 'none',
-                    }}
+                    className="tb__input"
                   />
                 </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', gridColumn: 'span 2' }}>
-                  <label style={{ fontSize: '0.72rem', textTransform: 'uppercase', color: 'var(--muted)', fontWeight: 600 }}>Target Travel Date *</label>
+                <div className="tb__input-group tb__input-group--full">
+                  <label className="tb__input-label">Target Travel Date *</label>
                   <input
                     value={details.date}
                     onChange={e => setDetails({ ...details, date: e.target.value })}
                     placeholder="Preferred Date / Range"
-                    style={{
-                      backgroundColor: 'var(--dark)',
-                      border: '1px solid rgba(255,255,255,0.08)',
-                      borderRadius: '8px',
-                      padding: '0.75rem 1rem',
-                      color: '#fff',
-                      fontSize: '0.88rem',
-                      outline: 'none',
-                    }}
+                    className="tb__input"
                   />
                 </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', gridColumn: 'span 2' }}>
-                  <label style={{ fontSize: '0.72rem', textTransform: 'uppercase', color: 'var(--muted)', fontWeight: 600 }}>Special Requests (optional)</label>
+                <div className="tb__input-group tb__input-group--full">
+                  <label className="tb__input-label">Special Requests (optional)</label>
                   <textarea
                     value={details.notes}
                     onChange={e => setDetails({ ...details, notes: e.target.value })}
                     placeholder="Tell us what you are most excited about or any specific landmarks you'd like to include..."
                     rows={3}
-                    style={{
-                      backgroundColor: 'var(--dark)',
-                      border: '1px solid rgba(255,255,255,0.08)',
-                      borderRadius: '8px',
-                      padding: '0.75rem 1rem',
-                      color: '#fff',
-                      fontSize: '0.88rem',
-                      fontFamily: 'inherit',
-                      outline: 'none',
-                      resize: 'none',
-                    }}
+                    className="tb__textarea"
                   />
                 </div>
               </div>
@@ -299,38 +224,38 @@ export default function TripBuilder() {
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.25 }}
             >
-              <h2 style={{ fontSize: '1.6rem', marginBottom: '0.5rem', fontFamily: 'var(--font-heading)' }}>Verify Custom Tour</h2>
-              <p style={{ color: 'var(--muted)', fontSize: '0.88rem', marginBottom: '1.8rem' }}>Check your specifications before sending details to our WhatsApp team.</p>
+              <h2 className="tb__title">Verify Custom Tour</h2>
+              <p className="tb__desc">Check your specifications before sending details to our WhatsApp team.</p>
 
-              <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '10px', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '14px', fontSize: '0.88rem', color: 'var(--light-2)' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.04)', paddingBottom: '8px' }}>
-                  <span style={{ color: 'var(--muted)' }}>Traveler Name:</span>
-                  <strong style={{ color: '#fff' }}>{details.name || 'Not filled'}</strong>
+              <div className="tb__summary-box">
+                <div className="tb__summary-row">
+                  <span className="tb__summary-key">Traveler Name:</span>
+                  <strong className="tb__summary-val">{details.name || 'Not filled'}</strong>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.04)', paddingBottom: '8px' }}>
-                  <span style={{ color: 'var(--muted)' }}>Contact Phone:</span>
-                  <strong style={{ color: '#fff' }}>{details.phone || 'Not filled'}</strong>
+                <div className="tb__summary-row">
+                  <span className="tb__summary-key">Contact Phone:</span>
+                  <strong className="tb__summary-val">{details.phone || 'Not filled'}</strong>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.04)', paddingBottom: '8px' }}>
-                  <span style={{ color: 'var(--muted)' }}>Travel Date:</span>
-                  <strong style={{ color: '#fff' }}>{details.date || 'Not filled'}</strong>
+                <div className="tb__summary-row">
+                  <span className="tb__summary-key">Travel Date:</span>
+                  <strong className="tb__summary-val">{details.date || 'Not filled'}</strong>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.04)', paddingBottom: '8px' }}>
-                  <span style={{ color: 'var(--muted)' }}>Experiences Selected:</span>
-                  <strong style={{ color: '#fff', textAlign: 'right', maxWidth: '60%' }}>
+                <div className="tb__summary-row">
+                  <span className="tb__summary-key">Experiences Selected:</span>
+                  <strong className="tb__summary-val tb__summary-val--wide">
                     {selectedInterests.length > 0
                       ? selectedInterests.map(id => INTERESTS.find(x => x.id === id)?.title).join(', ')
                       : 'None selected'
                     }
                   </strong>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.04)', paddingBottom: '8px' }}>
-                  <span style={{ color: 'var(--muted)' }}>Duration:</span>
-                  <strong style={{ color: '#fff' }}>{DURATIONS.find(x => x.id === duration)?.label}</strong>
+                <div className="tb__summary-row">
+                  <span className="tb__summary-key">Duration:</span>
+                  <strong className="tb__summary-val">{DURATIONS.find(x => x.id === duration)?.label}</strong>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '4px' }}>
-                  <span style={{ color: 'var(--muted)' }}>Group Size:</span>
-                  <strong style={{ color: '#fff' }}>{GROUPS.find(x => x.id === groupSize)?.label}</strong>
+                <div className="tb__summary-row tb__summary-row--last">
+                  <span className="tb__summary-key">Group Size:</span>
+                  <strong className="tb__summary-val">{GROUPS.find(x => x.id === groupSize)?.label}</strong>
                 </div>
               </div>
             </motion.div>
@@ -339,9 +264,9 @@ export default function TripBuilder() {
       </div>
 
       {/* Footer Navigation Buttons */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '2.5rem', paddingTop: '1.5rem', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+      <div className="tb__footer">
         {step > 1 ? (
-          <button onClick={handlePrev} className="btn btn-outline" style={{ fontSize: '0.8rem', padding: '0.6rem 1.4rem' }}>
+          <button onClick={handlePrev} className="btn btn-outline tb__back-btn">
             ← Back
           </button>
         ) : (
@@ -351,11 +276,9 @@ export default function TripBuilder() {
         {step < 4 ? (
           <button
             onClick={handleNext}
-            className="btn btn-primary"
+            className="btn btn-primary tb__next-btn"
             disabled={step === 3 && (!details.name.trim() || !details.phone.trim() || !details.date.trim())}
             style={{
-              fontSize: '0.8rem',
-              padding: '0.6rem 1.5rem',
               opacity: step === 3 && (!details.name.trim() || !details.phone.trim() || !details.date.trim()) ? 0.5 : 1,
               cursor: step === 3 && (!details.name.trim() || !details.phone.trim() || !details.date.trim()) ? 'not-allowed' : 'pointer',
             }}
@@ -363,7 +286,7 @@ export default function TripBuilder() {
             Next Step →
           </button>
         ) : (
-          <button onClick={handleSend} className="btn btn-whatsapp" style={{ fontSize: '0.8rem', padding: '0.6rem 1.6rem' }}>
+          <button onClick={handleSend} className="btn btn-whatsapp tb__wa-btn">
             💬 Enquire on WhatsApp
           </button>
         )}

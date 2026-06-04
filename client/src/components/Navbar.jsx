@@ -111,7 +111,7 @@ export default function Navbar() {
                                 display: 'flex',
                                 flexDirection: 'column',
                                 justifyContent: 'space-between',
-                                boxShodow: '-10px 0 35px rgba(0,0,0,0.6)',
+                                boxShadow: '-10px 0 35px rgba(0,0,0,0.6)',
                             }}
                         >
                             <div>

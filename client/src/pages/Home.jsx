@@ -246,44 +246,21 @@ export default function Home() {
 
       <section className="section home__rentals">
         <div className="container">
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '2rem',
-            background: 'var(--dark-2)',
-            border: '1px solid rgba(255,255,255,0.07)',
-            borderRadius: '16px',
-            padding: '2.5rem 3rem',
-            flexWrap: 'wrap',
-          }}>
-            <div>
-              <span style={{
-                fontSize: '0.7rem',
-                letterSpacing: '2px',
-                textTransform: 'uppercase',
-                color: 'var(--primary)',
-                fontWeight: 600,
-              }}>Also Available</span>
-              <h2 style={{ fontSize: '1.8rem', margin: '0.5rem 0', fontFamily: 'var(--font-display)' }}>
+          <div className="home__rentals-banner">
+            <div className="home__rentals-banner-content">
+              <span className="home__rentals-banner-subtitle">Also Available</span>
+              <h2 className="home__rentals-banner-title">
                 Luxury Car Rentals
               </h2>
-              <p style={{ color: 'var(--text-muted)', maxWidth: '420px', lineHeight: 1.6 }}>
+              <p className="home__rentals-banner-desc">
                 BMW, Mercedes, Jaguar, Innova and more. Airport transfers, outstation trips, corporate events — driven by professionals.
               </p>
             </div>
-            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+            <div className="home__rentals-banner-fleet">
               {['BMW 5 Series', 'Mercedes E-Class', 'Jaguar XF', 'Innova Crysta'].map(car => (
-                <span key={car} style={{
-                  background: 'rgba(255,255,255,0.05)',
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  borderRadius: '100px',
-                  padding: '6px 14px',
-                  fontSize: '0.75rem',
-                  color: 'var(--text-muted)',
-                }}>{car}</span>
+                <span key={car} className="home__rentals-banner-car">{car}</span>
               ))}
-              <a href="/car-rentals" className="btn btn-primary" style={{ marginTop: '0.5rem' }}>
+              <a href="/car-rentals" className="btn btn-primary home__rentals-banner-btn">
                 View Fleet →
               </a>
             </div>
