@@ -30,10 +30,10 @@ export default function WhatsAppWidget() {
             <div className="wa__widget-header">
               {/* Avatar circle */}
               <div className="wa__widget-avatar">
-                SM
+                AM
               </div>
               <div className="wa__widget-name-wrap">
-                <span className="wa__widget-name">Shreekant Mandal</span>
+                <span className="wa__widget-name">Abhishek Mandal</span>
                 <span className="wa__widget-status">
                   <span className="wa__widget-status-dot" />
                   Online · Responds in minutes
@@ -50,7 +50,7 @@ export default function WhatsAppWidget() {
             {/* Body */}
             <div className="wa__widget-body">
               <div className="wa__widget-bubble">
-                Hi there! 👋 I'm Shreekant, founder of SRAC Holidays. How can we help you plan your Mumbai tour or car rental today?
+                Hi there! 👋 I'm Abhishek, CEO of SRAC Holidays. How can we help you plan your Mumbai tour or car rental today?
               </div>
             </div>
 
