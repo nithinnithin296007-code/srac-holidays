@@ -79,12 +79,12 @@ function FAQItem({ q, a, isOpen, onClick }) {
   )
 }
 
-export default function FAQAccordion() {
+export default function FAQAccordion({ items = FAQS }) {
   const [openIndex, setOpenIndex] = useState(null)
 
   return (
     <div style={{ maxWidth: '650px', margin: '0 auto' }}>
-      {FAQS.map((faq, i) => (
+      {items.map((faq, i) => (
         <FAQItem
           key={i}
           q={faq.q}

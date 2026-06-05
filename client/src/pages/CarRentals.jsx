@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import SEO from '../components/SEO'
 import FortunerModel from '../components/FortunerModel'
+import FAQAccordion from '../components/FAQAccordion'
 import imgDzire from '../assets/cars/honda-amaze.jpg'
 import imgAmaze from '../assets/cars/honda-amaze.jpg'
 import imgHondaCity from '../assets/cars/honda-city.jpg'
@@ -56,6 +57,29 @@ const SERVICE_ICONS = {
   'Outstation': '🛣',
   'Corporate': '💼',
 }
+
+const CAR_FAQS = [
+  {
+    q: 'What is included in the car rental tariff?',
+    a: 'Our rental charges include a clean vehicle, a professional chauffeur, and fuel. Tolls, parking fees, and state border entry taxes are charged at actuals unless they are pre-arranged in a customized package.',
+  },
+  {
+    q: 'Do you offer self-drive car rentals?',
+    a: 'No, we specialize exclusively in chauffeur-driven rentals. Our experienced, background-verified drivers ensure a safe, stress-free journey while you focus on your travel or work.',
+  },
+  {
+    q: 'Are there any extra charges for night travel or outstation trips?',
+    a: 'For outstation trips, there is a standard driver night allowance if the journey extends past 10:00 PM or starts before 6:00 AM. Local city rentals do not incur extra charges unless they exceed the package hours/kms.',
+  },
+  {
+    q: 'How do we coordinate with the driver at airport pickups?',
+    a: 'Once your booking is confirmed, we will share the driver\'s details (name, phone number, and vehicle plate) 3 hours before your arrival. The driver will greet you at the airport arrivals exit holding a paging board with your name.',
+  },
+  {
+    q: 'What is your cancellation and modification policy?',
+    a: 'We offer free cancellations and modifications up to 24 hours prior to the scheduled pickup time. Cancellations made within 24 hours may attract a nominal fee depending on the vehicle type.',
+  },
+]
 
 const fade = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -367,6 +391,19 @@ export default function CarRentals() {
               )}
             </AnimatePresence>
           </div>
+        </div>
+      </section>
+
+      {/* ── FAQ ── */}
+      <section className="section cr-faq-section" style={{ borderTop: '1px solid var(--dark-3)', padding: '5rem 0' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <span className="tag">Got Questions?</span>
+            <h2 style={{ fontSize: '2.2rem', marginTop: '0.5rem', fontFamily: 'var(--font-heading)' }}>
+              Frequently Asked Questions
+            </h2>
+          </div>
+          <FAQAccordion items={CAR_FAQS} />
         </div>
       </section>
 
