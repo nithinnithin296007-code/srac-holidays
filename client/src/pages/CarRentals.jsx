@@ -313,6 +313,7 @@ export default function CarRentals() {
                     <AnimatePresence mode="wait">
                       {errors.name && (
                         <motion.span
+                          key="name-error"
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: 'auto' }}
                           exit={{ opacity: 0, height: 0 }}
@@ -354,6 +355,7 @@ export default function CarRentals() {
                     <AnimatePresence mode="wait">
                       {errors.details && (
                         <motion.span
+                          key="details-error"
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: 'auto' }}
                           exit={{ opacity: 0, height: 0 }}

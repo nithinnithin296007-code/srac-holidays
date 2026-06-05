@@ -539,6 +539,7 @@ body::before {
   position: relative;
   height: 220px;
   overflow: hidden;
+  min-height: 160px;
 }
 
 .tour-card__image img {
@@ -898,7 +899,7 @@ body::before {
   }
 
   .tours-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   }
 
   .why__inner {
@@ -914,7 +915,7 @@ body::before {
 
 @media (max-width: 560px) {
   .tours-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
   }
 
   .stats__grid {
@@ -1799,7 +1800,7 @@ body::before {
 
 /* Full grid */
 .tours-grid--full {
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
 /* Loading */
@@ -1850,17 +1851,18 @@ body::before {
 
 @media (max-width: 900px) {
   .tours-grid--full {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   }
 
   .tours__b2b-inner {
     flex-direction: column;
+    text-align: center;
   }
 }
 
 @media (max-width: 560px) {
   .tours-grid--full {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
   }
 }
 
@@ -3525,8 +3527,8 @@ a.contact__detail-value:hover { color: var(--primary); }
   .home__cta-right .btn { width: 100%; justify-content: center; }
 
   /* Tour cards */
-  .tours-grid { grid-template-columns: 1fr; }
-  .tours-grid--full { grid-template-columns: 1fr; }
+  .tours-grid { grid-template-columns: 1fr !important; }
+  .tours-grid--full { grid-template-columns: 1fr !important; }
   .hide-on-mobile { display: none !important; }
 
   /* Tours catalog page fixes */
@@ -3535,28 +3537,30 @@ a.contact__detail-value:hover { color: var(--primary); }
     padding: 0.8rem 0;
   }
   .tours__filter-bar .container {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.6rem;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.6rem !important;
   }
   .tours__filters {
-    flex-wrap: nowrap;
-    overflow-x: auto;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
     -webkit-overflow-scrolling: touch;
-    padding-bottom: 2px;
+    padding-bottom: 4px;
     margin: 0 -1.2rem;
     padding: 0 1.2rem;
     scrollbar-width: none;
+    gap: 0.6rem !important;
   }
   .tours__filters::-webkit-scrollbar {
     display: none;
   }
   .tours__filter-btn {
-    flex-shrink: 0;
+    flex-shrink: 0 !important;
   }
   .tours__count {
     font-size: 0.78rem;
-    text-align: right;
+    text-align: right !important;
   }
   .tours__b2b-inner {
     flex-direction: column;
