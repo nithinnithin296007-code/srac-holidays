@@ -1,9 +1,92 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useLocation } from 'react-router-dom'
+
+const getContextConfig = (pathname) => {
+  // Trade Enquiry (B2B)
+  if (pathname.startsWith('/b2b')) {
+    return {
+      avatar: 'AM',
+      name: 'Abhishek Mandal',
+      role: 'CEO · Trade Partnerships',
+      greeting: "Hello! Interested in a B2B partnership or group rates? I handle all our trade relations directly. How can I help your business today?",
+      placeholder: "Ask about commissions, trade rates, or bulk bookings...",
+      defaultMessage: "Hi Abhishek, I'd like to enquire about a B2B/trade partnership with SRAC Holidays."
+    }
+  }
+
+  // Car Rentals
+  if (pathname.startsWith('/car-rentals')) {
+    return {
+      avatar: 'AM',
+      name: 'Abhishek Mandal',
+      role: 'CEO · Transport Desk',
+      greeting: "Hi! Looking to rent a luxury sedan, SUV, or tour coach in Mumbai? Let me know your travel dates and requirements!",
+      placeholder: "Inquire about Camry, Innova, Audi A4, coach rentals...",
+      defaultMessage: "Hi, I'd like to enquire about renting a vehicle for..."
+    }
+  }
+
+  // Tours & Tour Details
+  if (pathname.startsWith('/tours')) {
+    return {
+      avatar: 'SM',
+      name: 'Shreekant Mandal',
+      role: 'Founder · Mumbai Expert',
+      greeting: "Namaste! 👋 I'm Shreekant, Founder of SRAC Holidays. Ready to explore Mumbai? Tell me which tours or custom experiences you are looking at!",
+      placeholder: "Inquire about Bollywood tours, heritage walks, street food...",
+      defaultMessage: "Hi Shreekant, I am interested in booking a Mumbai tour."
+    }
+  }
+
+  // Contact Page
+  if (pathname.startsWith('/contact')) {
+    return {
+      avatar: 'AM',
+      name: 'Abhishek Mandal',
+      role: 'CEO · Support',
+      greeting: "Hi there! Have any questions about our bookings, custom itineraries, or payments? I am here to help you directly.",
+      placeholder: "Type your query here...",
+      defaultMessage: "Hi SRAC Holidays, I have a quick query regarding..."
+    }
+  }
+
+  // About Page
+  if (pathname.startsWith('/about')) {
+    return {
+      avatar: 'SM',
+      name: 'Shreekant Mandal',
+      role: 'Founder',
+      greeting: "Hi! Thanks for checking out our story. We've been guiding guests since 2003. Let me know if you want to know more about our tours!",
+      placeholder: "Type a message...",
+      defaultMessage: "Hi Shreekant, I'd like to learn more about SRAC Holidays."
+    }
+  }
+
+  // Default (Home or other)
+  return {
+    avatar: 'AM',
+    name: 'Abhishek Mandal',
+    role: 'CEO · SRAC Holidays',
+    greeting: "Hi there! 👋 How can we help you plan your Mumbai experience, corporate trip, or luxury car rentals today?",
+    placeholder: "Type a message...",
+    defaultMessage: "" // Empty by default for Home to allow typing anything
+  }
+}
 
 export default function WhatsAppWidget() {
   const [open, setOpen] = useState(false)
   const [message, setMessage] = useState('')
+  const location = useLocation()
+  const config = getContextConfig(location.pathname)
+
+  const handleOpenToggle = () => {
+    const nextOpen = !open
+    setOpen(nextOpen)
+    if (nextOpen) {
+      setMessage(config.defaultMessage)
+    }
+  }
 
   const handleSend = (e) => {
     e.preventDefault()
@@ -30,13 +113,13 @@ export default function WhatsAppWidget() {
             <div className="wa__widget-header">
               {/* Avatar circle */}
               <div className="wa__widget-avatar">
-                AM
+                {config.avatar}
               </div>
               <div className="wa__widget-name-wrap">
-                <span className="wa__widget-name">Abhishek Mandal</span>
+                <span className="wa__widget-name">{config.name}</span>
                 <span className="wa__widget-status">
                   <span className="wa__widget-status-dot" />
-                  Online · Responds in minutes
+                  {config.role}
                 </span>
               </div>
               <button
@@ -50,7 +133,7 @@ export default function WhatsAppWidget() {
             {/* Body */}
             <div className="wa__widget-body">
               <div className="wa__widget-bubble">
-                Hi there! 👋 I'm Abhishek, CEO of SRAC Holidays. How can we help you plan your Mumbai tour or car rental today?
+                {config.greeting}
               </div>
             </div>
 
@@ -59,12 +142,13 @@ export default function WhatsAppWidget() {
               <input
                 value={message}
                 onChange={e => setMessage(e.target.value)}
-                placeholder="Type a message..."
+                placeholder={config.placeholder}
                 className="wa__widget-input"
               />
               <button
                 type="submit"
                 className="wa__widget-submit"
+                aria-label="Send to WhatsApp"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <line x1="22" y1="2" x2="11" y2="13" />
@@ -78,10 +162,11 @@ export default function WhatsAppWidget() {
 
       {/* Floating Trigger Button */}
       <motion.button
-        onClick={() => setOpen(!open)}
+        onClick={handleOpenToggle}
         whileHover={{ scale: 1.06 }}
         whileTap={{ scale: 0.95 }}
         className="wa__widget-trigger"
+        aria-label="Open WhatsApp Chat"
       >
         {/* Animated pulse ring */}
         {!open && (
