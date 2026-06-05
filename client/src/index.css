@@ -4759,5 +4759,460 @@ a.contact__detail-value:hover { color: var(--primary); }
   }
 }
 
+/* ══════════════════════════════════════════════════
+   TOURS & TOUR DETAIL — COMPREHENSIVE MOBILE FIXES
+   ══════════════════════════════════════════════════ */
 
+/* ── TABLET (≤768px) ── */
+@media (max-width: 768px) {
+  /* Tours listing hero */
+  .tours-hero {
+    height: auto;
+    min-height: 300px;
+    padding: 7rem 0 3rem;
+  }
+  .tours-hero__content {
+    padding-top: 2rem;
+  }
+  .tours-hero__title {
+    font-size: clamp(2rem, 7vw, 3rem);
+  }
+  .tours-hero__sub {
+    font-size: 0.92rem;
+    max-width: 100%;
+  }
 
+  /* Tour card tweaks */
+  .tour-card__image {
+    height: 190px;
+  }
+  .tour-card__body {
+    padding: 1.1rem;
+  }
+  .tour-card__name {
+    font-size: 1.05rem;
+  }
+  .tour-card__tagline {
+    font-size: 0.82rem;
+    margin-bottom: 0.75rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Tour Detail Hero */
+  .td__hero {
+    min-height: 45vh;
+    padding-bottom: 3rem;
+    padding-top: 7rem;
+  }
+  .td__hero-inner h1 {
+    font-size: clamp(1.6rem, 6vw, 2.4rem) !important;
+    margin-bottom: 0.6rem;
+  }
+  .td__subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+  .td__breadcrumb {
+    margin-bottom: 1rem;
+    gap: 0.5rem;
+  }
+  .td__breadcrumb a {
+    font-size: 0.78rem;
+  }
+  .td__meta {
+    gap: 0.8rem;
+  }
+  .td__meta span {
+    font-size: 0.78rem;
+    padding: 0.3rem 0.8rem;
+  }
+
+  /* Tour Detail body */
+  .td__body-grid {
+    gap: 2.5rem;
+  }
+  .td__left {
+    gap: 2rem;
+  }
+  .td__block h2 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  .td__block p {
+    font-size: 0.88rem;
+    line-height: 1.75;
+  }
+
+  /* CTA card full width on tablet */
+  .td__cta-card {
+    max-width: 100%;
+    padding: 1.5rem;
+  }
+
+  /* Highlights */
+  .td__highlights li {
+    font-size: 0.88rem;
+    gap: 0.65rem;
+    padding: 0.7rem 0.9rem;
+  }
+
+  /* Expect items */
+  .td__expect-item {
+    padding: 0.75rem 0.9rem;
+    font-size: 0.84rem;
+    gap: 0.75rem;
+  }
+
+  /* Route map */
+  .td__block[style*="margin: 3rem"] {
+    padding: 1.2rem !important;
+  }
+
+  /* Tours B2B section */
+  .tours__b2b h2 {
+    font-size: clamp(1.4rem, 5vw, 1.8rem);
+  }
+
+  /* FAQ in tours page — add bottom padding so sticky bar doesn't cover it */
+  .tours__faq {
+    padding-bottom: 2rem;
+  }
+}
+
+/* ── PHONE (≤576px) ── */
+@media (max-width: 576px) {
+  /* Tours listing hero */
+  .tours-hero {
+    min-height: 240px;
+    padding: 6rem 0 2rem;
+  }
+  .tours-hero__content {
+    padding-top: 1rem;
+  }
+  .tours-hero__title {
+    font-size: clamp(1.8rem, 8vw, 2.4rem);
+    line-height: 1.15;
+    margin: 0.5rem 0;
+  }
+  .tours-hero__sub {
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  /* Tour card stacking — full-width single column */
+  .tour-card__image {
+    height: 180px;
+  }
+  .tour-card__body {
+    padding: 1rem;
+  }
+  .tour-card__name {
+    font-size: 1rem;
+  }
+  .tour-card__meta {
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .tour-card__meta span {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.55rem;
+  }
+  .tour-card__footer {
+    padding-top: 0.75rem;
+  }
+  .tour-card__arrow {
+    font-size: 0.9rem;
+  }
+
+  /* Filter bar tighter */
+  .tours__filter-bar {
+    padding: 0.6rem 0;
+  }
+  .tours__filter-btn {
+    padding: 0.4rem 0.9rem;
+    font-size: 0.75rem;
+  }
+
+  /* Tour Detail Hero */
+  .td__hero {
+    min-height: 38vh;
+    padding-bottom: 2rem;
+    padding-top: 5.5rem;
+  }
+  .td__hero-inner {
+    max-width: 100%;
+  }
+  .td__hero-inner h1 {
+    font-size: clamp(1.5rem, 7vw, 2rem) !important;
+    word-break: break-word;
+  }
+  .td__subtitle {
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+  .td__breadcrumb a {
+    font-size: 0.72rem;
+  }
+  .td__meta {
+    gap: 0.5rem;
+  }
+  .td__meta span {
+    font-size: 0.72rem;
+    padding: 0.25rem 0.65rem;
+  }
+
+  /* Tour Detail body */
+  .td__body-grid {
+    gap: 2rem;
+  }
+  .td__left {
+    gap: 1.5rem;
+  }
+  .td__block h2 {
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+  }
+  .td__block p {
+    font-size: 0.84rem;
+    line-height: 1.7;
+    margin-bottom: 0.75rem;
+  }
+
+  /* CTA card */
+  .td__cta-card {
+    padding: 1.25rem;
+  }
+  .td__cta-card h3 {
+    font-size: 1.05rem;
+  }
+  .td__cta-meta {
+    padding: 0.9rem;
+    gap: 0.75rem;
+  }
+  .td__cta-meta span {
+    font-size: 0.65rem;
+  }
+  .td__cta-meta strong {
+    font-size: 0.82rem;
+  }
+  .td__cta-note {
+    font-size: 0.7rem;
+  }
+  .td__cta-tags {
+    gap: 0.3rem;
+  }
+  .td__cta-tag {
+    font-size: 0.62rem;
+    padding: 0.2rem 0.55rem;
+  }
+
+  /* Highlights */
+  .td__highlights li {
+    font-size: 0.84rem;
+    padding: 0.6rem 0.8rem;
+    gap: 0.6rem;
+  }
+  .td__highlight-dot {
+    width: 6px;
+    height: 6px;
+    margin-top: 0.4rem;
+  }
+
+  /* Expect items */
+  .td__expect-item {
+    padding: 0.65rem 0.8rem;
+    font-size: 0.82rem;
+    gap: 0.6rem;
+  }
+  .td__expect-icon {
+    font-size: 1rem;
+  }
+
+  /* Itinerary on small phones */
+  .td__itinerary-item {
+    grid-template-columns: 90px 1fr;
+    gap: 0.6rem;
+    padding: 0.7rem 0;
+  }
+  .td__itinerary-time {
+    font-size: 0.72rem;
+  }
+  .td__itinerary-activity {
+    font-size: 0.84rem;
+  }
+
+  /* Mobile sticky bar — prevent content from being hidden behind it */
+  .td__body {
+    padding-bottom: 5rem;
+  }
+
+  /* Tours B2B section */
+  .tours__b2b-inner {
+    gap: 1.5rem;
+    text-align: center;
+  }
+  .tours__b2b h2 {
+    font-size: 1.3rem;
+  }
+  .tours__b2b p {
+    font-size: 0.85rem;
+  }
+
+  /* FAQ section tighter */
+  .cr-faq-section,
+  .tours__faq {
+    padding: 3rem 0 !important;
+  }
+  .cr-faq-section h2,
+  .tours__faq h2 {
+    font-size: 1.6rem !important;
+  }
+
+  /* Skeleton cards on mobile */
+  .skeleton-image {
+    height: 180px;
+  }
+}
+
+/* ── VERY SMALL PHONES (≤420px) ── */
+@media (max-width: 420px) {
+  /* Tours listing hero */
+  .tours-hero {
+    padding: 5.5rem 0 1.5rem;
+    min-height: 200px;
+  }
+  .tours-hero__title {
+    font-size: 1.6rem;
+  }
+  .tours-hero__sub {
+    font-size: 0.8rem;
+  }
+
+  /* Tour Detail Hero */
+  .td__hero {
+    min-height: 32vh;
+    padding-bottom: 1.5rem;
+    padding-top: 5rem;
+  }
+  .td__hero-inner h1 {
+    font-size: 1.4rem !important;
+    line-height: 1.2;
+  }
+  .td__subtitle {
+    font-size: 0.8rem;
+  }
+  .td__meta span {
+    font-size: 0.68rem;
+    padding: 0.2rem 0.5rem;
+  }
+
+  /* Tour card */
+  .tour-card__image {
+    height: 160px;
+  }
+  .tour-card__body {
+    padding: 0.85rem;
+  }
+  .tour-card__name {
+    font-size: 0.95rem;
+  }
+  .tour-card__tagline {
+    font-size: 0.78rem;
+    -webkit-line-clamp: 2;
+  }
+
+  /* Body grid */
+  .td__body-grid {
+    gap: 1.5rem;
+  }
+  .td__left {
+    gap: 1.25rem;
+  }
+  .td__block h2 {
+    font-size: 1rem;
+  }
+
+  /* Itinerary single column */
+  .td__itinerary-item {
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
+  }
+  .td__itinerary-time {
+    text-align: left;
+    font-size: 0.7rem;
+  }
+  .td__itinerary-activity {
+    font-size: 0.82rem;
+  }
+
+  /* CTA card */
+  .td__cta-card {
+    padding: 1rem;
+  }
+  .td__cta-card h3 {
+    font-size: 0.95rem;
+  }
+  .td__cta-meta {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+    padding: 0.75rem;
+  }
+
+  /* B2B section */
+  .tours__b2b h2 {
+    font-size: 1.15rem;
+  }
+  .tours__b2b-actions .btn {
+    font-size: 0.82rem;
+    padding: 0.7rem 1.2rem;
+  }
+
+  /* Filter buttons */
+  .tours__filter-btn {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.72rem;
+  }
+
+  /* FAQ section */
+  .cr-faq-section h2,
+  .tours__faq h2 {
+    font-size: 1.4rem !important;
+  }
+
+  /* Mobile sticky bar adjustments */
+  .td__mobile-sticky-info h4 {
+    font-size: 0.82rem;
+  }
+  .td__mobile-sticky-info span {
+    font-size: 0.65rem;
+  }
+  .td__mobile-sticky-btn {
+    padding: 0.55rem 0.9rem;
+    font-size: 0.75rem;
+  }
+}
+
+/* ── GLOBAL OVERFLOW PREVENTION ── */
+.tours-hero,
+.tours__grid-section,
+.tours__faq,
+.tours__b2b,
+.td__hero,
+.td__body,
+.td__left,
+.td__right {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+.td__hero-inner,
+.td__block,
+.td__cta-card,
+.td__highlights li,
+.td__expect-item {
+  word-break: break-word;
+  overflow-wrap: break-word;
+}

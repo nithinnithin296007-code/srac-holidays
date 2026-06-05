@@ -68,16 +68,16 @@ const CAR_FAQS = [
     a: 'No, we specialize exclusively in chauffeur-driven rentals. Our experienced, background-verified drivers ensure a safe, stress-free journey while you focus on your travel or work.',
   },
   {
-    q: 'Are there any extra charges for night travel or outstation trips?',
-    a: 'For outstation trips, there is a standard driver night allowance if the journey extends past 10:00 PM or starts before 6:00 AM. Local city rentals do not incur extra charges unless they exceed the package hours/kms.',
+    q: 'Is there a minimum booking duration for car rentals?',
+    a: 'For local city rentals, the minimum booking is a 4-hour / 40 km package. Airport transfers have no minimum duration — we cover single one-way pickups and drops as well. Outstation trips require a minimum of one full day (8 hours / 80 km).',
   },
   {
     q: 'How do we coordinate with the driver at airport pickups?',
     a: 'Once your booking is confirmed, we will share the driver\'s details (name, phone number, and vehicle plate) 3 hours before your arrival. The driver will greet you at the airport arrivals exit holding a paging board with your name.',
   },
   {
-    q: 'What is your cancellation and modification policy?',
-    a: 'We offer free cancellations and modifications up to 24 hours prior to the scheduled pickup time. Cancellations made within 24 hours may attract a nominal fee depending on the vehicle type.',
+    q: 'Can I request child seats or extra luggage carriers?',
+    a: 'Yes! We provide baby/child safety seats free of charge on request — just mention it when you book. For extra luggage beyond the vehicle\'s standard boot capacity, we can arrange a larger vehicle or a rooftop carrier at a nominal additional cost.',
   },
 ]
 
