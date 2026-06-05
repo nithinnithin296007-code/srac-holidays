@@ -69,6 +69,7 @@ export default function CarRentals() {
   const [service, setService] = useState('')
   const [details, setDetails] = useState('')
   const [name, setName] = useState('')
+  const [errors, setErrors] = useState({ name: '', details: '' })
 
   const filtered = activeCategory === 'All'
     ? FLEET
@@ -78,19 +79,61 @@ export default function CarRentals() {
     setSelected(car)
     setService(car.services[0])
     setDetails('')
+    setErrors({ name: '', details: '' })
+  }
+
+  const validateForm = () => {
+    const newErrors = { name: '', details: '' }
+    let isValid = true
+
+    const nameTrimmed = name.trim()
+    if (!nameTrimmed) {
+      newErrors.name = 'Your name is required'
+      isValid = false
+    } else if (nameTrimmed.length < 2) {
+      newErrors.name = 'Name must be at least 2 characters'
+      isValid = false
+    }
+
+    const detailsTrimmed = details.trim()
+    if (!detailsTrimmed) {
+      newErrors.details = 'Travel details are required'
+      isValid = false
+    } else if (detailsTrimmed.length < 8) {
+      newErrors.details = 'Please enter more details (e.g. travel date & location)'
+      isValid = false
+    }
+
+    setErrors(newErrors)
+    return isValid
+  }
+
+  const handleNameChange = (val) => {
+    setName(val)
+    if (errors.name) {
+      setErrors(prev => ({ ...prev, name: '' }))
+    }
+  }
+
+  const handleDetailsChange = (val) => {
+    setDetails(val)
+    if (errors.details) {
+      setErrors(prev => ({ ...prev, details: '' }))
+    }
   }
 
   const openWhatsApp = () => {
     if (!selected) return
+    if (!validateForm()) return
     const lines = [
       `Hello SRAC Holidays 👋`,
-      name ? `My name is *${name}*.` : '',
+      `My name is *${name.trim()}*.`,
       ``,
       `I'd like to enquire about the *${selected.name}* for *${service}*.`,
-      details ? `Travel details: ${details}` : '',
+      `Travel details: ${details.trim()}`,
       ``,
       `Please share availability and pricing. Thank you!`,
-    ].filter(Boolean)
+    ]
     window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(lines.join('\n'))}`, '_blank')
   }
 
@@ -233,17 +276,32 @@ export default function CarRentals() {
                   <p className="cr-sb__meta">{selected.seats} seats · {selected.luggage} bags · {selected.category}</p>
 
                   <div className="cr-sb__field">
-                    <label className="cr-sb__label">Your Name <span className="cr-sb__opt">(optional)</span></label>
+                    <label className="cr-sb__label">
+                      👤 Your Name <span style={{ color: 'var(--primary)' }}>*</span>
+                    </label>
                     <input
                       className="cr-sb__input"
+                      style={errors.name ? { borderColor: '#ff4d4f', boxShadow: '0 0 0 1px rgba(255, 77, 79, 0.2)' } : {}}
                       placeholder="So we can address you properly"
                       value={name}
-                      onChange={e => setName(e.target.value)}
+                      onChange={e => handleNameChange(e.target.value)}
                     />
+                    <AnimatePresence mode="wait">
+                      {errors.name && (
+                        <motion.span
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          style={{ color: '#ff4d4f', fontSize: '0.72rem', marginTop: '4px', display: 'block', overflow: 'hidden' }}
+                        >
+                          {errors.name}
+                        </motion.span>
+                      )}
+                    </AnimatePresence>
                   </div>
 
                   <div className="cr-sb__field">
-                    <label className="cr-sb__label">Service Type</label>
+                    <label className="cr-sb__label">🚘 Service Type</label>
                     <div className="cr-sb__services">
                       {selected.services.map(s => (
                         <button
@@ -258,14 +316,29 @@ export default function CarRentals() {
                   </div>
 
                   <div className="cr-sb__field">
-                    <label className="cr-sb__label">Travel Details <span className="cr-sb__opt">(optional)</span></label>
+                    <label className="cr-sb__label">
+                      📅 Travel Details <span style={{ color: 'var(--primary)' }}>*</span>
+                    </label>
                     <textarea
                       className="cr-sb__textarea"
+                      style={errors.details ? { borderColor: '#ff4d4f', boxShadow: '0 0 0 1px rgba(255, 77, 79, 0.2)' } : {}}
                       placeholder="Date, pickup location, destination..."
                       value={details}
-                      onChange={e => setDetails(e.target.value)}
+                      onChange={e => handleDetailsChange(e.target.value)}
                       rows={3}
                     />
+                    <AnimatePresence mode="wait">
+                      {errors.details && (
+                        <motion.span
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          style={{ color: '#ff4d4f', fontSize: '0.72rem', marginTop: '4px', display: 'block', overflow: 'hidden' }}
+                        >
+                          {errors.details}
+                        </motion.span>
+                      )}
+                    </AnimatePresence>
                   </div>
 
                   <button className="btn btn-whatsapp cr-sb__wa" onClick={openWhatsApp}>
@@ -604,12 +677,16 @@ export default function CarRentals() {
 
         /* Sidebar */
         .cr-sidebar {
-          background: var(--dark-2);
-          border: 1px solid var(--dark-3);
+          background: rgba(26, 26, 26, 0.75);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(255, 255, 255, 0.08);
           border-radius: var(--radius);
-          padding: 1.5rem;
+          padding: 1.6rem;
           position: sticky;
           top: 90px;
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+          transition: all 0.3s var(--transition);
         }
         .cr-sidebar--empty {
           display: flex;
@@ -618,79 +695,81 @@ export default function CarRentals() {
           justify-content: center;
           min-height: 260px;
         }
-        .cr-sb__header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .cr-sb__header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; }
         .cr-sb__close {
-          background: none; border: none; color: var(--muted);
-          cursor: pointer; font-size: 1rem; font-family: var(--font-body);
-          transition: color 0.2s;
+          background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--muted);
+          cursor: pointer; font-size: 0.75rem; width: 28px; height: 28px; border-radius: 50%;
+          display: flex; align-items: center; justify-content: center;
+          transition: all 0.2s;
         }
-        .cr-sb__close:hover { color: var(--light); }
-        .cr-sb__img { width: 100%; height: 150px; object-fit: cover; border-radius: var(--radius-sm); margin-bottom: 1rem; }
-        .cr-sb__name { font-size: 1.3rem; color: var(--light); margin: 0 0 0.25rem; }
-        .cr-sb__meta { font-size: 0.78rem; color: var(--muted); margin: 0 0 1.25rem; }
-        .cr-sb__field { margin-bottom: 1rem; }
-        .cr-sb__label { display: block; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 0.5rem; }
+        .cr-sb__close:hover { background: var(--primary); border-color: var(--primary); color: var(--white); transform: scale(1.05); }
+        .cr-sb__img { width: 100%; height: 160px; object-fit: cover; border-radius: var(--radius-sm); margin-bottom: 1.2rem; border: 1px solid rgba(255,255,255,0.06); }
+        .cr-sb__name { font-size: 1.4rem; color: var(--white); margin: 0 0 0.3rem; font-family: var(--font-heading); }
+        .cr-sb__meta { font-size: 0.8rem; color: var(--muted); margin: 0 0 1.5rem; }
+        .cr-sb__field { margin-bottom: 1.2rem; }
+        .cr-sb__label { display: block; font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.2px; color: var(--light-2); margin-bottom: 0.6rem; }
         .cr-sb__opt { font-weight: 400; opacity: 0.5; text-transform: none; letter-spacing: 0; }
         .cr-sb__input {
           width: 100%;
-          background: var(--dark-3);
+          background: rgba(13, 13, 13, 0.45);
           border: 1px solid rgba(255,255,255,0.08);
           border-radius: var(--radius-sm);
           color: var(--light);
-          font-size: 0.82rem;
-          padding: 0.6rem 0.8rem;
+          font-size: 0.85rem;
+          padding: 0.7rem 0.9rem;
           font-family: var(--font-body);
           box-sizing: border-box;
-          transition: border-color 0.2s;
+          transition: border-color 0.25s, box-shadow 0.25s;
           outline: none;
         }
-        .cr-sb__input:focus { border-color: var(--primary); }
-        .cr-sb__input::placeholder { color: var(--muted); opacity: 0.6; }
-        .cr-sb__services { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+        .cr-sb__input:focus { border-color: var(--primary); box-shadow: 0 0 0 1px rgba(200, 65, 11, 0.25); }
+        .cr-sb__input::placeholder { color: var(--muted); opacity: 0.5; }
+        .cr-sb__services { display: flex; flex-wrap: wrap; gap: 0.5rem; }
         .cr-sb__svc {
-          background: var(--dark-3);
-          border: 1px solid rgba(255,255,255,0.08);
+          background: rgba(255, 255, 255, 0.03);
+          border: 1px solid rgba(255,255,255,0.06);
           color: var(--muted);
           font-size: 0.75rem;
-          padding: 0.4rem 0.7rem;
+          padding: 0.45rem 0.75rem;
           border-radius: var(--radius-sm);
           cursor: pointer;
-          transition: var(--transition);
+          transition: all 0.2s;
           font-family: var(--font-body);
         }
-        .cr-sb__svc:hover { border-color: var(--primary); color: var(--primary); }
-        .cr-sb__svc--active { background: rgba(200,65,11,0.15); border-color: var(--primary); color: var(--primary); }
+        .cr-sb__svc:hover { border-color: rgba(200,65,11,0.5); color: var(--light); background: rgba(255,255,255,0.05); }
+        .cr-sb__svc--active { background: rgba(200,65,11,0.12) !important; border-color: var(--primary) !important; color: var(--white) !important; box-shadow: 0 0 8px rgba(200, 65, 11, 0.15); }
         .cr-sb__textarea {
           width: 100%;
-          background: var(--dark-3);
+          background: rgba(13, 13, 13, 0.45);
           border: 1px solid rgba(255,255,255,0.08);
           border-radius: var(--radius-sm);
           color: var(--light);
-          font-size: 0.82rem;
-          padding: 0.6rem 0.8rem;
+          font-size: 0.85rem;
+          padding: 0.7rem 0.9rem;
           font-family: var(--font-body);
           resize: none;
           box-sizing: border-box;
           outline: none;
-          transition: border-color 0.2s;
+          transition: border-color 0.25s, box-shadow 0.25s;
         }
-        .cr-sb__textarea:focus { border-color: var(--primary); }
-        .cr-sb__textarea::placeholder { color: var(--muted); opacity: 0.6; }
-        .cr-sb__wa { width: 100%; justify-content: center; margin-top: 0.25rem; border-radius: var(--radius-sm); }
-        .cr-sb__divider { border: none; border-top: 1px solid var(--dark-3); margin: 1.25rem 0 1rem; }
-        .cr-sb__alt { font-size: 0.65rem; color: var(--muted); text-align: center; margin: 0 0 0.75rem; text-transform: uppercase; letter-spacing: 1px; }
+        .cr-sb__textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 1px rgba(200, 65, 11, 0.25); }
+        .cr-sb__textarea::placeholder { color: var(--muted); opacity: 0.5; }
+        .cr-sb__wa { width: 100%; justify-content: center; margin-top: 0.5rem; border-radius: var(--radius-sm); display: flex; align-items: center; gap: 8px; transition: transform 0.2s, background-color 0.2s; }
+        .cr-sb__wa:hover { transform: translateY(-1px); }
+        .cr-sb__divider { border: none; border-top: 1px solid rgba(255, 255, 255, 0.08); margin: 1.5rem 0 1.25rem; }
+        .cr-sb__alt { font-size: 0.65rem; color: var(--muted); text-align: center; margin: 0 0 0.85rem; text-transform: uppercase; letter-spacing: 1.2px; }
         .cr-sb__phones { display: flex; flex-direction: column; gap: 0.5rem; }
         .cr-sb__phone {
           display: block;
           text-align: center;
           color: var(--muted);
           font-size: 0.8rem;
-          padding: 0.55rem;
-          border: 1px solid var(--dark-3);
+          padding: 0.6rem;
+          border: 1px solid rgba(255, 255, 255, 0.08);
           border-radius: var(--radius-sm);
           transition: var(--transition);
         }
-        .cr-sb__phone:hover { border-color: var(--primary); color: var(--primary); }
+        .cr-sb__phone:hover { border-color: var(--primary); color: var(--primary); background: rgba(255,255,255,0.02); }
       `}</style>
     </main>
   )
