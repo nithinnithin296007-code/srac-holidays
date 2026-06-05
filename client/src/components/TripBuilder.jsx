@@ -28,6 +28,50 @@ export default function TripBuilder() {
   const [duration, setDuration] = useState('half')
   const [groupSize, setGroupSize] = useState('family')
   const [details, setDetails] = useState({ name: '', phone: '', date: '', notes: '' })
+  const [errors, setErrors] = useState({ name: '', phone: '', date: '' })
+
+  const validateStep3 = () => {
+    const newErrors = { name: '', phone: '', date: '' }
+    let isValid = true
+
+    const nameTrimmed = details.name.trim()
+    if (!nameTrimmed) {
+      newErrors.name = 'Your name is required'
+      isValid = false
+    } else if (nameTrimmed.length < 2) {
+      newErrors.name = 'Name must be at least 2 characters'
+      isValid = false
+    }
+
+    const phoneTrimmed = details.phone.trim()
+    const phoneRegex = /^\+?[0-9\s\-()]{7,15}$/
+    if (!phoneTrimmed) {
+      newErrors.phone = 'Phone number is required'
+      isValid = false
+    } else if (!phoneRegex.test(phoneTrimmed)) {
+      newErrors.phone = 'Please enter a valid phone number (e.g. +91 98765 43210)'
+      isValid = false
+    }
+
+    const dateTrimmed = details.date.trim()
+    if (!dateTrimmed) {
+      newErrors.date = 'Travel date is required'
+      isValid = false
+    } else if (dateTrimmed.length < 3) {
+      newErrors.date = 'Please specify a valid date or date range'
+      isValid = false
+    }
+
+    setErrors(newErrors)
+    return isValid
+  }
+
+  const handleInputChange = (field, val) => {
+    setDetails(prev => ({ ...prev, [field]: val }))
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: '' }))
+    }
+  }
 
   const toggleInterest = (id) => {
     if (selectedInterests.includes(id)) {
@@ -37,7 +81,12 @@ export default function TripBuilder() {
     }
   }
 
-  const handleNext = () => setStep(step + 1)
+  const handleNext = () => {
+    if (step === 3) {
+      if (!validateStep3()) return
+    }
+    setStep(step + 1)
+  }
   const handlePrev = () => setStep(step - 1)
 
   const handleSend = () => {
@@ -176,30 +225,42 @@ export default function TripBuilder() {
                   <label className="tb__input-label">Your Name *</label>
                   <input
                     value={details.name}
-                    onChange={e => setDetails({ ...details, name: e.target.value })}
+                    onChange={e => handleInputChange('name', e.target.value)}
                     placeholder="Enter name"
                     className="tb__input"
+                    style={errors.name ? { borderColor: '#ff4d4f', boxShadow: '0 0 0 1px rgba(255, 77, 79, 0.2)' } : {}}
                   />
+                  {errors.name && (
+                    <span className="tb__error-message" style={{ color: '#ff4d4f', fontSize: '0.72rem', marginTop: '2px' }}>{errors.name}</span>
+                  )}
                 </div>
 
                 <div className="tb__input-group">
                   <label className="tb__input-label">Phone Number *</label>
                   <input
                     value={details.phone}
-                    onChange={e => setDetails({ ...details, phone: e.target.value })}
+                    onChange={e => handleInputChange('phone', e.target.value)}
                     placeholder="e.g. +91 98765 43210"
                     className="tb__input"
+                    style={errors.phone ? { borderColor: '#ff4d4f', boxShadow: '0 0 0 1px rgba(255, 77, 79, 0.2)' } : {}}
                   />
+                  {errors.phone && (
+                    <span className="tb__error-message" style={{ color: '#ff4d4f', fontSize: '0.72rem', marginTop: '2px' }}>{errors.phone}</span>
+                  )}
                 </div>
 
                 <div className="tb__input-group tb__input-group--full">
                   <label className="tb__input-label">Target Travel Date *</label>
                   <input
                     value={details.date}
-                    onChange={e => setDetails({ ...details, date: e.target.value })}
+                    onChange={e => handleInputChange('date', e.target.value)}
                     placeholder="Preferred Date / Range"
                     className="tb__input"
+                    style={errors.date ? { borderColor: '#ff4d4f', boxShadow: '0 0 0 1px rgba(255, 77, 79, 0.2)' } : {}}
                   />
+                  {errors.date && (
+                    <span className="tb__error-message" style={{ color: '#ff4d4f', fontSize: '0.72rem', marginTop: '2px' }}>{errors.date}</span>
+                  )}
                 </div>
 
                 <div className="tb__input-group tb__input-group--full">
@@ -277,11 +338,6 @@ export default function TripBuilder() {
           <button
             onClick={handleNext}
             className="btn btn-primary tb__next-btn"
-            disabled={step === 3 && (!details.name.trim() || !details.phone.trim() || !details.date.trim())}
-            style={{
-              opacity: step === 3 && (!details.name.trim() || !details.phone.trim() || !details.date.trim()) ? 0.5 : 1,
-              cursor: step === 3 && (!details.name.trim() || !details.phone.trim() || !details.date.trim()) ? 'not-allowed' : 'pointer',
-            }}
           >
             Next Step →
           </button>

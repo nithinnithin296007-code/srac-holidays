@@ -10,7 +10,7 @@ const MODELS = [
 ]
 
 function Car({ url }) {
-  const { scene } = useGLTF(url)
+  const { scene } = useGLTF(url, true)
   const { size, camera } = useThree()
   const w = size.width
 
