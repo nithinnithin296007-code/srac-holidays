@@ -82,7 +82,25 @@ export default function About() {
           </motion.div>
 
           <div className="ab__team-grid">
-            <motion.div className="ab__team-card" {...fade(0.1)}>
+            <motion.div
+              className="ab__team-card ab__team-card--leader"
+              initial={{ opacity: 0, y: 40, scale: 0.96 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-80px" }}
+              whileHover={{ 
+                y: -8, 
+                scale: 1.015,
+                boxShadow: "0 20px 40px rgba(201, 168, 76, 0.12)",
+                borderColor: "rgba(201, 168, 76, 0.45)"
+              }}
+              transition={{ 
+                type: "spring", 
+                stiffness: 100, 
+                damping: 16,
+                delay: 0.1
+              }}
+            >
+              <div className="leader-glow-line" />
               <div className="ab__team-info">
                 <h3 className="ab__team-name">Shreekant Mandal</h3>
                 <span className="ab__team-role">Founder</span>
@@ -92,7 +110,25 @@ export default function About() {
               </div>
             </motion.div>
 
-            <motion.div className="ab__team-card" {...fade(0.2)}>
+            <motion.div
+              className="ab__team-card ab__team-card--leader"
+              initial={{ opacity: 0, y: 40, scale: 0.96 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-80px" }}
+              whileHover={{ 
+                y: -8, 
+                scale: 1.015,
+                boxShadow: "0 20px 40px rgba(201, 168, 76, 0.12)",
+                borderColor: "rgba(201, 168, 76, 0.45)"
+              }}
+              transition={{ 
+                type: "spring", 
+                stiffness: 100, 
+                damping: 16,
+                delay: 0.2
+              }}
+            >
+              <div className="leader-glow-line" />
               <div className="ab__team-info">
                 <h3 className="ab__team-name">Abhishek Mandal</h3>
                 <span className="ab__team-role">Chief Executive Officer</span>
