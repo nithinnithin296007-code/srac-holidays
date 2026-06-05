@@ -2911,7 +2911,7 @@ a.contact__detail-value:hover { color: var(--primary); }
   gap: 4rem;
   align-items: start;
 }
-.td__left { display: flex; flex-direction: column; gap: 3rem; }
+.td__left { display: flex; flex-direction: column; gap: 3rem; min-width: 0; }
 .td__block h2 {
   font-size: 1.4rem;
   margin-bottom: 1.2rem;
@@ -2966,7 +2966,7 @@ a.contact__detail-value:hover { color: var(--primary); }
 .td__expect-icon { font-size: 1.1rem; flex-shrink: 0; }
 
 /* Right CTA */
-.td__right { display: flex; flex-direction: column; gap: 2rem; position: sticky; top: 7rem; }
+.td__right { display: flex; flex-direction: column; gap: 2rem; position: sticky; top: 7rem; min-width: 0; }
 .td__cta-card {
   background: var(--dark-2);
   border: 1px solid rgba(201,168,76,0.2);
