@@ -2869,6 +2869,8 @@ a.contact__detail-value:hover { color: var(--primary); }
   display: flex;
   align-items: center;
   margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.8rem;
 }
 .td__breadcrumb a {
   color: rgba(255,255,255,0.7);
@@ -3456,11 +3458,135 @@ a.contact__detail-value:hover { color: var(--primary); }
 
   /* Tour cards */
   .tours-grid { grid-template-columns: 1fr; }
+  .tours-grid--full { grid-template-columns: 1fr; }
+  .hide-on-mobile { display: none !important; }
+
+  /* Tours catalog page fixes */
+  .tours__filter-bar {
+    top: 64px;
+    padding: 0.8rem 0;
+  }
+  .tours__filter-bar .container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.6rem;
+  }
+  .tours__filters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2px;
+    margin: 0 -1.2rem;
+    padding: 0 1.2rem;
+    scrollbar-width: none;
+  }
+  .tours__filters::-webkit-scrollbar {
+    display: none;
+  }
+  .tours__filter-btn {
+    flex-shrink: 0;
+  }
+  .tours__count {
+    font-size: 0.78rem;
+    text-align: right;
+  }
+  .tours__b2b-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+  .tours__b2b-actions {
+    width: 100%;
+    align-items: center;
+  }
+  .tours__b2b-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
 
   /* Tour detail */
   .td__body-grid { grid-template-columns: 1fr; }
   .td__right { position: static; }
   .td__cta-meta { grid-template-columns: 1fr 1fr; }
+  .td__cta-card { max-width: 100%; }
+
+  .td__hero {
+    min-height: 50vh;
+    padding-top: 5rem;
+  }
+  .td__hero-inner h1 {
+    font-size: clamp(1.8rem, 6vw, 2.5rem) !important;
+  }
+  .td__subtitle {
+    font-size: 0.95rem;
+  }
+  .td__meta {
+    gap: 0.6rem;
+  }
+  .td__meta span {
+    font-size: 0.8rem;
+    padding: 0.35rem 0.8rem;
+  }
+  .td__itinerary-item {
+    grid-template-columns: 1fr;
+    gap: 0.3rem;
+    padding: 0.8rem 0;
+  }
+  .td__itinerary-time {
+    text-align: left;
+    font-size: 0.75rem;
+  }
+  .td__itinerary-activity {
+    font-size: 0.88rem;
+  }
+
+  /* Swipe hints */
+  .td__map-hint {
+    display: inline-block !important;
+  }
+
+  /* Mobile Sticky bottom booking bar */
+  .td__mobile-sticky-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(13, 13, 13, 0.94);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0.9rem 1.2rem;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 900;
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+  }
+  .td__mobile-sticky-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    max-width: 60%;
+  }
+  .td__mobile-sticky-info h4 {
+    font-size: 0.9rem;
+    font-family: var(--font-body);
+    font-weight: 600;
+    color: var(--light);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .td__mobile-sticky-info span {
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+  .td__mobile-sticky-btn {
+    padding: 0.65rem 1.1rem;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+  body {
+    padding-bottom: 76px;
+  }
 
   /* Car rentals */
   .cr__main-grid { grid-template-columns: 1fr; }
@@ -3557,6 +3683,9 @@ a.contact__detail-value:hover { color: var(--primary); }
   color: var(--light-2);
   line-height: 1.6;
 }
+
+.td__mobile-sticky-bar { display: none; }
+.td__map-hint { display: none; }
 
 /* Spinner & Skeleton Loading States */
 .tours__loading {

@@ -37,7 +37,12 @@ function TourMap({ itinerary }) {
 
   return (
     <div className="td__block" style={{ margin: '3rem 0', background: 'var(--dark-2)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 'var(--radius)', padding: '2rem' }}>
-      <h2 style={{ marginBottom: '1.25rem' }}>Interactive Route Map</h2>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+        <h2 style={{ margin: 0 }}>Interactive Route Map</h2>
+        <span className="td__map-hint" style={{ fontSize: '0.75rem', color: 'var(--primary)', fontWeight: 500 }}>
+          Swipe to view full route ↔
+        </span>
+      </div>
       
       {/* Scrollable container for mobile */}
       <div style={{ overflowX: 'auto', width: '100%', scrollbarWidth: 'none', msOverflowStyle: 'none' }} className="cr-model-switcher">
@@ -208,7 +213,7 @@ export default function TourDetail() {
           <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9 }}>
             <div className="td__breadcrumb">
               <Link to="/tours">← Back to All Tours</Link>
-              <span className="tag" style={{ marginLeft: '1rem' }}>MUMBAI</span>
+              <span className="tag">MUMBAI</span>
             </div>
             <h1>{tour.name}</h1>
             <p className="td__subtitle">{tour.tagline}</p>
@@ -316,6 +321,22 @@ export default function TourDetail() {
 
         </div>
       </section>
+
+      {/* Mobile Sticky Booking Bar */}
+      <div className="td__mobile-sticky-bar">
+        <div className="td__mobile-sticky-info">
+          <h4>{tour.name}</h4>
+          <span>{tour.duration} · {tour.groupSize}</span>
+        </div>
+        <a
+          href={"https://wa.me/917738676316?text=" + waMsg}
+          target="_blank"
+          rel="noreferrer"
+          className="btn btn-whatsapp td__mobile-sticky-btn"
+        >
+          Book Now
+        </a>
+      </div>
 
     </main>
   )

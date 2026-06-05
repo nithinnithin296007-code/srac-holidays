@@ -55,7 +55,7 @@ export default function Tours() {
         <div className="container tours-hero__content">
           <span className="tag">15 Unique Experiences</span>
           <h1 className="tours-hero__title">
-            Every Tour a<br />
+            Every Tour a <br className="hide-on-mobile" />
             <span style={{color:'var(--primary)'}}>Different Mumbai</span>
           </h1>
           <p className="tours-hero__sub">
