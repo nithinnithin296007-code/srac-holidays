@@ -1,4 +1,4 @@
-import { Suspense, useState, useEffect } from 'react'
+import { Suspense, useState, useEffect, useRef } from 'react'
 import { Canvas, useThree } from '@react-three/fiber'
 import { OrbitControls, Environment, useGLTF, Html, Center, ContactShadows } from '@react-three/drei'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -15,7 +15,7 @@ const MODELS = [
   { file: '/models/innova_zenix.glb', name: 'Innova Hycross', fallbackImg: imgInnova },
 ]
 
-function Car({ url }) {
+function Car({ url, isMobile }) {
   const { scene } = useGLTF(url, true)
   const { size, camera } = useThree()
   const w = size.width
@@ -69,13 +69,15 @@ function Car({ url }) {
       <Center>
         <primitive object={scene} scale={scale} />
       </Center>
-      <ContactShadows
-        position={[0, -0.78, 0]}
-        opacity={0.6}
-        scale={10}
-        blur={2.5}
-        far={1.5}
-      />
+      {!isMobile && (
+        <ContactShadows
+          position={[0, -0.78, 0]}
+          opacity={0.6}
+          scale={10}
+          blur={2.5}
+          far={1.5}
+        />
+      )}
     </>
   )
 }
@@ -107,6 +109,8 @@ function Loader() {
 export default function FortunerModel() {
   const [active, setActive] = useState(0)
   const [isMobile, setIsMobile] = useState(false)
+  const [inView, setInView] = useState(false)
+  const containerRef = useRef(null)
 
   useEffect(() => {
     const checkMobile = () => {
@@ -118,52 +122,61 @@ export default function FortunerModel() {
     }
     checkMobile()
     window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setInView(entry.isIntersecting)
+      },
+      { threshold: 0.05 }
+    )
+    if (containerRef.current) {
+      observer.observe(containerRef.current)
+    }
+
+    return () => {
+      window.removeEventListener('resize', checkMobile)
+      observer.disconnect()
+    }
   }, [])
 
   return (
-    <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-      {isMobile ? (
-        <div style={{ width: '100%', height: 'calc(100% - 60px)', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
-          <AnimatePresence mode="wait">
-            <motion.img
-              key={active}
-              src={MODELS[active].fallbackImg}
-              alt={MODELS[active].name}
-              initial={{ opacity: 0, scale: 0.95, y: 15 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: -15 }}
-              transition={{ duration: 0.25, ease: 'easeOut' }}
-              style={{
-                maxWidth: '90%',
-                maxHeight: '80%',
-                objectFit: 'contain',
-                filter: 'drop-shadow(0 20px 25px rgba(0,0,0,0.55))',
-              }}
-            />
-          </AnimatePresence>
-        </div>
-      ) : (
+    <div ref={containerRef} style={{ position: 'relative', width: '100%', height: '100%' }}>
+      {inView ? (
         <Canvas
           camera={{ position: [4.5, 1.8, 6.5], fov: 40 }}
-          style={{ background: 'transparent' }}
+          style={{ background: 'transparent', touchAction: 'pan-y' }}
+          dpr={isMobile ? [1, 1.5] : window.devicePixelRatio}
         >
           <ambientLight intensity={0.7} />
-          <directionalLight position={[5, 8, 5]} intensity={1.8} castShadow />
+          <directionalLight position={[5, 8, 5]} intensity={1.8} castShadow={!isMobile} />
           <directionalLight position={[-3, 2, 4]} intensity={0.4} />
           <Environment preset="city" />
           <Suspense fallback={<Loader />}>
-            <Car key={active} url={MODELS[active].file} />
+            <Car key={active} url={MODELS[active].file} isMobile={isMobile} />
           </Suspense>
           <OrbitControls
             enableZoom={false}
             enablePan={false}
-            autoRotate
+            autoRotate={!isMobile}
             autoRotateSpeed={0.5}
             minPolarAngle={Math.PI / 4}
             maxPolarAngle={Math.PI / 2.1}
           />
         </Canvas>
+      ) : (
+        /* Viewport Placeholder static image when off-screen to use 0% graphics/memory resources */
+        <div style={{ width: '100%', height: 'calc(100% - 60px)', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
+          <img
+            src={MODELS[active].fallbackImg}
+            alt={MODELS[active].name}
+            style={{
+              maxWidth: '90%',
+              maxHeight: '80%',
+              objectFit: 'contain',
+              filter: 'drop-shadow(0 20px 25px rgba(0,0,0,0.55))',
+            }}
+          />
+        </div>
       )}
 
       {/* Switcher */}
