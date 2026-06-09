@@ -1,5 +1,5 @@
 import { Routes, Route, useLocation } from 'react-router-dom'
-import { AnimatePresence } from 'framer-motion'
+import { AnimatePresence, MotionConfig } from 'framer-motion'
 import { useEffect } from 'react'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -15,16 +15,17 @@ import NotFound from './pages/NotFound'
 
 export default function App() {
   const location = useLocation()
+  const { pathname } = location
 
   useEffect(() => {
     window.scrollTo(0, 0)
-  }, [location.pathname])
+  }, [pathname])
 
   return (
-    <>
+    <MotionConfig reducedMotion="user">
       <Navbar />
       <AnimatePresence mode="wait">
-        <Routes location={location} key={location.pathname}>
+        <Routes location={location} key={pathname}>
           <Route path="/" element={<Home />} />
           <Route path="/tours" element={<Tours />} />
           <Route path="/tours/:slug" element={<TourDetail />} />
@@ -37,6 +38,6 @@ export default function App() {
       </AnimatePresence>
       <Footer />
       <WhatsAppWidget />
-    </>
+    </MotionConfig>
   )
 }

@@ -32,20 +32,53 @@ const ScrollFloat = ({
         if (!el) return
         const scroller = scrollContainerRef?.current ?? window
         const charElements = el.querySelectorAll('.char')
-        gsap.fromTo(
-            charElements,
-            { willChange: 'opacity, transform', opacity: 0, yPercent: 120, scaleY: 2.3, scaleX: 0.7, transformOrigin: '50% 0%' },
-            {
-                duration: animationDuration,
-                ease,
-                opacity: 1,
-                yPercent: 0,
-                scaleY: 1,
-                scaleX: 1,
-                stagger,
-                scrollTrigger: { trigger: el, scroller, start: scrollStart, end: scrollEnd, scrub: true }
+
+        const isMobile = window.matchMedia('(max-width: 768px)').matches
+
+        let anim
+        if (isMobile) {
+            // High performance, one-time fade/slide on mobile instead of character scrub
+            anim = gsap.fromTo(
+                el,
+                { opacity: 0, y: 30 },
+                {
+                    duration: 0.8,
+                    opacity: 1,
+                    y: 0,
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: el,
+                        scroller,
+                        start: 'top 90%',
+                        once: true
+                    }
+                }
+            )
+        } else {
+            anim = gsap.fromTo(
+                charElements,
+                { willChange: 'opacity, transform', opacity: 0, yPercent: 120, scaleY: 2.3, scaleX: 0.7, transformOrigin: '50% 0%' },
+                {
+                    duration: animationDuration,
+                    ease,
+                    opacity: 1,
+                    yPercent: 0,
+                    scaleY: 1,
+                    scaleX: 1,
+                    stagger,
+                    scrollTrigger: { trigger: el, scroller, start: scrollStart, end: scrollEnd, scrub: true }
+                }
+            )
+        }
+
+        return () => {
+            if (anim) {
+                if (anim.scrollTrigger) {
+                    anim.scrollTrigger.kill()
+                }
+                anim.kill()
             }
-        )
+        }
     }, [scrollContainerRef, animationDuration, ease, scrollStart, scrollEnd, stagger])
 
     return (

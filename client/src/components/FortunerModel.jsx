@@ -1,12 +1,18 @@
 import { Suspense, useState, useEffect } from 'react'
 import { Canvas, useThree } from '@react-three/fiber'
 import { OrbitControls, Environment, useGLTF, Html, Center, ContactShadows } from '@react-three/drei'
+import { motion, AnimatePresence } from 'framer-motion'
+
+import imgFortuner from '../assets/cars/fortuner.jpg'
+import imgMercedes from '../assets/cars/mercedes-e.jpg'
+import imgAudi from '../assets/cars/audi.jpg'
+import imgInnova from '../assets/cars/innova-crysta.jpg'
 
 const MODELS = [
-  { file: '/models/toyota_fortuner_2021.glb', name: 'Toyota Fortuner' },
-  { file: '/models/mercedes_s65.glb', name: 'Mercedes S65' },
-  { file: '/models/audi_a5.glb', name: 'Audi A5' },
-  { file: '/models/innova_zenix.glb', name: 'Innova Hycross' },
+  { file: '/models/toyota_fortuner_2021.glb', name: 'Toyota Fortuner', fallbackImg: imgFortuner },
+  { file: '/models/mercedes_s65.glb', name: 'Mercedes S65', fallbackImg: imgMercedes },
+  { file: '/models/audi_a5.glb', name: 'Audi A5', fallbackImg: imgAudi },
+  { file: '/models/innova_zenix.glb', name: 'Innova Hycross', fallbackImg: imgInnova },
 ]
 
 function Car({ url }) {
@@ -100,29 +106,65 @@ function Loader() {
 
 export default function FortunerModel() {
   const [active, setActive] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(
+        window.matchMedia('(max-width: 991px)').matches ||
+        ('ontouchstart' in window) ||
+        navigator.maxTouchPoints > 0
+      )
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-      <Canvas
-        camera={{ position: [4.5, 1.8, 6.5], fov: 40 }}
-        style={{ background: 'transparent' }}
-      >
-        <ambientLight intensity={0.7} />
-        <directionalLight position={[5, 8, 5]} intensity={1.8} castShadow />
-        <directionalLight position={[-3, 2, 4]} intensity={0.4} />
-        <Environment preset="city" />
-        <Suspense fallback={<Loader />}>
-          <Car key={active} url={MODELS[active].file} />
-        </Suspense>
-        <OrbitControls
-          enableZoom={false}
-          enablePan={false}
-          autoRotate
-          autoRotateSpeed={0.5}
-          minPolarAngle={Math.PI / 4}
-          maxPolarAngle={Math.PI / 2.1}
-        />
-      </Canvas>
+      {isMobile ? (
+        <div style={{ width: '100%', height: 'calc(100% - 60px)', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={active}
+              src={MODELS[active].fallbackImg}
+              alt={MODELS[active].name}
+              initial={{ opacity: 0, scale: 0.95, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: -15 }}
+              transition={{ duration: 0.25, ease: 'easeOut' }}
+              style={{
+                maxWidth: '90%',
+                maxHeight: '80%',
+                objectFit: 'contain',
+                filter: 'drop-shadow(0 20px 25px rgba(0,0,0,0.55))',
+              }}
+            />
+          </AnimatePresence>
+        </div>
+      ) : (
+        <Canvas
+          camera={{ position: [4.5, 1.8, 6.5], fov: 40 }}
+          style={{ background: 'transparent' }}
+        >
+          <ambientLight intensity={0.7} />
+          <directionalLight position={[5, 8, 5]} intensity={1.8} castShadow />
+          <directionalLight position={[-3, 2, 4]} intensity={0.4} />
+          <Environment preset="city" />
+          <Suspense fallback={<Loader />}>
+            <Car key={active} url={MODELS[active].file} />
+          </Suspense>
+          <OrbitControls
+            enableZoom={false}
+            enablePan={false}
+            autoRotate
+            autoRotateSpeed={0.5}
+            minPolarAngle={Math.PI / 4}
+            maxPolarAngle={Math.PI / 2.1}
+          />
+        </Canvas>
+      )}
 
       {/* Switcher */}
       <div 
