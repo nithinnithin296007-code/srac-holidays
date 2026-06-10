@@ -186,35 +186,6 @@ export default function FortunerModel() {
             filter: 'drop-shadow(0 20px 25px rgba(0,0,0,0.55))',
           }}
         />
-        {/* Show loader only when inView but not yet fully loaded */}
-        {inView && !loaded && (
-          <div style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '0.75rem',
-            background: 'rgba(13, 13, 13, 0.75)',
-            padding: '1.25rem 2rem',
-            borderRadius: '16px',
-            backdropFilter: 'blur(12px)',
-            border: '1px solid rgba(255, 255, 255, 0.08)',
-            boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
-          }}>
-            <div className="cr-model-loader__spinner" style={{
-              width: 28,
-              height: 28,
-              border: '2px solid rgba(255, 255, 255, 0.1)',
-              borderTopColor: 'var(--primary)',
-              borderRadius: '50%',
-              animation: 'spin 1s linear infinite',
-            }} />
-            <span style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.8)', letterSpacing: '0.5px' }}>Loading 3D Model...</span>
-          </div>
-        )}
       </div>
 
       {/* Switcher */}
