@@ -4,34 +4,19 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import TourCard from '../components/TourCard'
 import FAQAccordion from '../components/FAQAccordion'
-import axios from 'axios'
-import { API_URL } from '../utils/api'
 import { useSearchParams } from 'react-router-dom'
+import toursData from '../data/tours'
 
 gsap.registerPlugin(ScrollTrigger)
 
 const categories = ['All', 'Bollywood', 'Mumbai', 'Heritage', 'Food', 'Getaways']
 
 export default function Tours() {
-  const [tours, setTours] = useState([])
+  const tours = toursData
   const [searchParams] = useSearchParams()
   const categoryParam = searchParams.get('category')
   const [active, setActive] = useState(categoryParam || 'All')
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(false)
   const pageRef = useRef(null)
-
-  const fetchTours = () => {
-    setLoading(true)
-    setError(false)
-    axios.get(`${API_URL}/tours`)
-      .then(res => { setTours(res.data); setLoading(false) })
-      .catch(() => { setError(true); setLoading(false) })
-  }
-
-  useEffect(() => {
-    fetchTours()
-  }, [])
 
 
   useEffect(() => {
@@ -92,32 +77,11 @@ export default function Tours() {
       {/* ── GRID ── */}
       <section className="section tours__grid-section">
         <div className="container">
-          {loading ? (
-            <div className="tours-grid tours-grid--full">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <div className="tour-card skeleton-card" key={i}>
-                  <div className="skeleton-image skeleton-pulse" />
-                  <div className="tour-card__body">
-                    <div className="skeleton-title skeleton-pulse" />
-                    <div className="skeleton-text skeleton-pulse" />
-                    <div className="skeleton-text skeleton-pulse" style={{ width: '60%' }} />
-                    <div className="skeleton-meta skeleton-pulse" />
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : error ? (
-            <div style={{ textAlign: 'center', padding: '4rem 2rem', background: 'rgba(255, 255, 255, 0.02)', border: '1px dashed rgba(255,255,255,0.08)', borderRadius: 'var(--radius)' }}>
-              <p style={{ color: 'var(--muted)', marginBottom: '1.5rem', fontFamily: 'var(--font-body)' }}>Could not load tours. Please check your network connection.</p>
-              <button onClick={fetchTours} className="btn btn-outline" style={{ margin: '0 auto' }}>Retry Loading</button>
-            </div>
-          ) : (
             <div className="tours-grid tours-grid--full">
               {filtered.map((tour, i) => (
                 <TourCard key={tour.slug} tour={tour} index={i} />
               ))}
             </div>
-          )}
         </div>
       </section>
 

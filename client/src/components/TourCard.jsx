@@ -1,4 +1,4 @@
-﻿import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 
 export default function TourCard({ tour, index = 0 }) {
@@ -15,6 +15,7 @@ export default function TourCard({ tour, index = 0 }) {
                     <img
                         src={tour.coverImage}
                         alt={tour.name}
+                        loading="lazy"
                         onError={e => {
                             e.target.src = `https://picsum.photos/seed/${tour.slug}/600/400`
                         }}

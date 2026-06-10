@@ -3,7 +3,7 @@ import { fade } from '../utils/animations'
 import SEO from '../components/SEO'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { API_URL } from '../utils/api'
+import toursData from '../data/tours'
 
 function TourMap({ itinerary }) {
   const [activeStop, setActiveStop] = useState(0)
@@ -171,57 +171,16 @@ function TourMap({ itinerary }) {
 
 export default function TourDetail() {
   const { slug } = useParams()
-  const [tour, setTour] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(false)
-  const [errorStatus, setErrorStatus] = useState(null)
+  const tour = toursData.find(t => t.slug === slug)
 
-  const fetchTourDetail = () => {
-    setLoading(true)
-    setError(false)
-    setErrorStatus(null)
-    fetch(`${API_URL}/tours/${slug}`)
-      .then(r => {
-        if (!r.ok) {
-          setErrorStatus(r.status)
-          throw new Error('Request failed with status ' + r.status)
-        }
-        return r.json()
-      })
-      .then(data => { setTour(data); setLoading(false) })
-      .catch((err) => { 
-        setError(true)
-        setLoading(false)
-        // If not already set via response status, treat as network error (500)
-        setErrorStatus(prev => prev || 500)
-      })
-  }
-
-  useEffect(() => {
-    fetchTourDetail()
-  }, [slug])
-
-
-  if (loading) return (
-    <main style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{ color: 'var(--muted)', fontSize: '1rem' }}>Loading tour...</div>
-    </main>
-  )
-
-  if (error || !tour) {
-    const isNotFound = errorStatus === 404;
+  if (!tour) {
     return (
       <main style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '1.25rem', padding: '2rem' }}>
-        <h2 style={{ color: 'var(--primary)' }}>{isNotFound ? 'Tour Not Found' : 'Failed to Load Tour'}</h2>
+        <h2 style={{ color: 'var(--primary)' }}>Tour Not Found</h2>
         <p style={{ color: 'var(--muted)', textAlign: 'center', maxWidth: '420px', lineHeight: 1.6, margin: 0 }}>
-          {isNotFound 
-            ? "We couldn't find the tour you are looking for. It may have been removed or renamed." 
-            : "There was a problem connecting to our servers. Please check your network connection and try again."}
+          We couldn't find the tour you are looking for. It may have been removed or renamed.
         </p>
         <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center', marginTop: '0.5rem' }}>
-          {!isNotFound && (
-            <button onClick={fetchTourDetail} className="btn btn-primary">Retry Loading</button>
-          )}
           <Link to="/tours" className="btn btn-outline">Back to All Tours</Link>
         </div>
       </main>

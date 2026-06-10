@@ -1,41 +1,20 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import SEO from '../components/SEO'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import TourCard from '../components/TourCard'
-import axios from 'axios'
-import { API_URL } from '../utils/api'
 import ScrollFloat from '../components/ScrollFloat'
 import TripBuilder from '../components/TripBuilder'
 import MediaGallery from '../components/MediaGallery'
+import toursData from '../data/tours'
 
 gsap.registerPlugin(ScrollTrigger)
 
 export default function Home() {
   const heroRef = useRef(null)
-  const [featured, setFeatured] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(false)
-
-  const fetchFeatured = () => {
-    setLoading(true)
-    setError(false)
-    axios.get(`${API_URL}/tours`)
-      .then(res => {
-        setFeatured(res.data.slice(0, 6))
-        setLoading(false)
-      })
-      .catch(() => {
-        setError(true)
-        setLoading(false)
-      })
-  }
-
-  useEffect(() => {
-    fetchFeatured()
-  }, [])
+  const featured = toursData.slice(0, 6)
 
 
   useEffect(() => {
@@ -126,29 +105,10 @@ export default function Home() {
             <ScrollFloat containerClassName="section-title">Tours Worth Taking</ScrollFloat>
             <p className="section-sub">Every tour is guided by a local who knows the city — not a script.</p>
           </div>
-          <div className="tours-grid" style={error ? { display: 'block' } : {}}>
-            {loading ? (
-              Array.from({ length: 6 }).map((_, i) => (
-                <div className="tour-card skeleton-card" key={i}>
-                  <div className="skeleton-image skeleton-pulse" />
-                  <div className="tour-card__body">
-                    <div className="skeleton-title skeleton-pulse" />
-                    <div className="skeleton-text skeleton-pulse" />
-                    <div className="skeleton-text skeleton-pulse" style={{ width: '60%' }} />
-                    <div className="skeleton-meta skeleton-pulse" />
-                  </div>
-                </div>
-              ))
-            ) : error ? (
-              <div style={{ textAlign: 'center', padding: '3rem 1.5rem', background: 'rgba(255, 255, 255, 0.02)', border: '1px dashed rgba(255,255,255,0.08)', borderRadius: 'var(--radius)', margin: '1rem 0' }}>
-                <p style={{ color: 'var(--muted)', marginBottom: '1.25rem', fontFamily: 'var(--font-body)' }}>Failed to load featured tours. Please check your network connection.</p>
-                <button onClick={fetchFeatured} className="btn btn-outline" style={{ margin: '0 auto' }}>Retry Loading</button>
-              </div>
-            ) : (
-              featured.map((tour, i) => (
-                <TourCard key={tour.slug} tour={tour} index={i} />
-              ))
-            )}
+          <div className="tours-grid">
+            {featured.map((tour, i) => (
+              <TourCard key={tour.slug} tour={tour} index={i} />
+            ))}
           </div>
           <div className="featured__cta reveal-section">
             <Link to="/tours" className="btn btn-outline">See All 15 Tours →</Link>
