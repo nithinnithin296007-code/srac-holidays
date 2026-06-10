@@ -22,12 +22,17 @@ app.use(helmet());
 app.use(cors({ 
   origin: function (origin, callback) {
     if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) !== -1 || origin.endsWith('.vercel.app')) {
+    // Secure CORS Check: Allow exact whitelisted domains or valid project-specific Vercel preview subdomains.
+    // This prevents malicious-site.vercel.app from accessing backend resources under the credentials mode.
+    const isAllowedOrigin = allowedOrigins.includes(origin);
+    const isVercelPreview = /^https:\/\/srac-holidays-[a-zA-Z0-9-]+\.vercel\.app$/.test(origin) || origin === 'https://srac-holidays.vercel.app';
+    if (isAllowedOrigin || isVercelPreview) {
       return callback(null, true);
     }
     const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
     return callback(new Error(msg), false);
   }, 
+  methods: ['GET', 'HEAD', 'OPTIONS'],
   credentials: true 
 }));
 app.use(express.json());
@@ -35,7 +40,7 @@ app.use(express.json());
 
 const limiter = rateLimit({
   windowMs: 60 * 1000,
-  max: 100,
+  max: 60, // Limit general API requests to 60 requests per minute per IP as per CLAUDE.md
   message: { error: 'Too many requests, please try again later.' },
   standardHeaders: true,
   legacyHeaders: false,

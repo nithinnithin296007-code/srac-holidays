@@ -1,4 +1,4 @@
-﻿const express = require('express');
+const express = require('express');
 const router = express.Router();
 const tours = require('../data/tours');
 
@@ -11,7 +11,8 @@ router.get('/meta/categories', (req, res) => {
 // GET all tours
 router.get('/', (req, res) => {
     const { category } = req.query;
-    if (category && category !== 'All') {
+    // Enforce type safety / sanitization: ensure category is a string
+    if (typeof category === 'string' && category !== 'All') {
         return res.json(tours.filter(t => t.category === category));
     }
     res.json(tours);
