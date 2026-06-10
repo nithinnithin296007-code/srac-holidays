@@ -21,10 +21,16 @@ export default function Tours() {
   const [error, setError] = useState(false)
   const pageRef = useRef(null)
 
-  useEffect(() => {
+  const fetchTours = () => {
+    setLoading(true)
+    setError(false)
     axios.get(`${API_URL}/tours`)
       .then(res => { setTours(res.data); setLoading(false) })
       .catch(() => { setError(true); setLoading(false) })
+  }
+
+  useEffect(() => {
+    fetchTours()
   }, [])
 
 
@@ -101,8 +107,9 @@ export default function Tours() {
               ))}
             </div>
           ) : error ? (
-            <div style={{ textAlign: 'center', padding: '4rem', color: 'var(--muted)' }}>
-              <p>Could not load tours. Please refresh the page.</p>
+            <div style={{ textAlign: 'center', padding: '4rem 2rem', background: 'rgba(255, 255, 255, 0.02)', border: '1px dashed rgba(255,255,255,0.08)', borderRadius: 'var(--radius)' }}>
+              <p style={{ color: 'var(--muted)', marginBottom: '1.5rem', fontFamily: 'var(--font-body)' }}>Could not load tours. Please check your network connection.</p>
+              <button onClick={fetchTours} className="btn btn-outline" style={{ margin: '0 auto' }}>Retry Loading</button>
             </div>
           ) : (
             <div className="tours-grid tours-grid--full">

@@ -17,17 +17,24 @@ export default function Home() {
   const heroRef = useRef(null)
   const [featured, setFeatured] = useState([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
 
-  useEffect(() => {
+  const fetchFeatured = () => {
     setLoading(true)
+    setError(false)
     axios.get(`${API_URL}/tours`)
       .then(res => {
         setFeatured(res.data.slice(0, 6))
         setLoading(false)
       })
       .catch(() => {
+        setError(true)
         setLoading(false)
       })
+  }
+
+  useEffect(() => {
+    fetchFeatured()
   }, [])
 
 
@@ -119,7 +126,7 @@ export default function Home() {
             <ScrollFloat containerClassName="section-title">Tours Worth Taking</ScrollFloat>
             <p className="section-sub">Every tour is guided by a local who knows the city — not a script.</p>
           </div>
-          <div className="tours-grid">
+          <div className="tours-grid" style={error ? { display: 'block' } : {}}>
             {loading ? (
               Array.from({ length: 6 }).map((_, i) => (
                 <div className="tour-card skeleton-card" key={i}>
@@ -132,6 +139,11 @@ export default function Home() {
                   </div>
                 </div>
               ))
+            ) : error ? (
+              <div style={{ textAlign: 'center', padding: '3rem 1.5rem', background: 'rgba(255, 255, 255, 0.02)', border: '1px dashed rgba(255,255,255,0.08)', borderRadius: 'var(--radius)', margin: '1rem 0' }}>
+                <p style={{ color: 'var(--muted)', marginBottom: '1.25rem', fontFamily: 'var(--font-body)' }}>Failed to load featured tours. Please check your network connection.</p>
+                <button onClick={fetchFeatured} className="btn btn-outline" style={{ margin: '0 auto' }}>Retry Loading</button>
+              </div>
             ) : (
               featured.map((tour, i) => (
                 <TourCard key={tour.slug} tour={tour} index={i} />

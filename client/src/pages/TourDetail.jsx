@@ -174,17 +174,31 @@ export default function TourDetail() {
   const [tour, setTour] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
+  const [errorStatus, setErrorStatus] = useState(null)
 
-  useEffect(() => {
+  const fetchTourDetail = () => {
     setLoading(true)
     setError(false)
+    setErrorStatus(null)
     fetch(`${API_URL}/tours/${slug}`)
       .then(r => {
-        if (!r.ok) throw new Error('Not found')
+        if (!r.ok) {
+          setErrorStatus(r.status)
+          throw new Error('Request failed with status ' + r.status)
+        }
         return r.json()
       })
       .then(data => { setTour(data); setLoading(false) })
-      .catch(() => { setError(true); setLoading(false) })
+      .catch((err) => { 
+        setError(true)
+        setLoading(false)
+        // If not already set via response status, treat as network error (500)
+        setErrorStatus(prev => prev || 500)
+      })
+  }
+
+  useEffect(() => {
+    fetchTourDetail()
   }, [slug])
 
 
@@ -194,12 +208,25 @@ export default function TourDetail() {
     </main>
   )
 
-  if (error || !tour) return (
-    <main style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '1rem' }}>
-      <h2 style={{ color: 'var(--primary)' }}>Tour not found</h2>
-      <Link to="/tours" className="btn btn-outline">Back to All Tours</Link>
-    </main>
-  )
+  if (error || !tour) {
+    const isNotFound = errorStatus === 404;
+    return (
+      <main style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '1.25rem', padding: '2rem' }}>
+        <h2 style={{ color: 'var(--primary)' }}>{isNotFound ? 'Tour Not Found' : 'Failed to Load Tour'}</h2>
+        <p style={{ color: 'var(--muted)', textAlign: 'center', maxWidth: '420px', lineHeight: 1.6, margin: 0 }}>
+          {isNotFound 
+            ? "We couldn't find the tour you are looking for. It may have been removed or renamed." 
+            : "There was a problem connecting to our servers. Please check your network connection and try again."}
+        </p>
+        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center', marginTop: '0.5rem' }}>
+          {!isNotFound && (
+            <button onClick={fetchTourDetail} className="btn btn-primary">Retry Loading</button>
+          )}
+          <Link to="/tours" className="btn btn-outline">Back to All Tours</Link>
+        </div>
+      </main>
+    )
+  }
 
   const waMsg = encodeURIComponent('Hi SRAC Holidays! I am interested in the ' + tour.name + '. Can you share more details?')
 
