@@ -15,7 +15,7 @@ const MODELS = [
   { file: '/models/innova_zenix.glb', name: 'Innova Hycross', fallbackImg: imgInnova },
 ]
 
-function Car({ url, isMobile }) {
+function Car({ url, isMobile, onLoaded }) {
   const { scene } = useGLTF(url, true)
   const { size, camera } = useThree()
   const w = size.width
@@ -27,6 +27,12 @@ function Car({ url, isMobile }) {
     camera.lookAt(0, 0, 0)
     camera.updateProjectionMatrix()
   }, [w, camera])
+
+  useEffect(() => {
+    if (scene) {
+      onLoaded()
+    }
+  }, [scene, onLoaded])
 
   useEffect(() => {
     const disposeMaterial = (material) => {
@@ -82,34 +88,11 @@ function Car({ url, isMobile }) {
   )
 }
 
-function Loader() {
-  return (
-    <Html center>
-      <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: '0.75rem',
-        color: 'rgba(255,255,255,0.5)',
-      }}>
-        <div style={{
-          width: 36,
-          height: 36,
-          border: '3px solid rgba(255,255,255,0.1)',
-          borderTopColor: 'var(--primary)',
-          borderRadius: '50%',
-          animation: 'spin 1s linear infinite',
-        }} />
-        <span style={{ fontSize: '0.8rem' }}>Loading model…</span>
-      </div>
-    </Html>
-  )
-}
-
 export default function FortunerModel() {
   const [active, setActive] = useState(0)
   const [isMobile, setIsMobile] = useState(false)
   const [inView, setInView] = useState(false)
+  const [loaded, setLoaded] = useState(false)
   const containerRef = useRef(null)
 
   useEffect(() => {
@@ -141,43 +124,98 @@ export default function FortunerModel() {
 
   return (
     <div ref={containerRef} style={{ position: 'relative', width: '100%', height: '100%' }}>
-      {inView ? (
-        <Canvas
-          camera={{ position: [4.5, 1.8, 6.5], fov: 40 }}
-          style={{ background: 'transparent', touchAction: 'pan-y' }}
-          dpr={isMobile ? [1, 1.5] : window.devicePixelRatio}
-        >
-          <ambientLight intensity={0.7} />
-          <directionalLight position={[5, 8, 5]} intensity={1.8} castShadow={!isMobile} />
-          <directionalLight position={[-3, 2, 4]} intensity={0.4} />
-          <Environment preset="city" />
-          <Suspense fallback={<Loader />}>
-            <Car key={active} url={MODELS[active].file} isMobile={isMobile} />
-          </Suspense>
-          <OrbitControls
-            enableZoom={false}
-            enablePan={false}
-            autoRotate={!isMobile}
-            autoRotateSpeed={0.5}
-            minPolarAngle={Math.PI / 4}
-            maxPolarAngle={Math.PI / 2.1}
-          />
-        </Canvas>
-      ) : (
-        /* Viewport Placeholder static image when off-screen to use 0% graphics/memory resources */
-        <div style={{ width: '100%', height: 'calc(100% - 60px)', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
-          <img
-            src={MODELS[active].fallbackImg}
-            alt={MODELS[active].name}
-            style={{
-              maxWidth: '90%',
-              maxHeight: '80%',
-              objectFit: 'contain',
-              filter: 'drop-shadow(0 20px 25px rgba(0,0,0,0.55))',
-            }}
-          />
+      {/* 3D Canvas element with smooth fade transition */}
+      {inView && (
+        <div style={{
+          width: '100%',
+          height: 'calc(100% - 60px)',
+          opacity: loaded ? 1 : 0,
+          transition: 'opacity 0.4s ease',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          zIndex: loaded ? 3 : 1,
+        }}>
+          <Canvas
+            camera={{ position: [4.5, 1.8, 6.5], fov: 40 }}
+            style={{ background: 'transparent', touchAction: 'pan-y' }}
+            dpr={isMobile ? [1, 1.5] : window.devicePixelRatio}
+          >
+            <ambientLight intensity={0.7} />
+            <directionalLight position={[5, 8, 5]} intensity={1.8} castShadow={!isMobile} />
+            <directionalLight position={[-3, 2, 4]} intensity={0.4} />
+            <Environment preset="city" />
+            <Suspense fallback={null}>
+              <Car key={active} url={MODELS[active].file} isMobile={isMobile} onLoaded={() => setLoaded(true)} />
+            </Suspense>
+            <OrbitControls
+              enableZoom={false}
+              enablePan={false}
+              autoRotate={!isMobile}
+              autoRotateSpeed={0.5}
+              minPolarAngle={Math.PI / 4}
+              maxPolarAngle={Math.PI / 2.1}
+            />
+          </Canvas>
         </div>
       )}
+
+      {/* Preview Image / Loader Overlay (shown when offscreen OR when model is loading/loaded behind in view) */}
+      <div style={{
+        width: '100%',
+        height: 'calc(100% - 60px)',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        overflow: 'hidden',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        zIndex: 2,
+        opacity: loaded ? 0 : 1,
+        transition: 'opacity 0.4s ease',
+        pointerEvents: loaded ? 'none' : 'auto',
+      }}>
+        <img
+          src={MODELS[active].fallbackImg}
+          alt={MODELS[active].name}
+          style={{
+            maxWidth: '90%',
+            maxHeight: '80%',
+            objectFit: 'contain',
+            filter: 'drop-shadow(0 20px 25px rgba(0,0,0,0.55))',
+          }}
+        />
+        {/* Show loader only when inView but not yet fully loaded */}
+        {inView && !loaded && (
+          <div style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '0.75rem',
+            background: 'rgba(13, 13, 13, 0.75)',
+            padding: '1.25rem 2rem',
+            borderRadius: '16px',
+            backdropFilter: 'blur(12px)',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
+          }}>
+            <div className="cr-model-loader__spinner" style={{
+              width: 28,
+              height: 28,
+              border: '2px solid rgba(255, 255, 255, 0.1)',
+              borderTopColor: 'var(--primary)',
+              borderRadius: '50%',
+              animation: 'spin 1s linear infinite',
+            }} />
+            <span style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.8)', letterSpacing: '0.5px' }}>Loading 3D Model...</span>
+          </div>
+        )}
+      </div>
 
       {/* Switcher */}
       <div 
@@ -207,7 +245,12 @@ export default function FortunerModel() {
         {MODELS.map((m, i) => (
           <button
             key={i}
-            onClick={() => setActive(i)}
+            onClick={() => {
+              if (active !== i) {
+                setLoaded(false)
+                setActive(i)
+              }
+            }}
             style={{
               background: active === i ? 'var(--primary)' : 'rgba(255,255,255,0.08)',
               border: active === i ? '1px solid var(--primary)' : '1px solid rgba(255,255,255,0.15)',

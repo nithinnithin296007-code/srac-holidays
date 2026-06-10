@@ -33,7 +33,7 @@ export default function Footer() {
               <li><Link to="/tours?category=Mumbai">Mumbai Tours</Link></li>
               <li><Link to="/tours?category=Heritage">Heritage Tours</Link></li>
               <li><Link to="/tours?category=Food">Food Tours</Link></li>
-              <li><Link to="/tours?category=Getaways">Getaways</Link></li>
+              <li><Link to="/tours?category=Gateway">Gateway</Link></li>
             </ul>
           </div>
 

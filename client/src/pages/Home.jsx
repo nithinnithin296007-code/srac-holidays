@@ -14,7 +14,27 @@ gsap.registerPlugin(ScrollTrigger)
 
 export default function Home() {
   const heroRef = useRef(null)
+  const videoRef = useRef(null)
   const featured = toursData.slice(0, 6)
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.play().catch(() => {})
+        } else {
+          video.pause()
+        }
+      },
+      { threshold: 0 }
+    )
+
+    observer.observe(video)
+    return () => observer.disconnect()
+  }, [])
 
 
   useEffect(() => {
@@ -50,7 +70,7 @@ export default function Home() {
       <SEO />
       <section className="hero">
         <div className="hero__video-bg">
-          <video autoPlay muted loop playsInline>
+          <video ref={videoRef} autoPlay muted loop playsInline>
             <source src="/videos/hero.mp4" type="video/mp4" />
           </video>
           <div className="hero__video-overlay" />

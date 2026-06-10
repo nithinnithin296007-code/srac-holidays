@@ -9,7 +9,7 @@ import toursData from '../data/tours'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const categories = ['All', 'Bollywood', 'Mumbai', 'Heritage', 'Food', 'Getaways']
+const categories = ['All', 'Bollywood', 'Mumbai', 'Heritage', 'Food', 'Gateway']
 
 export default function Tours() {
   const tours = toursData
