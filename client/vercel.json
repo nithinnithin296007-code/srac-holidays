@@ -1,9 +1,15 @@
 {
   "cleanUrls": true,
   "rewrites": [
-    {
-      "source": "/((?!assets/|images/|videos/|models/|favicon\\.svg|icons\\.svg|logo\\.jpg|robots\\.txt|sitemap\\.xml).*)",
-      "destination": "/index.html"
-    }
+    { "source": "/assets/:path*", "destination": "/assets/:path*" },
+    { "source": "/images/:path*", "destination": "/images/:path*" },
+    { "source": "/videos/:path*", "destination": "/videos/:path*" },
+    { "source": "/models/:path*", "destination": "/models/:path*" },
+    { "source": "/favicon.svg", "destination": "/favicon.svg" },
+    { "source": "/icons.svg", "destination": "/icons.svg" },
+    { "source": "/logo.jpg", "destination": "/logo.jpg" },
+    { "source": "/robots.txt", "destination": "/robots.txt" },
+    { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
