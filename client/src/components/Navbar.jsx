@@ -6,7 +6,6 @@ import logo from '../assets/logo.svg'
 const links = [
     { label: 'Home', to: '/' },
     { label: 'Tours', to: '/tours' },
-    { label: 'Custom Tour', to: '/#custom-trip' },
     { label: 'About', to: '/about' },
     { label: 'Car Rentals', to: '/car-rentals' },
     { label: 'Trade Enquiry', to: '/b2b' },
