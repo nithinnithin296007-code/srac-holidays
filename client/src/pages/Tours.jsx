@@ -6,18 +6,44 @@ import TourCard from '../components/TourCard'
 import FAQAccordion from '../components/FAQAccordion'
 import { useSearchParams } from 'react-router-dom'
 import toursData from '../data/tours'
+import { API_URL } from '../utils/api'
+import axios from 'axios'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const categories = ['All', 'Bollywood', 'Mumbai', 'Heritage', 'Food', 'Gateway']
-
 export default function Tours() {
-  const tours = toursData
+  const [tours, setTours] = useState(toursData)
+  const [categories, setCategories] = useState(['All', 'Bollywood', 'Mumbai', 'Heritage', 'Food', 'Gateway'])
+  const [loading, setLoading] = useState(true)
   const [searchParams] = useSearchParams()
   const categoryParam = searchParams.get('category')
   const [active, setActive] = useState(categoryParam || 'All')
   const pageRef = useRef(null)
 
+  useEffect(() => {
+    let activeRequest = true
+    const fetchData = async () => {
+      try {
+        setLoading(true)
+        const [toursRes, catsRes] = await Promise.all([
+          axios.get(`${API_URL}/tours`),
+          axios.get(`${API_URL}/tours/meta/categories`)
+        ])
+        if (activeRequest) {
+          setTours(toursRes.data)
+          setCategories(catsRes.data)
+        }
+      } catch (err) {
+        console.warn('API error fetching tours, falling back to local data:', err)
+      } finally {
+        if (activeRequest) {
+          setLoading(false)
+        }
+      }
+    }
+    fetchData()
+    return () => { activeRequest = false }
+  }, [])
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -78,9 +104,23 @@ export default function Tours() {
       <section className="section tours__grid-section">
         <div className="container">
             <div className="tours-grid tours-grid--full">
-              {filtered.map((tour, i) => (
-                <TourCard key={tour.slug} tour={tour} index={i} />
-              ))}
+              {loading ? (
+                Array.from({ length: 6 }).map((_, idx) => (
+                  <div className="tour-card skeleton-card skeleton-pulse" key={idx}>
+                    <div className="skeleton-image" />
+                    <div className="tour-card__body">
+                      <div className="skeleton-title" />
+                      <div className="skeleton-text" />
+                      <div className="skeleton-text" style={{ width: '90%' }} />
+                      <div className="skeleton-meta" />
+                    </div>
+                  </div>
+                ))
+              ) : (
+                filtered.map((tour, i) => (
+                  <TourCard key={tour.slug} tour={tour} index={i} />
+                ))
+              )}
             </div>
         </div>
       </section>

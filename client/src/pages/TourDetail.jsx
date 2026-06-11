@@ -4,6 +4,8 @@ import SEO from '../components/SEO'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import toursData from '../data/tours'
+import { API_URL } from '../utils/api'
+import axios from 'axios'
 
 function TourMap({ itinerary }) {
   const [activeStop, setActiveStop] = useState(0)
@@ -71,7 +73,7 @@ function TourMap({ itinerary }) {
               const isActive = activeStop === idx
               return (
                 <g 
-                  key={idx} 
+                   key={idx} 
                   onClick={() => setActiveStop(idx)} 
                   onMouseEnter={() => setActiveStop(idx)}
                   style={{ cursor: 'pointer' }}
@@ -166,12 +168,44 @@ function TourMap({ itinerary }) {
   )
 }
 
-
-
-
 export default function TourDetail() {
   const { slug } = useParams()
-  const tour = toursData.find(t => t.slug === slug)
+  const [tour, setTour] = useState(() => toursData.find(t => t.slug === slug))
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    let activeRequest = true
+    const fetchTour = async () => {
+      try {
+        setLoading(true)
+        const res = await axios.get(`${API_URL}/tours/${slug}`)
+        if (activeRequest && res.data) {
+          setTour(res.data)
+        }
+      } catch (err) {
+        console.warn(`API error fetching tour ${slug}, falling back to local data:`, err)
+        const localTour = toursData.find(t => t.slug === slug)
+        if (activeRequest) {
+          setTour(localTour)
+        }
+      } finally {
+        if (activeRequest) {
+          setLoading(false)
+        }
+      }
+    }
+    fetchTour()
+    return () => { activeRequest = false }
+  }, [slug])
+
+  if (loading && !tour) {
+    return (
+      <main style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '1.25rem', padding: '2rem' }}>
+        <div className="tours__spinner" />
+        <p style={{ color: 'var(--muted)', fontSize: '0.9rem' }}>Loading tour details...</p>
+      </main>
+    )
+  }
 
   if (!tour) {
     return (

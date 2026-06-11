@@ -1,10 +1,11 @@
-﻿export const validateName = (value) =>
+export const validateName = (value) =>
   !value.trim() ? 'Name is required' : ''
 
 export const validatePhone = (value) => {
   if (!value.trim()) return 'Phone number is required'
-  const digits = value.replace(/\s+/g, '').replace('+91', '')
-  if (!/^[6-9]\d{9}$/.test(digits)) return 'Enter a valid 10-digit Indian mobile number'
+  const cleanVal = value.trim()
+  const phoneRegex = /^\+?[0-9\s\-()]{7,15}$/
+  if (!phoneRegex.test(cleanVal)) return 'Enter a valid phone number (7-15 digits)'
   return ''
 }
 
