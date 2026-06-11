@@ -789,6 +789,9 @@ body::before {
 
 /* ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ SECTION COMMON ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ÃƒÂ¢Ã¢â‚¬ÂÃ¢â€šÂ¬ */
 .section-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
   margin-bottom: 4rem;
 }
@@ -3454,6 +3457,11 @@ a.contact__detail-value:hover { color: var(--primary); }
     border-bottom: none;
     padding-bottom: 0;
   }
+}
+
+/* Reduce spacing immediately following the stats bar */
+.home__stats + .section {
+  padding-top: 3.5rem;
 }
 
 /* Why section */
