@@ -7,7 +7,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import TourCard from '../components/TourCard'
 import ScrollFloat from '../components/ScrollFloat'
 import TripBuilder from '../components/TripBuilder'
-import MediaGallery from '../components/MediaGallery'
 import toursData from '../data/tours'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -225,16 +224,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section home__gallery" style={{ background: 'var(--dark)' }}>
-        <div className="container">
-          <div className="section-header reveal-section" style={{ textAlign: "center" }}>
-            <span className="tag">Moments from Mumbai</span>
-            <ScrollFloat containerClassName="section-title">Authentic Travel Moments</ScrollFloat>
-            <p className="section-sub">A glimpse into real experiences, street life, and stories from our custom excursions.</p>
-          </div>
-          <MediaGallery />
-        </div>
-      </section>
 
       <section className="section home__rentals">
         <div className="container">
