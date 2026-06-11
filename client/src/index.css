@@ -4951,6 +4951,61 @@ a.contact__detail-value:hover { color: var(--primary); }
   overflow-wrap: break-word;
 }
 
+/* Custom Highlight for Custom Trip Builder */
+.navbar__link-highlight {
+  color: var(--primary) !important;
+  font-weight: 600;
+  position: relative;
+}
+
+.navbar__link-highlight::after {
+  content: '✦';
+  font-size: 0.6rem;
+  position: absolute;
+  top: -2px;
+  right: -8px;
+  color: var(--primary);
+}
+
+.film__btn-custom {
+  border-color: var(--primary) !important;
+  color: var(--primary) !important;
+  box-shadow: 0 0 15px rgba(200, 65, 11, 0.1);
+  transition: all 0.3s ease;
+}
+
+.film__btn-custom:hover {
+  background: var(--primary) !important;
+  color: #fff !important;
+  box-shadow: 0 0 25px rgba(200, 65, 11, 0.4) !important;
+}
+
+.home__builder {
+  position: relative;
+  background: radial-gradient(circle at top, rgba(200, 65, 11, 0.12) 0%, var(--dark) 70%) !important;
+  overflow: hidden;
+  padding-bottom: 4rem !important;
+}
+
+.home__builder::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(800px, 90vw);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--primary), transparent);
+}
+
+.trip-builder-card {
+  position: relative;
+  border-color: rgba(200, 65, 11, 0.15) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(200, 65, 11, 0.05) !important;
+  background: rgba(20, 20, 20, 0.9) !important;
+  backdrop-filter: blur(10px);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   ::before,

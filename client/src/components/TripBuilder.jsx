@@ -6,7 +6,7 @@ const INTERESTS = [
   { id: 'dharavi', icon: '🏘️', title: 'Dharavi Local Life', desc: 'Crafts, recycling, community walk' },
   { id: 'heritage', icon: '🏛️', title: 'Heritage Walk', desc: 'Gateway of India, CST, Marine Drive' },
   { id: 'food', icon: '🍛', title: 'Street Food Trail', desc: 'Authentic local delicacies & bites' },
-  { id: 'getaway', icon: '🛣️', title: 'Weekend Getaway', desc: 'Hill stations, vineyards, retreats' },
+  { id: 'gateway', icon: '🛣️', title: 'Weekend Gateway', desc: 'Hill stations, vineyards, retreats' },
 ]
 
 const DURATIONS = [

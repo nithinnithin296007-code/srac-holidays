@@ -35,6 +35,13 @@ export default function Home() {
     return () => observer.disconnect()
   }, [])
 
+  useEffect(() => {
+    if (window.location.hash === '#custom-trip') {
+      setTimeout(() => {
+        document.getElementById('custom-trip')?.scrollIntoView({ behavior: 'smooth' })
+      }, 300)
+    }
+  }, [])
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -87,8 +94,8 @@ export default function Home() {
           </p>
           <div className="film__actions">
             <Link to="/tours" className="btn btn-primary">Explore Tours</Link>
-            <a href="https://wa.me/917738676316" target="_blank" rel="noreferrer" className="btn btn-outline">
-              WhatsApp Us
+            <a href="#custom-trip" className="btn btn-outline film__btn-custom">
+              Build Custom Trip ✦
             </a>
           </div>
         </div>
@@ -132,6 +139,17 @@ export default function Home() {
           <div className="featured__cta reveal-section">
             <Link to="/tours" className="btn btn-outline">See All 15 Tours →</Link>
           </div>
+        </div>
+      </section>
+
+      <section id="custom-trip" className="section home__builder">
+        <div className="container">
+          <div className="section-header reveal-section" style={{ textAlign: "center" }}>
+            <span className="tag">Highlight Feature</span>
+            <ScrollFloat containerClassName="section-title">Build Your Custom Tour</ScrollFloat>
+            <p className="section-sub">Select your interests, tell us your duration, and let us design a personalized day in Mumbai.</p>
+          </div>
+          <TripBuilder />
         </div>
       </section>
 
@@ -249,16 +267,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section home__builder" style={{ paddingBottom: 0 }}>
-        <div className="container">
-          <div className="section-header reveal-section" style={{ textAlign: "center" }}>
-            <span className="tag">Custom Trip</span>
-            <h2 className="section-title">Build Your Custom Tour</h2>
-            <p className="section-sub">Select your interests, tell us your duration, and let us design a personalized day in Mumbai.</p>
-          </div>
-          <TripBuilder />
-        </div>
-      </section>
 
       <section className="home__cta reveal-section">
         <div className="container home__cta-inner">

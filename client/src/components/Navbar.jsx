@@ -6,6 +6,7 @@ import logo from '../assets/logo.svg'
 const links = [
     { label: 'Home', to: '/' },
     { label: 'Tours', to: '/tours' },
+    { label: 'Custom Tour', to: '/#custom-trip' },
     { label: 'About', to: '/about' },
     { label: 'Car Rentals', to: '/car-rentals' },
     { label: 'Trade Enquiry', to: '/b2b' },
@@ -22,6 +23,16 @@ export default function Navbar() {
         window.addEventListener('scroll', onScroll, { passive: true })
         return () => window.removeEventListener('scroll', onScroll)
     }, [])
+
+    const handleLinkClick = (e, to) => {
+        if (to === '/#custom-trip') {
+            if (location.pathname === '/') {
+                e.preventDefault()
+                document.getElementById('custom-trip')?.scrollIntoView({ behavior: 'smooth' })
+                setOpen(false)
+            }
+        }
+    }
 
     useEffect(() => setOpen(false), [location])
 
@@ -43,7 +54,12 @@ export default function Navbar() {
                             <li key={l.to}>
                                 <Link
                                     to={l.to}
-                                    className={`navbar__link ${location.pathname === l.to ? 'active' : ''}`}
+                                    onClick={(e) => handleLinkClick(e, l.to)}
+                                    className={`navbar__link ${
+                                        l.label === 'Custom Tour' ? 'navbar__link-highlight' : ''
+                                    } ${
+                                        location.pathname === l.to || (l.to === '/#custom-trip' && location.pathname === '/' && location.hash === '#custom-trip') ? 'active' : ''
+                                    }`}
                                 >
                                     {l.label}
                                 </Link>
@@ -134,11 +150,12 @@ export default function Navbar() {
                                         >
                                             <Link 
                                                 to={l.to}
+                                                onClick={(e) => handleLinkClick(e, l.to)}
                                                 style={{ 
                                                     fontSize: '1.5rem', 
                                                     fontFamily: 'var(--font-heading)', 
-                                                    color: location.pathname === l.to ? 'var(--primary)' : 'var(--light)',
-                                                    fontWeight: location.pathname === l.to ? '700' : '400',
+                                                    color: (location.pathname === l.to || (l.to === '/#custom-trip' && location.pathname === '/' && location.hash === '#custom-trip')) ? 'var(--primary)' : 'var(--light)',
+                                                    fontWeight: (location.pathname === l.to || (l.to === '/#custom-trip' && location.pathname === '/' && location.hash === '#custom-trip')) ? '700' : '400',
                                                     transition: 'color 0.2s',
                                                     display: 'block'
                                                 }}

@@ -34,7 +34,7 @@ export default function Tours() {
     <main ref={pageRef}>
       <SEO 
         title="Mumbai Tours & Experiences" 
-        description="Explore our list of unique Mumbai tours. Bollywood Film City tours, Dharavi slum tours, heritage walks, street food tastings, and local getaways." 
+        description="Explore our list of unique Mumbai tours. Bollywood Film City tours, Dharavi slum tours, heritage walks, street food tastings, and local gateways." 
       />
 
       {/* ── HERO ── */}
