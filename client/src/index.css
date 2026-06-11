@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap');
 
 :root {
   --primary: #C8410B;
@@ -11,7 +11,7 @@
   --light-2: #EDE8E0;
   --white: #FFFFFF;
   --muted: #888888;
-  --font-heading: 'Plus Jakarta Sans', sans-serif;
+  --font-heading: 'Montserrat', sans-serif;
   --font-body: 'Inter', sans-serif;
   --max-width: 1280px;
   --radius: 12px;
@@ -1551,7 +1551,7 @@ body::before {
   --light-2: #D9D4C7;
   --white: #FFFFFF;
   --muted: #7A8599;
-  --font-heading: 'Plus Jakarta Sans', sans-serif;
+  --font-heading: 'Montserrat', sans-serif;
   --font-body: 'Inter', sans-serif;
   --max-width: 1280px;
   --radius: 12px;
