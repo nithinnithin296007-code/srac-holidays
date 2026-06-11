@@ -638,8 +638,6 @@ body::before {
   position: relative;
   height: 100vh;
   min-height: 700px;
-  display: flex;
-  align-items: center;
   overflow: hidden;
 }
 
