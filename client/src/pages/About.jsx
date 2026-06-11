@@ -9,10 +9,10 @@ const awards = [
   { year: '2017', title: 'Certificate of Excellence', body: 'TripAdvisor' },
   { year: '2018', title: 'Certificate of Excellence', body: 'TripAdvisor' },
   { year: '2019', title: 'Certificate of Excellence', body: 'TripAdvisor' },
-  { year: '2020', title: "Travellers\' Choice", body: 'TripAdvisor' },
-  { year: '2022', title: "Travellers\' Choice", body: 'TripAdvisor' },
-  { year: '2023', title: "Travellers\' Choice", body: 'TripAdvisor' },
-  { year: '2024', title: "Travellers\' Choice", body: 'TripAdvisor' },
+  { year: '2020', title: "Travellers' Choice", body: 'TripAdvisor' },
+  { year: '2022', title: "Travellers' Choice", body: 'TripAdvisor' },
+  { year: '2023', title: "Travellers' Choice", body: 'TripAdvisor' },
+  { year: '2024', title: "Travellers' Choice", body: 'TripAdvisor' },
 ]
 
 const values = [

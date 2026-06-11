@@ -1,11 +1,13 @@
 import { defineConfig, devices } from '@playwright/test';
 
+const processEnv = globalThis.process?.env || {};
+
 export default defineConfig({
   testDir: './tests',
   timeout: 60000,
   fullyParallel: false,
-  forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 1 : 0,
+  forbidOnly: !!processEnv.CI,
+  retries: processEnv.CI ? 1 : 0,
   workers: 1,
   reporter: 'list',
   use: {
@@ -21,7 +23,7 @@ export default defineConfig({
   webServer: {
     command: 'npm run dev',
     url: 'http://localhost:3000',
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: !processEnv.CI,
     cwd: './',
   },
 });

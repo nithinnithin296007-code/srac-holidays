@@ -25,16 +25,14 @@ export default function Navbar() {
     }, [])
 
     const handleLinkClick = (e, to) => {
+        setOpen(false)
         if (to === '/#custom-trip') {
             if (location.pathname === '/') {
                 e.preventDefault()
                 document.getElementById('custom-trip')?.scrollIntoView({ behavior: 'smooth' })
-                setOpen(false)
             }
         }
     }
-
-    useEffect(() => setOpen(false), [location])
 
     return (
         <>

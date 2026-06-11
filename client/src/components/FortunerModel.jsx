@@ -1,7 +1,6 @@
 import { Suspense, useState, useEffect, useRef } from 'react'
 import { Canvas, useThree } from '@react-three/fiber'
 import { OrbitControls, Environment, useGLTF, Html, Center, ContactShadows } from '@react-three/drei'
-import { motion, AnimatePresence } from 'framer-motion'
 
 import imgFortuner from '../assets/cars/fortuner.jpg'
 import imgMercedes from '../assets/cars/mercedes-e.jpg'

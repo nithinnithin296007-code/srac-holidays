@@ -64,12 +64,6 @@ export default function Home() {
     { number: '7+', label: 'TripAdvisor Awards' },
   ]
 
-  const whyItems = [
-    { title: 'Bollywood Access', desc: 'Real sets, real shoots — not a themed attraction.' },
-    { title: 'Local Guides Only', desc: 'Every guide lives in the neighbourhood they show you.' },
-    { title: 'Small Groups', desc: 'Max 15-20 people. Often much less.' },
-    { title: 'No Hidden Costs', desc: 'Price listed is the full price. Always.' },
-  ]
 
   return (
     <main ref={heroRef}>
