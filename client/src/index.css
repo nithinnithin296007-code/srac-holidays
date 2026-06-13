@@ -3760,7 +3760,7 @@ a.contact__detail-value:hover { color: var(--primary); }
     font-size: 0.8rem;
     white-space: nowrap;
   }
-  body {
+  body.page-tour-detail {
     padding-bottom: 76px;
   }
 

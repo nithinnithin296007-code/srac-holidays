@@ -174,6 +174,13 @@ export default function TourDetail() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    document.body.classList.add('page-tour-detail')
+    return () => {
+      document.body.classList.remove('page-tour-detail')
+    }
+  }, [])
+
+  useEffect(() => {
     let activeRequest = true
     const fetchTour = async () => {
       try {
