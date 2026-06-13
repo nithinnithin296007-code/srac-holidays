@@ -1,28 +1,30 @@
-import { useState } from 'react'
+import { useState, lazy, Suspense } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import SEO from '../components/SEO'
-import FortunerModel from '../components/FortunerModel'
 import FAQAccordion from '../components/FAQAccordion'
-import imgDzire from '../assets/cars/honda-amaze.jpg'
-import imgAmaze from '../assets/cars/honda-amaze.jpg'
-import imgHondaCity from '../assets/cars/honda-city.jpg'
-import imgVerna from '../assets/cars/verna.jpg'
-import imgEtios from '../assets/cars/etios.jpg'
-import imgMercedes from '../assets/cars/mercedes-e.jpg'
-import imgAudi from '../assets/cars/audi.jpg'
-import imgJaguar from '../assets/cars/jaguar-xf.jpg'
-import imgCamry from '../assets/cars/camry.jpg'
-import imgInnova from '../assets/cars/innova.jpg'
-import imgInnovaCrysta from '../assets/cars/innova-crysta.jpg'
-import imgFortuner from '../assets/cars/fortuner.jpg'
-import imgScorpio from '../assets/cars/scorpio.png'
-import imgCreta from '../assets/cars/creta.jpg'
-import imgErtiga from '../assets/cars/ertiga.jpg'
-import imgMarazzo from '../assets/cars/marazzo.jpg'
-import imgTempo from '../assets/cars/tempo.png'
+
+// Lazy-load the 3D car viewer — Three.js is ~800KB and only needed when this component renders
+const FortunerModel = lazy(() => import('../components/FortunerModel'))
+import imgDzire from '../assets/cars/honda-amaze.webp'
+import imgAmaze from '../assets/cars/honda-amaze.webp'
+import imgHondaCity from '../assets/cars/honda-city.webp'
+import imgVerna from '../assets/cars/verna.webp'
+import imgEtios from '../assets/cars/etios.webp'
+import imgMercedes from '../assets/cars/mercedes-e.webp'
+import imgAudi from '../assets/cars/audi.webp'
+import imgJaguar from '../assets/cars/jaguar-xf.webp'
+import imgCamry from '../assets/cars/camry.webp'
+import imgInnova from '../assets/cars/innova.webp'
+import imgInnovaCrysta from '../assets/cars/innova-crysta.webp'
+import imgFortuner from '../assets/cars/fortuner.webp'
+import imgScorpio from '../assets/cars/scorpio.webp'
+import imgCreta from '../assets/cars/creta.webp'
+import imgErtiga from '../assets/cars/ertiga.webp'
+import imgMarazzo from '../assets/cars/marazzo.webp'
+import imgTempo from '../assets/cars/tempo.webp'
 import imgCoach18 from '../assets/cars/coach-18.avif'
-import imgCoach24 from '../assets/cars/coach-24.jpg'
-import imgCoach32 from '../assets/cars/coach-32.jpg'
+import imgCoach24 from '../assets/cars/coach-24.webp'
+import imgCoach32 from '../assets/cars/coach-32.webp'
 
 const WHATSAPP = '917738676316'
 
@@ -209,7 +211,14 @@ export default function CarRentals() {
             </motion.div>
           </div>
           <div className="cr-hero__canvas">
-            <FortunerModel />
+            <Suspense fallback={
+              <div className="cr-model-loader" style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '1rem' }}>
+                <div className="cr-model-loader__spinner" />
+                <span>Loading 3D model…</span>
+              </div>
+            }>
+              <FortunerModel />
+            </Suspense>
           </div>
         </div>
       </section>

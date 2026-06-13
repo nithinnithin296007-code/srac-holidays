@@ -2,10 +2,10 @@ import { Suspense, useState, useEffect, useRef } from 'react'
 import { Canvas, useThree } from '@react-three/fiber'
 import { OrbitControls, Environment, useGLTF, Html, Center, ContactShadows } from '@react-three/drei'
 
-import imgFortuner from '../assets/cars/fortuner.jpg'
-import imgMercedes from '../assets/cars/mercedes-e.jpg'
-import imgAudi from '../assets/cars/audi.jpg'
-import imgInnova from '../assets/cars/innova-crysta.jpg'
+import imgFortuner from '../assets/cars/fortuner.webp'
+import imgMercedes from '../assets/cars/mercedes-e.webp'
+import imgAudi from '../assets/cars/audi.webp'
+import imgInnova from '../assets/cars/innova-crysta.webp'
 
 const MODELS = [
   { file: '/models/toyota_fortuner_2021.glb', name: 'Toyota Fortuner', fallbackImg: imgFortuner },
