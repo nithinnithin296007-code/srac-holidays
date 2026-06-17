@@ -3,6 +3,7 @@
 :root {
   --primary: #C8410B;
   --primary-dark: #A33308;
+  --primary-light: #FF6B35;
   --accent: #F5A623;
   --dark: #0D0D0D;
   --dark-2: #1A1A1A;
@@ -130,8 +131,8 @@ img {
   font-weight: 600;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--primary);
-  border: 1px solid var(--primary);
+  color: var(--primary-light, #FF6B35);
+  border: 1px solid var(--primary-light, #FF6B35);
   padding: 0.3rem 0.8rem;
   border-radius: 100px;
 }
@@ -168,18 +169,18 @@ img {
 }
 
 .btn-outline:hover {
-  border-color: var(--primary);
-  color: var(--primary);
+  border-color: var(--accent);
+  color: var(--accent);
   transform: translateY(-2px);
 }
 
 .btn-whatsapp {
-  background: #25D366;
+  background: #128C7E;
   color: var(--white);
 }
 
 .btn-whatsapp:hover {
-  background: #1ebe5d;
+  background: #075E54;
   transform: translateY(-2px);
 }
 
@@ -1547,6 +1548,7 @@ body::before {
 :root {
   --primary: #C9A84C;
   --primary-dark: #A8873A;
+  --primary-light: #E8C87A;
   --accent: #E8C87A;
   --dark: #080C14;
   --dark-2: #0D1320;
@@ -1576,8 +1578,8 @@ body::before {
 
 /* Tag border gold */
 .tag {
-  color: var(--primary);
-  border-color: var(--primary);
+  color: var(--primary-light);
+  border-color: var(--primary-light);
 }
 
 /* Buttons */
@@ -1591,7 +1593,7 @@ body::before {
 }
 
 .btn-whatsapp {
-  background: #25D366;
+  background: #128C7E;
   color: white;
 }
 
@@ -4039,7 +4041,7 @@ a.contact__detail-value:hover { color: var(--primary); }
   font-size: 0.7rem;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--primary);
+  color: var(--accent);
   font-weight: 600;
 }
 
@@ -4050,7 +4052,7 @@ a.contact__detail-value:hover { color: var(--primary); }
 }
 
 .home__rentals-banner-desc {
-  color: var(--muted);
+  color: rgba(240, 237, 230, 0.75);
   max-width: 420px;
   line-height: 1.6;
   font-size: 0.9rem;
@@ -4065,11 +4067,11 @@ a.contact__detail-value:hover { color: var(--primary); }
 
 .home__rentals-banner-car {
   background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
   border-radius: 100px;
   padding: 6px 14px;
   font-size: 0.75rem;
-  color: var(--muted);
+  color: var(--light);
 }
 
 .home__rentals-banner-btn {

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import SEO from '../components/SEO'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
@@ -15,10 +15,23 @@ export default function Home() {
   const heroRef = useRef(null)
   const videoRef = useRef(null)
   const featured = toursData.slice(0, 6)
+  const [videoSrc, setVideoSrc] = useState('')
+
+  useEffect(() => {
+    const loadVideo = () => {
+      setVideoSrc('/videos/hero.mp4')
+    }
+    if (document.readyState === 'complete') {
+      loadVideo()
+    } else {
+      window.addEventListener('load', loadVideo)
+      return () => window.removeEventListener('load', loadVideo)
+    }
+  }, [])
 
   useEffect(() => {
     const video = videoRef.current
-    if (!video) return
+    if (!video || !videoSrc) return
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -33,7 +46,7 @@ export default function Home() {
 
     observer.observe(video)
     return () => observer.disconnect()
-  }, [])
+  }, [videoSrc])
 
   useEffect(() => {
     if (window.location.hash === '#custom-trip') {
@@ -113,9 +126,16 @@ export default function Home() {
       <SEO />
       <section className="hero">
         <div className="hero__video-bg">
-          <video ref={videoRef} autoPlay muted loop playsInline>
-            <source src="/videos/hero.mp4" type="video/mp4" />
-          </video>
+          <video
+            ref={videoRef}
+            src={videoSrc || undefined}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-hidden="true"
+          />
           <div className="hero__video-overlay" />
         </div>
 

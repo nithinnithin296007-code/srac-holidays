@@ -64,7 +64,7 @@ function FAQItem({ q, a, isOpen, onClick }) {
             style={{ overflow: 'hidden' }}
           >
             <p style={{
-              color: 'var(--muted)',
+              color: 'var(--light-2)',
               fontSize: '0.88rem',
               lineHeight: 1.7,
               marginTop: '0.75rem',
