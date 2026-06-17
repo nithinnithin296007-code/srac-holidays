@@ -2,20 +2,16 @@ import { useEffect, useRef, useState } from 'react'
 import SEO from '../components/SEO'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import TourCard from '../components/TourCard'
 import ScrollFloat from '../components/ScrollFloat'
 import TripBuilder from '../components/TripBuilder'
 import toursData from '../data/tours'
 
-gsap.registerPlugin(ScrollTrigger)
-
 export default function Home() {
   const heroRef = useRef(null)
   const videoRef = useRef(null)
   const featured = toursData.slice(0, 6)
-  const [videoSrc, setVideoSrc] = useState('')
+  const [videoSrc, setVideoSrc] = useState('/videos/hero.mp4')
 
   useEffect(() => {
     const loadVideo = () => {
@@ -57,17 +53,30 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from('.film__tag', { opacity: 0, duration: 0.8, delay: 0.6 })
-      gsap.from('.film__title', { opacity: 0, duration: 1.2, delay: 0.9, ease: 'power4.out' })
-      gsap.from('.film__sub', { opacity: 0, duration: 1, delay: 1.3 })
-      gsap.from('.film__actions', { opacity: 0, duration: 1, delay: 1.5 })
-      gsap.from('.hero__scroll', { opacity: 0, duration: 1, delay: 2 })
-      gsap.utils.toArray('.reveal-section').forEach(el => {
-        gsap.from(el, { opacity: 0, y: 50, duration: 1, scrollTrigger: { trigger: el, start: 'top 85%' } })
+    let ctx
+    let mounted = true
+
+    import('gsap').then(({ gsap }) => {
+      import('gsap/ScrollTrigger').then(({ ScrollTrigger }) => {
+        if (!mounted) return
+        gsap.registerPlugin(ScrollTrigger)
+        ctx = gsap.context(() => {
+          gsap.from('.film__tag', { opacity: 0, duration: 0.8, delay: 0.6 })
+          gsap.from('.film__title', { opacity: 0, duration: 1.2, delay: 0.9, ease: 'power4.out' })
+          gsap.from('.film__sub', { opacity: 0, duration: 1, delay: 1.3 })
+          gsap.from('.film__actions', { opacity: 0, duration: 1, delay: 1.5 })
+          gsap.from('.hero__scroll', { opacity: 0, duration: 1, delay: 2 })
+          gsap.utils.toArray('.reveal-section').forEach(el => {
+            gsap.from(el, { opacity: 0, y: 50, duration: 1, scrollTrigger: { trigger: el, start: 'top 85%' } })
+          })
+        }, heroRef)
       })
-    }, heroRef)
-    return () => ctx.revert()
+    })
+
+    return () => {
+      mounted = false
+      if (ctx) ctx.revert()
+    }
   }, [])
 
   const stats = [
@@ -120,7 +129,6 @@ export default function Home() {
     },
   ]
 
-
   return (
     <main ref={heroRef}>
       <SEO />
@@ -133,7 +141,8 @@ export default function Home() {
             muted
             loop
             playsInline
-            preload="metadata"
+            preload="none"
+            poster="/videos/hero-poster.jpg"
             aria-hidden="true"
           />
           <div className="hero__video-overlay" />
@@ -169,15 +178,12 @@ export default function Home() {
         </div>
       </section>
 
-
       <section className="home__stats reveal-section">
         <div className="container">
           <div className="home__stats-bar">
             {stats.map((s, i) => (
               <div className="home__stat-item" key={i}>
-                <div className="home__stat-icon">
-                  {s.icon}
-                </div>
+                <div className="home__stat-icon">{s.icon}</div>
                 <div className="home__stat-info">
                   <span className="home__stat-number">{s.number}</span>
                   <span className="home__stat-label">{s.label}</span>
@@ -306,15 +312,12 @@ export default function Home() {
         </div>
       </section>
 
-
       <section className="section home__rentals">
         <div className="container">
           <div className="home__rentals-banner">
             <div className="home__rentals-banner-content">
               <span className="home__rentals-banner-subtitle">Also Available</span>
-              <h2 className="home__rentals-banner-title">
-                Luxury Car Rentals
-              </h2>
+              <h2 className="home__rentals-banner-title">Luxury Car Rentals</h2>
               <p className="home__rentals-banner-desc">
                 BMW, Mercedes, Jaguar, Innova and more. Airport transfers, outstation trips, corporate events — driven by professionals.
               </p>
@@ -323,14 +326,11 @@ export default function Home() {
               {['BMW 5 Series', 'Mercedes E-Class', 'Jaguar XF', 'Innova Crysta'].map(car => (
                 <span key={car} className="home__rentals-banner-car">{car}</span>
               ))}
-              <a href="/car-rentals" className="btn btn-primary home__rentals-banner-btn">
-                View Fleet →
-              </a>
+              <a href="/car-rentals" className="btn btn-primary home__rentals-banner-btn">View Fleet →</a>
             </div>
           </div>
         </div>
       </section>
-
 
       <section className="home__cta reveal-section">
         <div className="container home__cta-inner">

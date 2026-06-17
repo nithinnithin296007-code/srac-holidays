@@ -6,7 +6,7 @@ const tours = [
         duration: 'Full Day · 8 hrs',
         groupSize: '2–15 people',
         category: 'Bollywood',
-        coverImage: 'https://images.unsplash.com/photo-1646327537880-962a5276e4bf?w=800&q=80',
+        coverImage: '/images/tours/tour-01.jpg',
         description: 'The tour that started it all. Since 2003, we\'ve been taking visitors inside the real Bollywood — working sets, studio floors, and the city that built the industry.',
         highlights: ['Film City studio access', 'Live set visits', 'Mumbai city landmarks', 'Local lunch included'],
         itinerary: [
@@ -24,7 +24,7 @@ const tours = [
         duration: 'Half Day · 4 hrs',
         groupSize: '2–10 people',
         category: 'Mumbai',
-        coverImage: 'https://plus.unsplash.com/premium_photo-1661964379253-dfc38531f6ad?w=800&q=80',
+        coverImage: '/images/tours/tour-02.jpg',
         description: 'Asia\'s largest urban settlement is also one of its most productive. This educational tour shows the industries, crafts, and community spirit that make Dharavi remarkable.',
         highlights: ['Recycling & manufacturing zones', 'Local craft workshops', 'Community interaction', 'Expert local guide'],
         itinerary: [
@@ -41,7 +41,7 @@ const tours = [
         duration: 'Half Day · 3 hrs',
         groupSize: '2–20 people',
         category: 'Mumbai',
-        coverImage: 'https://images.unsplash.com/photo-1616428090830-59bd09d9f272?w=800&q=80',
+        coverImage: '/images/tours/tour-03.jpg',
         description: 'Walk through Mumbai\'s colonial-era streets, Gothic architecture, and hidden cultural gems that most tourists walk past without knowing.',
         highlights: ['CST railway station', 'Colonial architecture', 'Local markets', 'Hidden temples'],
         itinerary: [
@@ -58,7 +58,7 @@ const tours = [
         duration: 'Half Day · 3 hrs',
         groupSize: '2–15 people',
         category: 'Mumbai',
-        coverImage: 'https://images.pexels.com/photos/33224085/pexels-photo-33224085.jpeg',
+        coverImage: '/images/tours/tour-04.jpg',
         description: 'Watch Mumbai\'s legendary lunch delivery network in action — 5,000 workers, 200,000 deliveries daily, Six Sigma accuracy. No app. No GPS.',
         highlights: ['Live dabbawala sorting', 'Meet the workers', 'Railway station operations', 'Photo opportunities'],
         itinerary: [
@@ -75,7 +75,7 @@ const tours = [
         duration: 'Half Day · 4 hrs',
         groupSize: '2–20 people',
         category: 'Bollywood',
-        coverImage: 'https://images.unsplash.com/photo-1562041524-748f3fbde03b?w=800&q=80',
+        coverImage: '/images/tours/tour-05.jpg',
         description: 'Step inside Film City — Bollywood\'s main production hub. See active sets, costume departments, and if you\'re lucky, catch a live shoot.',
         highlights: ['Active set access', 'Costume & props department', 'Studio backlot tour', 'Possible live shoot'],
         itinerary: [
@@ -92,7 +92,7 @@ const tours = [
         duration: 'Half Day · 3 hrs',
         groupSize: '2–12 people',
         category: 'Food',
-        coverImage: 'https://images.unsplash.com/photo-1619193100179-af4cc742ed3e?w=800&q=80',
+        coverImage: '/images/tours/tour-06.jpg',
         description: 'Vada pav, pav bhaji, bhel puri — 8 to 10 street food stops across Mumbai\'s best eating neighbourhoods.',
         highlights: ['8–10 food stops', 'Local neighbourhoods', 'Vegetarian & non-veg options', 'Food history explained'],
         itinerary: [
@@ -109,7 +109,7 @@ const tours = [
         duration: 'Full Day · 6 hrs',
         groupSize: '2–20 people',
         category: 'Heritage',
-        coverImage: 'https://images.unsplash.com/photo-1701430662619-a2d33480a2d6?w=800&q=80',
+        coverImage: '/images/tours/tour-07.jpg',
         description: 'Ancient rock-cut temples dedicated to Lord Shiva on an island in Mumbai Harbour. A UNESCO World Heritage Site.',
         highlights: ['Ferry from Gateway of India', 'UNESCO cave temples', 'Trimurti sculpture', 'Arabian Sea views'],
         itinerary: [
@@ -127,7 +127,7 @@ const tours = [
         duration: '2 Days',
         groupSize: '2–20 people',
         category: 'Heritage',
-        coverImage: 'https://images.unsplash.com/photo-1701430662597-ff86c1cba95a?w=800&q=80',
+        coverImage: '/images/tours/tour-08.jpg',
         description: 'The rock-cut cave temples of Ajanta and Ellora are among the greatest archaeological sites on earth. We handle transport, stays, and guided access.',
         highlights: ['Ajanta Buddhist caves', 'Ellora Hindu & Jain caves', 'Overnight in Aurangabad', 'Expert archaeologist guide'],
         itinerary: [
@@ -145,7 +145,7 @@ const tours = [
         duration: '2 Days',
         groupSize: '2–20 people',
         category: 'Gateway',
-        coverImage: 'https://images.unsplash.com/photo-1663052156709-648428439981?w=800&q=80',
+        coverImage: '/images/tours/tour-09.jpg',
         description: 'Strawberry farms, valley viewpoints, cool air — 2 hours from Mumbai.',
         highlights: ['Scenic valley viewpoints', 'Strawberry farm visit', 'Venna Lake boating', 'Local cuisine'],
         itinerary: [
@@ -163,7 +163,7 @@ const tours = [
         duration: '2 Days',
         groupSize: '2–15 people',
         category: 'Gateway',
-        coverImage: 'https://plus.unsplash.com/premium_photo-1675970835725-a339c261d5c7?w=800&q=80',
+        coverImage: '/images/tours/tour-10.jpg',
         description: 'India\'s most celebrated vineyard is 3 hours from Mumbai. Wine tasting, vineyard walks, and a resort stay in the Sahyadri hills.',
         highlights: ['Sula vineyard tour', 'Wine tasting session', 'Resort stay', 'Nashik city sightseeing'],
         itinerary: [
@@ -181,7 +181,7 @@ const tours = [
         duration: 'Half Day · 4 hrs',
         groupSize: '2–15 people',
         category: 'Heritage',
-        coverImage: 'https://images.pexels.com/photos/5974265/pexels-photo-5974265.jpeg',
+        coverImage: '/images/tours/tour-11.jpg',
         description: 'Mumbai has one of India\'s oldest Jewish communities, dating back 2,000 years. Synagogues, cemeteries, and neighbourhoods most people do not know exist.',
         highlights: ['Keneseth Eliyahoo Synagogue', 'Magen David Synagogue', 'Jewish cemetery', 'Community history'],
         itinerary: [
@@ -198,7 +198,7 @@ const tours = [
         duration: 'Full Day · 8 hrs',
         groupSize: '2–20 people',
         category: 'Gateway',
-        coverImage: 'https://images.unsplash.com/photo-1713545396351-b848e4707cb2?w=800&q=80',
+        coverImage: '/images/tours/tour-12.jpg',
         description: 'No cars, no pollution. 90 minutes from Mumbai, accessible only by toy train or on foot.',
         highlights: ['Heritage toy train ride', 'Car-free environment', 'Valley viewpoints', 'Nature trails'],
         itinerary: [
@@ -216,7 +216,7 @@ const tours = [
         duration: 'Half Day · 3 hrs',
         groupSize: '2–12 people',
         category: 'Food',
-        coverImage: 'https://images.unsplash.com/photo-1627904199733-20e4c5ef50de?w=800&q=80',
+        coverImage: '/images/tours/tour-13.jpg',
         description: 'Dhansak, patra ni machhi, berry pulav — Parsi cuisine kept alive in Mumbai\'s old Irani cafés and community dining halls.',
         highlights: ['Irani café breakfast', 'Parsi colony visit', 'Community kitchen access', 'Full Parsi meal'],
         itinerary: [
@@ -233,7 +233,7 @@ const tours = [
         duration: 'Half Day · 4 hrs',
         groupSize: '2–15 people',
         category: 'Bollywood',
-        coverImage: 'https://images.unsplash.com/photo-1612000656409-16fcf948b2d9?w=800&q=80',
+        coverImage: '/images/tours/tour-14.jpg',
         description: 'India\'s TV industry is as big as its film industry — and far less visited. Behind the scenes of active serial productions.',
         highlights: ['Active TV serial sets', 'Meet cast & crew', 'Costume & makeup dept', 'Production behind-the-scenes'],
         itinerary: [
@@ -250,7 +250,7 @@ const tours = [
         duration: 'Half Day · 4 hrs',
         groupSize: '2–15 people',
         category: 'Mumbai',
-        coverImage: 'https://plus.unsplash.com/premium_photo-1673240845266-2f2c432cf194?w=800&q=80',
+        coverImage: '/images/tours/tour-15.jpg',
         description: 'Crawford Market, Chor Bazaar, Dharavi leather district — Mumbai\'s real shopping is in its chaotic, extraordinary street markets.',
         highlights: ['Crawford Market', 'Chor Bazaar antiques', 'Dharavi leather goods', 'Bargaining guidance'],
         itinerary: [

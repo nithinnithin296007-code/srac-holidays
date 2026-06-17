@@ -207,8 +207,7 @@ export default function FortunerModel() {
         </Canvas>
       )}
 
-      {/* Switcher */}
-      <div 
+      <div
         className="cr-model-switcher"
         style={{
           position: 'absolute',
