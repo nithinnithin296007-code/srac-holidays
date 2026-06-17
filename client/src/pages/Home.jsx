@@ -36,7 +36,7 @@ export default function Home() {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          video.play().catch(() => {})
+          video.play().catch(() => { })
         } else {
           video.pause()
         }
@@ -58,10 +58,10 @@ export default function Home() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from('.film__tag', { opacity: 0, x: -30, duration: 0.8, delay: 0.6 })
-      gsap.from('.film__title', { opacity: 0, y: 40, duration: 1.2, delay: 0.9, ease: 'power4.out' })
-      gsap.from('.film__sub', { opacity: 0, y: 20, duration: 1, delay: 1.3 })
-      gsap.from('.film__actions', { opacity: 0, y: 20, duration: 1, delay: 1.5 })
+      gsap.from('.film__tag', { opacity: 0, duration: 0.8, delay: 0.6 })
+      gsap.from('.film__title', { opacity: 0, duration: 1.2, delay: 0.9, ease: 'power4.out' })
+      gsap.from('.film__sub', { opacity: 0, duration: 1, delay: 1.3 })
+      gsap.from('.film__actions', { opacity: 0, duration: 1, delay: 1.5 })
       gsap.from('.hero__scroll', { opacity: 0, duration: 1, delay: 2 })
       gsap.utils.toArray('.reveal-section').forEach(el => {
         gsap.from(el, { opacity: 0, y: 50, duration: 1, scrollTrigger: { trigger: el, start: 'top 85%' } })
