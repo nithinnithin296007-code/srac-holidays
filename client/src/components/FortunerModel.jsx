@@ -14,10 +14,16 @@ const MODELS = [
   { file: '/models/innova_zenix.glb', name: 'Innova Hycross', fallbackImg: imgInnova },
 ]
 
-function Car({ url, isMobile }) {
+function Car({ url, isMobile, onLoaded }) {
   const { scene } = useGLTF(url, true)
   const { size, camera } = useThree()
   const w = size.width
+
+  useEffect(() => {
+    if (scene && onLoaded) {
+      onLoaded()
+    }
+  }, [scene, onLoaded])
 
   useEffect(() => {
     if (w < 480) camera.position.set(3.2, 1.6, 7.8)
@@ -109,7 +115,12 @@ export default function FortunerModel() {
   const [active, setActive] = useState(0)
   const [isMobile, setIsMobile] = useState(false)
   const [inView, setInView] = useState(false)
+  const [modelLoaded, setModelLoaded] = useState(false)
   const containerRef = useRef(null)
+
+  useEffect(() => {
+    setModelLoaded(false)
+  }, [active])
 
   useEffect(() => {
     const checkMobile = () => {
@@ -140,31 +151,20 @@ export default function FortunerModel() {
 
   return (
     <div ref={containerRef} style={{ position: 'relative', width: '100%', height: '100%' }}>
-      {inView ? (
-        <Canvas
-          camera={{ position: [4.5, 1.8, 6.5], fov: 40 }}
-          style={{ background: 'transparent', touchAction: 'pan-y' }}
-          dpr={isMobile ? [1, 1.5] : window.devicePixelRatio}
-        >
-          <ambientLight intensity={0.7} />
-          <directionalLight position={[5, 8, 5]} intensity={1.8} castShadow={!isMobile} />
-          <directionalLight position={[-3, 2, 4]} intensity={0.4} />
-          <Environment preset="city" />
-          <Suspense fallback={<Loader />}>
-            <Car key={active} url={MODELS[active].file} isMobile={isMobile} />
-          </Suspense>
-          <OrbitControls
-            enableZoom={false}
-            enablePan={false}
-            autoRotate={!isMobile}
-            autoRotateSpeed={0.5}
-            minPolarAngle={Math.PI / 4}
-            maxPolarAngle={Math.PI / 2.1}
-          />
-        </Canvas>
-      ) : (
-        /* Viewport Placeholder static image when off-screen to use 0% graphics/memory resources */
-        <div style={{ width: '100%', height: 'calc(100% - 60px)', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
+      {(!inView || !modelLoaded) && (
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          height: 'calc(100% - 60px)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          overflow: 'hidden',
+          zIndex: 5,
+          pointerEvents: 'none',
+          transition: 'opacity 0.4s ease',
+          opacity: 1,
+        }}>
           <img
             src={MODELS[active].fallbackImg}
             alt={MODELS[active].name}
@@ -176,6 +176,35 @@ export default function FortunerModel() {
             }}
           />
         </div>
+      )}
+
+      {inView && (
+        <Canvas
+          camera={{ position: [4.5, 1.8, 6.5], fov: 40 }}
+          style={{ background: 'transparent', touchAction: 'pan-y' }}
+          dpr={isMobile ? [1, 1.5] : window.devicePixelRatio}
+        >
+          <ambientLight intensity={0.7} />
+          <directionalLight position={[5, 8, 5]} intensity={1.8} castShadow={!isMobile} />
+          <directionalLight position={[-3, 2, 4]} intensity={0.4} />
+          <Environment preset="city" />
+          <Suspense fallback={null}>
+            <Car
+              key={active}
+              url={MODELS[active].file}
+              isMobile={isMobile}
+              onLoaded={() => setModelLoaded(true)}
+            />
+          </Suspense>
+          <OrbitControls
+            enableZoom={false}
+            enablePan={false}
+            autoRotate={!isMobile}
+            autoRotateSpeed={0.5}
+            minPolarAngle={Math.PI / 4}
+            maxPolarAngle={Math.PI / 2.1}
+          />
+        </Canvas>
       )}
 
       {/* Switcher */}
