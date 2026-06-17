@@ -14,7 +14,7 @@ gsap.registerPlugin(ScrollTrigger)
 export default function Tours() {
   const [tours, setTours] = useState(toursData)
   const [categories, setCategories] = useState(['All', 'Bollywood', 'Mumbai', 'Heritage', 'Food', 'Gateway'])
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [searchParams] = useSearchParams()
   const categoryParam = searchParams.get('category')
   const [active, setActive] = useState(categoryParam || 'All')
@@ -24,7 +24,6 @@ export default function Tours() {
     let activeRequest = true
     const fetchData = async () => {
       try {
-        setLoading(true)
         const [toursRes, catsRes] = await Promise.all([
           axios.get(`${API_URL}/tours`),
           axios.get(`${API_URL}/tours/meta/categories`)
@@ -35,10 +34,6 @@ export default function Tours() {
         }
       } catch (err) {
         console.warn('API error fetching tours, falling back to local data:', err)
-      } finally {
-        if (activeRequest) {
-          setLoading(false)
-        }
       }
     }
     fetchData()

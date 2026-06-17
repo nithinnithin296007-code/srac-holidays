@@ -171,7 +171,7 @@ function TourMap({ itinerary }) {
 export default function TourDetail() {
   const { slug } = useParams()
   const [tour, setTour] = useState(() => toursData.find(t => t.slug === slug))
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(() => !toursData.some(t => t.slug === slug))
 
   useEffect(() => {
     document.body.classList.add('page-tour-detail')
@@ -184,7 +184,9 @@ export default function TourDetail() {
     let activeRequest = true
     const fetchTour = async () => {
       try {
-        setLoading(true)
+        if (!toursData.some(t => t.slug === slug)) {
+          setLoading(true)
+        }
         const res = await axios.get(`${API_URL}/tours/${slug}`)
         if (activeRequest && res.data) {
           setTour(res.data)
