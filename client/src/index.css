@@ -5,15 +5,7 @@
   font-display: swap;
 }
 
-@font-face {
-  font-family: 'Playfair Display';
-  src: url('https://fonts.gstatic.com/s/playfairdisplay/v30/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWBN2PKdFvXDXbtXK-F2qO0g.woff2') format('woff2');
-  font-weight: 400 900;
-  font-display: swap;
-  ascent-override: 85%;
-  descent-override: 20%;
-  line-gap-override: 0%;
-}
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap');
 
 :root {
   --primary: #C8410B;
