@@ -159,22 +159,17 @@ export default function FortunerModel() {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          overflow: 'hidden',
           zIndex: 5,
           pointerEvents: 'none',
-          transition: 'opacity 0.4s ease',
-          opacity: 1,
         }}>
-          <img
-            src={MODELS[active].fallbackImg}
-            alt={MODELS[active].name}
-            style={{
-              maxWidth: '90%',
-              maxHeight: '80%',
-              objectFit: 'contain',
-              filter: 'drop-shadow(0 20px 25px rgba(0,0,0,0.55))',
-            }}
-          />
+          <div style={{
+            width: 36,
+            height: 36,
+            border: '3px solid rgba(255,255,255,0.1)',
+            borderTopColor: 'var(--primary)',
+            borderRadius: '50%',
+            animation: 'spin 1s linear infinite',
+          }} />
         </div>
       )}
 
